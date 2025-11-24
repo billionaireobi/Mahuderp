@@ -34,6 +34,7 @@ paths:
         required: true
       security:
       - jwtAuth: []
+      - BearerAuth: []
       responses:
         '200':
           description: No response body
@@ -50,6 +51,7 @@ paths:
       - auth
       security:
       - jwtAuth: []
+      - BearerAuth: []
       responses:
         '200':
           content:
@@ -87,6 +89,7 @@ paths:
         required: true
       security:
       - jwtAuth: []
+      - BearerAuth: []
       - {}
       responses:
         '200':
@@ -105,10 +108,17 @@ paths:
 
         Query Parameters:
         - limit: Number of records to return (default: 20, max: 100)
+      parameters:
+      - in: query
+        name: limit
+        schema:
+          type: integer
+        description: 'Number of records to return (default: 20, max: 100)'
       tags:
       - auth
       security:
       - jwtAuth: []
+      - BearerAuth: []
       responses:
         '200':
           content:
@@ -146,6 +156,7 @@ paths:
         required: true
       security:
       - jwtAuth: []
+      - BearerAuth: []
       responses:
         '200':
           description: No response body
@@ -160,6 +171,7 @@ paths:
       - auth
       security:
       - jwtAuth: []
+      - BearerAuth: []
       responses:
         '200':
           content:
@@ -194,6 +206,7 @@ paths:
         required: true
       security:
       - jwtAuth: []
+      - BearerAuth: []
       - {}
       responses:
         '200':
@@ -228,6 +241,7 @@ paths:
         required: true
       security:
       - jwtAuth: []
+      - BearerAuth: []
       - {}
       responses:
         '200':
@@ -251,6 +265,7 @@ paths:
       - auth
       security:
       - jwtAuth: []
+      - BearerAuth: []
       responses:
         '200':
           content:
@@ -287,6 +302,7 @@ paths:
               $ref: '#/components/schemas/PatchedUserProfile'
       security:
       - jwtAuth: []
+      - BearerAuth: []
       responses:
         '200':
           content:
@@ -322,6 +338,7 @@ paths:
         required: true
       security:
       - jwtAuth: []
+      - BearerAuth: []
       - {}
       responses:
         '200':
@@ -362,6 +379,7 @@ paths:
         required: true
       security:
       - jwtAuth: []
+      - BearerAuth: []
       - {}
       responses:
         '200':
@@ -386,6 +404,7 @@ paths:
       - auth
       security:
       - jwtAuth: []
+      - BearerAuth: []
       - {}
       responses:
         '200':
@@ -401,6 +420,7 @@ paths:
       - auth
       security:
       - jwtAuth: []
+      - BearerAuth: []
       responses:
         '200':
           content:
@@ -428,6 +448,7 @@ paths:
       - auth
       security:
       - jwtAuth: []
+      - BearerAuth: []
       responses:
         '204':
           description: No response body
@@ -459,6 +480,7 @@ paths:
         required: true
       security:
       - jwtAuth: []
+      - BearerAuth: []
       - {}
       responses:
         '200':
@@ -473,6 +495,7 @@ paths:
       - core
       security:
       - jwtAuth: []
+      - BearerAuth: []
       responses:
         '200':
           content:
@@ -503,6 +526,7 @@ paths:
         required: true
       security:
       - jwtAuth: []
+      - BearerAuth: []
       responses:
         '200':
           content:
@@ -529,6 +553,7 @@ paths:
       - core
       security:
       - jwtAuth: []
+      - BearerAuth: []
       responses:
         '200':
           content:
@@ -564,6 +589,7 @@ paths:
         required: true
       security:
       - jwtAuth: []
+      - BearerAuth: []
       responses:
         '200':
           content:
@@ -598,6 +624,7 @@ paths:
               $ref: '#/components/schemas/PatchedBranch'
       security:
       - jwtAuth: []
+      - BearerAuth: []
       responses:
         '200':
           content:
@@ -621,6 +648,7 @@ paths:
       - core
       security:
       - jwtAuth: []
+      - BearerAuth: []
       responses:
         '204':
           description: No response body
@@ -634,6 +662,7 @@ paths:
       - core
       security:
       - jwtAuth: []
+      - BearerAuth: []
       responses:
         '200':
           content:
@@ -664,6 +693,7 @@ paths:
         required: true
       security:
       - jwtAuth: []
+      - BearerAuth: []
       responses:
         '200':
           content:
@@ -690,6 +720,7 @@ paths:
       - core
       security:
       - jwtAuth: []
+      - BearerAuth: []
       responses:
         '200':
           content:
@@ -725,6 +756,7 @@ paths:
         required: true
       security:
       - jwtAuth: []
+      - BearerAuth: []
       responses:
         '200':
           content:
@@ -761,6 +793,7 @@ paths:
         required: true
       security:
       - jwtAuth: []
+      - BearerAuth: []
       responses:
         '200':
           content:
@@ -775,6 +808,7 @@ paths:
       - core
       security:
       - jwtAuth: []
+      - BearerAuth: []
       responses:
         '200':
           content:
@@ -802,6 +836,7 @@ paths:
         required: true
       security:
       - jwtAuth: []
+      - BearerAuth: []
       responses:
         '200':
           content:
@@ -828,6 +863,7 @@ paths:
       - core
       security:
       - jwtAuth: []
+      - BearerAuth: []
       responses:
         '200':
           content:
@@ -845,6 +881,7 @@ paths:
       - core
       security:
       - jwtAuth: []
+      - BearerAuth: []
       responses:
         '200':
           description: No response body
@@ -858,6 +895,7 @@ paths:
       - core
       security:
       - jwtAuth: []
+      - BearerAuth: []
       responses:
         '200':
           content:
@@ -888,6 +926,7 @@ paths:
         required: true
       security:
       - jwtAuth: []
+      - BearerAuth: []
       responses:
         '200':
           content:
@@ -914,6 +953,7 @@ paths:
       - core
       security:
       - jwtAuth: []
+      - BearerAuth: []
       responses:
         '200':
           content:
@@ -949,6 +989,7 @@ paths:
         required: true
       security:
       - jwtAuth: []
+      - BearerAuth: []
       responses:
         '200':
           content:
@@ -983,6 +1024,7 @@ paths:
               $ref: '#/components/schemas/PatchedEmployer'
       security:
       - jwtAuth: []
+      - BearerAuth: []
       responses:
         '200':
           content:
@@ -1006,6 +1048,7 @@ paths:
       - core
       security:
       - jwtAuth: []
+      - BearerAuth: []
       responses:
         '204':
           description: No response body
@@ -1019,6 +1062,7 @@ paths:
       - core
       security:
       - jwtAuth: []
+      - BearerAuth: []
       responses:
         '200':
           content:
@@ -1045,6 +1089,7 @@ paths:
       - core
       security:
       - jwtAuth: []
+      - BearerAuth: []
       responses:
         '200':
           content:
@@ -1062,6 +1107,7 @@ paths:
       - core
       security:
       - jwtAuth: []
+      - BearerAuth: []
       responses:
         '200':
           content:
@@ -1092,6 +1138,7 @@ paths:
         required: true
       security:
       - jwtAuth: []
+      - BearerAuth: []
       responses:
         '200':
           content:
@@ -1118,6 +1165,7 @@ paths:
       - core
       security:
       - jwtAuth: []
+      - BearerAuth: []
       responses:
         '200':
           content:
@@ -1135,6 +1183,7 @@ paths:
       - core
       security:
       - jwtAuth: []
+      - BearerAuth: []
       responses:
         '200':
           content:
@@ -1165,6 +1214,7 @@ paths:
         required: true
       security:
       - jwtAuth: []
+      - BearerAuth: []
       responses:
         '200':
           content:
@@ -1191,6 +1241,7 @@ paths:
       - core
       security:
       - jwtAuth: []
+      - BearerAuth: []
       responses:
         '200':
           content:
@@ -1226,6 +1277,7 @@ paths:
         required: true
       security:
       - jwtAuth: []
+      - BearerAuth: []
       responses:
         '200':
           content:
@@ -1260,6 +1312,7 @@ paths:
               $ref: '#/components/schemas/PatchedVendor'
       security:
       - jwtAuth: []
+      - BearerAuth: []
       responses:
         '200':
           content:
@@ -1283,9 +1336,143 @@ paths:
       - core
       security:
       - jwtAuth: []
+      - BearerAuth: []
       responses:
         '204':
           description: No response body
+  /api/dashboard/:
+    get:
+      operationId: dashboard_retrieve
+      description: |-
+        Main dashboard endpoint - routes to role-specific dashboard
+        GET /api/dashboard/
+      tags:
+      - dashboard
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /api/dashboard/accountant/:
+    get:
+      operationId: dashboard_accountant_retrieve
+      description: |-
+        Accountant Dashboard - Day-to-day operations
+        GET /api/dashboard/accountant/
+      tags:
+      - dashboard
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /api/dashboard/auditor/:
+    get:
+      operationId: dashboard_auditor_retrieve
+      description: |-
+        Auditor Dashboard - Read-only audit and compliance view
+        GET /api/dashboard/auditor/
+      tags:
+      - dashboard
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /api/dashboard/branch-user/:
+    get:
+      operationId: dashboard_branch_user_retrieve
+      description: |-
+        Branch User Dashboard - Candidate operations focus
+        GET /api/dashboard/branch-user/
+      tags:
+      - dashboard
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /api/dashboard/country-manager/:
+    get:
+      operationId: dashboard_country_manager_retrieve
+      description: |-
+        Country Manager Dashboard - Company-specific operations
+        GET /api/dashboard/country-manager/
+      tags:
+      - dashboard
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /api/dashboard/finance-manager/:
+    get:
+      operationId: dashboard_finance_manager_retrieve
+      description: |-
+        Finance Manager Dashboard - Financial operations focus
+        GET /api/dashboard/finance-manager/
+      tags:
+      - dashboard
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /api/dashboard/hq-admin/:
+    get:
+      operationId: dashboard_hq_admin_retrieve
+      description: |-
+        HQ Admin Dashboard - Consolidated view across all companies
+        GET /api/dashboard/hq-admin/
+      tags:
+      - dashboard
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
   /api/schema/:
     get:
       operationId: schema_retrieve
@@ -1410,6 +1597,7 @@ paths:
       - schema
       security:
       - jwtAuth: []
+      - BearerAuth: []
       - {}
       responses:
         '200':
@@ -1660,7 +1848,7 @@ components:
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
         currency:
-          $ref: '#/components/schemas/CurrencyEnum'
+          $ref: '#/components/schemas/BaseCurrencyEnum'
         reimbursable:
           type: boolean
           description: Can be billed to employer
@@ -1899,24 +2087,6 @@ components:
         * `AE` - UAE
         * `QA` - Qatar
         * `PH` - Philippines
-    CurrencyEnum:
-      enum:
-      - INR
-      - KES
-      - AED
-      - QAR
-      - PHP
-      - USD
-      - EUR
-      type: string
-      description: |-
-        * `INR` - Indian Rupee
-        * `KES` - Kenyan Shilling
-        * `AED` - UAE Dirham
-        * `QAR` - Qatari Riyal
-        * `PHP` - Philippine Peso
-        * `USD` - US Dollar
-        * `EUR` - Euro
     CurrentStageEnum:
       enum:
       - SOURCING
@@ -2028,7 +2198,7 @@ components:
           type: string
           format: date
         currency:
-          $ref: '#/components/schemas/CurrencyEnum'
+          $ref: '#/components/schemas/BaseCurrencyEnum'
         total_amount:
           type: string
           format: decimal
@@ -2186,7 +2356,7 @@ components:
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           description: Fee per candidate
         currency:
-          $ref: '#/components/schemas/CurrencyEnum'
+          $ref: '#/components/schemas/BaseCurrencyEnum'
         notes:
           type: string
           nullable: true

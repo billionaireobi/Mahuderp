@@ -23,7 +23,7 @@ from .serializers import (
     LogoutSerializer, LoginHistorySerializer, UserProfileSerializer,
     ActiveSessionSerializer, EmailVerificationSerializer
 )
-from drf_spectacular.utils import extend_schema
+from drf_spectacular.utils import extend_schema, OpenApiParameter
 from drf_spectacular.types import OpenApiTypes
 from .utils import (
     get_client_ip, get_user_agent, parse_user_agent,
@@ -528,7 +528,18 @@ def user_profile(request):
         }, status=status.HTTP_200_OK)
 
 
-@extend_schema(responses=LoginHistorySerializer(many=True))
+@extend_schema(
+    parameters=[
+        OpenApiParameter(
+            name='limit',
+            type=int,
+            location=OpenApiParameter.QUERY,
+            required=False,
+            description='Number of records to return (default: 20, max: 100)'
+        ),
+    ],
+    responses=LoginHistorySerializer(many=True)
+)
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def login_history(request):

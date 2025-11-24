@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     # Local apps
     'authentications.apps.AuthenticationsConfig',  # Custom auth app
     'core',
+    'dashboards',
 ]
 
 MIDDLEWARE = [
@@ -153,6 +154,33 @@ SPECTACULAR_SETTINGS = {
         {'url': 'http://localhost:8000', 'description': 'Local development server'},
     ],
 }
+
+# Add Bearer auth to OpenAPI so Swagger UI shows an Authorize control
+SPECTACULAR_SETTINGS.update({
+    'SECURITY': [{'BearerAuth': []}],
+    'COMPONENTS': {
+        'securitySchemes': {
+            'BearerAuth': {
+                'type': 'http',
+                'scheme': 'bearer',
+                'bearerFormat': 'JWT',
+            },
+        },
+    },
+    # If multiple places use the same Django choices, spectacular may generate
+    # multiple enum names for the same choice set. ENUM_NAME_OVERRIDES lets us
+    # force a single stable name for the BaseCurrency choices used across the
+    # codebase.
+    'ENUM_NAME_OVERRIDES': {
+           # ENUM_NAME_OVERRIDES expects a mapping from the desired enum component
+           # name -> the actual choices object (or import path) that defines the
+           # choices. Previously this was inverted which caused the loader to try
+           # importing the enum name as a choices object. Provide a single stable
+           # mapping here so drf-spectacular will use `BaseCurrencyEnum` for the
+           # Company currency choices.
+           'BaseCurrencyEnum': 'core.models.Company.CURRENCY_CHOICES',
+    },
+})
 
 # Simple JWT
 SIMPLE_JWT = {
