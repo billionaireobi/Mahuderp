@@ -23,6 +23,8 @@ from .serializers import (
     LogoutSerializer, LoginHistorySerializer, UserProfileSerializer,
     ActiveSessionSerializer, EmailVerificationSerializer
 )
+from drf_spectacular.utils import extend_schema
+from drf_spectacular.types import OpenApiTypes
 from .utils import (
     get_client_ip, get_user_agent, parse_user_agent,
     send_password_reset_email, send_verification_email,
@@ -30,6 +32,7 @@ from .utils import (
 )
 
 
+@extend_schema(request=RegisterSerializer, responses=UserSerializer)
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def register(request):
@@ -82,6 +85,7 @@ def register(request):
     }, status=status.HTTP_201_CREATED)
 
 
+@extend_schema(request=LoginSerializer, responses=UserSerializer)
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def login(request):
@@ -161,6 +165,7 @@ def login(request):
     }, status=status.HTTP_200_OK)
 
 
+@extend_schema(request=LogoutSerializer, responses=None)
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def logout(request):
@@ -203,6 +208,7 @@ def logout(request):
         }, status=status.HTTP_400_BAD_REQUEST)
 
 
+@extend_schema(request=None, responses=OpenApiTypes.NONE)
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def logout_all(request):
@@ -226,6 +232,7 @@ def logout_all(request):
     }, status=status.HTTP_200_OK)
 
 
+@extend_schema(request=RefreshTokenSerializer, responses=None)
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def refresh_token(request):
@@ -282,6 +289,7 @@ def refresh_token(request):
         }, status=status.HTTP_400_BAD_REQUEST)
 
 
+@extend_schema(request=ChangePasswordSerializer, responses=None)
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def change_password(request):
@@ -319,6 +327,7 @@ def change_password(request):
     }, status=status.HTTP_200_OK)
 
 
+@extend_schema(request=PasswordResetRequestSerializer, responses=None)
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def password_reset_request(request):
@@ -366,6 +375,7 @@ def password_reset_request(request):
     }, status=status.HTTP_200_OK)
 
 
+@extend_schema(request=PasswordResetConfirmSerializer, responses=None)
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def password_reset_confirm(request):
@@ -431,6 +441,7 @@ def password_reset_confirm(request):
         }, status=status.HTTP_400_BAD_REQUEST)
 
 
+@extend_schema(request=EmailVerificationSerializer, responses=None)
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def verify_email(request):
@@ -477,6 +488,7 @@ def verify_email(request):
         }, status=status.HTTP_400_BAD_REQUEST)
 
 
+@extend_schema(request=UserProfileSerializer, responses=UserProfileSerializer)
 @api_view(['GET', 'PATCH'])
 @permission_classes([IsAuthenticated])
 def user_profile(request):
@@ -516,6 +528,7 @@ def user_profile(request):
         }, status=status.HTTP_200_OK)
 
 
+@extend_schema(responses=LoginHistorySerializer(many=True))
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def login_history(request):
@@ -545,6 +558,7 @@ def login_history(request):
     }, status=status.HTTP_200_OK)
 
 
+@extend_schema(responses=ActiveSessionSerializer(many=True))
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def active_sessions(request):
@@ -567,6 +581,7 @@ def active_sessions(request):
     }, status=status.HTTP_200_OK)
 
 
+@extend_schema(responses=None)
 @api_view(['DELETE'])
 @permission_classes([IsAuthenticated])
 def revoke_session(request, session_id):
@@ -593,6 +608,7 @@ def revoke_session(request, session_id):
         }, status=status.HTTP_404_NOT_FOUND)
 
 
+@extend_schema(request=None, responses=None)
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def resend_verification_email(request):
@@ -647,6 +663,7 @@ def resend_verification_email(request):
     }, status=status.HTTP_200_OK)
 
 
+@extend_schema(responses=UserSerializer)
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def check_auth(request):

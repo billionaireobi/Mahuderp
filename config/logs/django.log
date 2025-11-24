@@ -183,3 +183,47 @@
 [INFO] 2025-11-24 09:05:59 autoreload 7710 140436561694976 - Watching for file changes with StatReloader
 [INFO] 2025-11-24 09:06:40 autoreload 7710 140436561694976 - /home/nethunter/Desktop/mahudgrp/config/core/urls.py changed, reloading.
 [INFO] 2025-11-24 09:06:41 autoreload 7754 140156326629632 - Watching for file changes with StatReloader
+[INFO] 2025-11-24 09:34:05 autoreload 9314 139999847321856 - Watching for file changes with StatReloader
+[INFO] 2025-11-24 09:59:17 autoreload 9314 139999847321856 - /home/nethunter/Desktop/mahudgrp/config/config/settings.py changed, reloading.
+[INFO] 2025-11-24 09:59:18 autoreload 10308 140081159217408 - Watching for file changes with StatReloader
+[INFO] 2025-11-24 10:04:14 autoreload 10308 140081159217408 - /home/nethunter/Desktop/mahudgrp/config/config/settings.py changed, reloading.
+[INFO] 2025-11-24 10:04:15 autoreload 10980 139636247372032 - Watching for file changes with StatReloader
+[INFO] 2025-11-24 10:04:20 autoreload 10980 139636247372032 - /home/nethunter/Desktop/mahudgrp/config/config/urls.py changed, reloading.
+[INFO] 2025-11-24 10:04:20 autoreload 11008 140406876184832 - Watching for file changes with StatReloader
+[INFO] 2025-11-24 10:07:53 autoreload 11008 140406876184832 - /home/nethunter/Desktop/mahudgrp/config/config/urls.py changed, reloading.
+[INFO] 2025-11-24 10:07:54 autoreload 11322 139626286268672 - Watching for file changes with StatReloader
+[INFO] 2025-11-24 10:11:17 autoreload 11322 139626286268672 - /home/nethunter/Desktop/mahudgrp/config/authentications/views.py changed, reloading.
+[INFO] 2025-11-24 10:11:18 autoreload 11623 140140991410432 - Watching for file changes with StatReloader
+[INFO] 2025-11-24 10:11:44 autoreload 11623 140140991410432 - /home/nethunter/Desktop/mahudgrp/config/core/views.py changed, reloading.
+[INFO] 2025-11-24 10:11:45 autoreload 11701 139726367035648 - Watching for file changes with StatReloader
+[INFO] 2025-11-24 10:13:53 autoreload 11701 139726367035648 - /home/nethunter/Desktop/mahudgrp/config/authentications/views.py changed, reloading.
+[INFO] 2025-11-24 10:13:54 autoreload 11875 140586768634112 - Watching for file changes with StatReloader
+[INFO] 2025-11-24 10:14:58 autoreload 11875 140586768634112 - /home/nethunter/Desktop/mahudgrp/config/core/views.py changed, reloading.
+[INFO] 2025-11-24 10:15:00 autoreload 11988 140414611788032 - Watching for file changes with StatReloader
+[INFO] 2025-11-24 10:18:46 autoreload 11988 140414611788032 - /home/nethunter/Desktop/mahudgrp/venv/lib/python3.13/site-packages/rest_framework/fields.py changed, reloading.
+[INFO] 2025-11-24 10:18:47 autoreload 12389 139824374460672 - Watching for file changes with StatReloader
+[INFO] 2025-11-24 10:22:23 autoreload 12389 139824374460672 - /home/nethunter/Desktop/mahudgrp/config/authentications/serializers.py changed, reloading.
+[INFO] 2025-11-24 10:22:24 autoreload 12642 140503417880832 - Watching for file changes with StatReloader
+[INFO] 2025-11-24 10:24:19 autoreload 12642 140503417880832 - /home/nethunter/Desktop/mahudgrp/config/authentications/serializers.py changed, reloading.
+[INFO] 2025-11-24 10:24:20 autoreload 12858 139801959522560 - Watching for file changes with StatReloader
+[INFO] 2025-11-24 10:29:55 autoreload 13152 139697574256896 - Watching for file changes with StatReloader
+[INFO] 2025-11-24 10:29:58 basehttp 13152 139697472927424 - "GET / HTTP/1.1" 200 405
+[WARNING] 2025-11-24 10:36:27 basehttp 13152 139697472927424 - "GET /api/auth/login/ HTTP/1.1" 405 5869
+[WARNING] 2025-11-24 10:36:59 basehttp 13152 139697472927424 - "POST /api/auth/login/ HTTP/1.1" 401 5689
+[INFO] 2025-11-24 10:36:59 basehttp 13152 139697472927424 - "GET /static/rest_framework/css/bootstrap.min.css HTTP/1.1" 304 0
+[INFO] 2025-11-24 10:36:59 basehttp 13152 139697454044864 - "GET /static/rest_framework/css/prettify.css HTTP/1.1" 304 0
+[INFO] 2025-11-24 10:36:59 basehttp 13152 139697445652160 - "GET /static/rest_framework/css/default.css HTTP/1.1" 304 0
+[INFO] 2025-11-24 10:36:59 basehttp 13152 139697099634368 - "GET /static/rest_framework/js/jquery-3.5.1.min.js HTTP/1.1" 304 0
+[INFO] 2025-11-24 10:36:59 basehttp 13152 139697464534720 - "GET /static/rest_framework/css/bootstrap-tweaks.css HTTP/1.1" 304 0
+[INFO] 2025-11-24 10:36:59 basehttp 13152 139697091241664 - "GET /static/rest_framework/js/csrf.js HTTP/1.1" 304 0
+[INFO] 2025-11-24 10:36:59 basehttp 13152 139697454044864 - "GET /static/rest_framework/js/ajax-form.js HTTP/1.1" 304 0
+[INFO] 2025-11-24 10:36:59 basehttp 13152 139697445652160 - "GET /static/rest_framework/js/bootstrap.min.js HTTP/1.1" 304 0
+[INFO] 2025-11-24 10:36:59 basehttp 13152 139697464534720 - "GET /static/rest_framework/js/default.js HTTP/1.1" 304 0
+[INFO] 2025-11-24 10:36:59 basehttp 13152 139697099634368 - "GET /static/rest_framework/js/prettify-min.js HTTP/1.1" 304 0
+[WARNING] 2025-11-24 10:38:05 basehttp 13152 139697099634368 - "POST /api/auth/login/ HTTP/1.1" 401 5689
+[WARNING] 2025-11-24 10:39:06 basehttp 13152 139697099634368 - "POST /api/auth/login/ HTTP/1.1" 401 5689
+[INFO] 2025-11-24 10:40:30 basehttp 13152 139697099634368 - "POST /api/auth/login/ HTTP/1.1" 200 7282
+[WARNING] 2025-11-24 10:46:53 basehttp 13152 139697099634368 - "GET /api/auth/login/ HTTP/1.1" 405 5869
+[INFO] 2025-11-24 10:46:53 basehttp 13152 139697099634368 - "GET /static/rest_framework/img/grid.png HTTP/1.1" 304 0
+[INFO] 2025-11-24 10:47:15 basehttp 12858 139801789462208 - "GET /api/docs/ HTTP/1.1" 200 4659
+[INFO] 2025-11-24 10:47:17 basehttp 12858 139801789462208 - "GET /api/schema/ HTTP/1.1" 200 138035

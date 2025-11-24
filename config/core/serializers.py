@@ -10,6 +10,8 @@ from .models import (
     Invoice, InvoiceLine, Bill, BillLine,
     Receipt, Payment, Journal, JournalLine
 )
+from drf_spectacular.utils import extend_schema_field
+from drf_spectacular.types import OpenApiTypes
 
 
 # ============================================================
@@ -99,6 +101,9 @@ class JobOrderSerializer(serializers.ModelSerializer):
     def get_candidate_count(self, obj):
         return obj.candidates.count()
 
+    # Candidate count is an integer
+    get_candidate_count = extend_schema_field(OpenApiTypes.INT)(get_candidate_count)
+
 
 class CandidateCostSerializer(serializers.ModelSerializer):
     """Serializer for Candidate Cost"""
@@ -128,6 +133,9 @@ class CandidateSerializer(serializers.ModelSerializer):
     
     def get_total_costs(self, obj):
         return sum(cost.amount for cost in obj.costs.all())
+
+    # Total costs are numeric (sum of amounts)
+    get_total_costs = extend_schema_field(OpenApiTypes.NUMBER)(get_total_costs)
 
 
 # ============================================================

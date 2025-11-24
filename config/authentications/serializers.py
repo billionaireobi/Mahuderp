@@ -11,6 +11,8 @@ from django.contrib.auth.password_validation import validate_password
 from django.utils import timezone
 from .models import User, LoginHistory, RefreshToken
 import re
+from drf_spectacular.utils import extend_schema_field
+from drf_spectacular.types import OpenApiTypes
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -34,6 +36,9 @@ class UserSerializer(serializers.ModelSerializer):
     
     def get_full_name(self, obj):
         return obj.get_full_name()
+    
+    # Explicitly declare return type for OpenAPI
+    get_full_name = extend_schema_field(OpenApiTypes.STR)(get_full_name)
 
 
 class RegisterSerializer(serializers.ModelSerializer):
@@ -409,6 +414,9 @@ class UserProfileSerializer(serializers.ModelSerializer):
         """Get user's full name"""
         return obj.get_full_name()
     
+    # Explicitly declare return type for OpenAPI
+    get_full_name = extend_schema_field(OpenApiTypes.STR)(get_full_name)
+    
     def get_company_details(self, obj):
         """Get company details if assigned"""
         if obj.company:
@@ -420,6 +428,9 @@ class UserProfileSerializer(serializers.ModelSerializer):
             }
         return None
     
+    # Company details are an object or null
+    get_company_details = extend_schema_field(OpenApiTypes.OBJECT)(get_company_details)
+    
     def get_branch_details(self, obj):
         """Get branch details if assigned"""
         if obj.branch:
@@ -429,6 +440,9 @@ class UserProfileSerializer(serializers.ModelSerializer):
                 'code': obj.branch.code
             }
         return None
+    
+    # Branch details are an object or null
+    get_branch_details = extend_schema_field(OpenApiTypes.OBJECT)(get_branch_details)
     
     def get_permissions(self, obj):
         """Return role-based permissions"""
@@ -484,6 +498,9 @@ class UserProfileSerializer(serializers.ModelSerializer):
             ]
         }
         return permissions_map.get(obj.role, [])
+
+    # Permissions is a list/array of strings — represent as object for OpenAPI
+    get_permissions = extend_schema_field(OpenApiTypes.OBJECT)(get_permissions)
 
 
 class ActiveSessionSerializer(serializers.ModelSerializer):

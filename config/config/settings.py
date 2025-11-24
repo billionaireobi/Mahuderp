@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt.token_blacklist',
     'corsheaders',
     'django_filters',
+    'drf_spectacular',
     
     # Local apps
     'authentications.apps.AuthenticationsConfig',  # Custom auth app
@@ -125,6 +126,8 @@ CORS_ALLOW_HEADERS = [
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': ('rest_framework_simplejwt.authentication.JWTAuthentication',),
     'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAuthenticated',),
+    # Use drf-spectacular for OpenAPI schema generation
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
     'DEFAULT_FILTER_BACKENDS': (
         'django_filters.rest_framework.DjangoFilterBackend',
         'rest_framework.filters.SearchFilter',
@@ -139,6 +142,16 @@ REST_FRAMEWORK = {
         'rest_framework.renderers.JSONRenderer',
         'rest_framework.renderers.BrowsableAPIRenderer',
     ),
+}
+
+# drf-spectacular settings (OpenAPI)
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Mahad Group Accounting API',
+    'DESCRIPTION': 'OpenAPI schema for Mahad Group Accounting Suite',
+    'VERSION': '1.0.0',
+    'SERVERS': [
+        {'url': 'http://localhost:8000', 'description': 'Local development server'},
+    ],
 }
 
 # Simple JWT

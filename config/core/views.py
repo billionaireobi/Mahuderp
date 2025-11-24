@@ -21,6 +21,7 @@ from .serializers import (
     JobOrderSerializer, CandidateSerializer, CandidateCostSerializer,
     InvoiceSerializer, BillSerializer
 )
+from drf_spectacular.utils import extend_schema
 
 # def handler404(request, exception):
 #     return render(request, '404.html', status=404)
@@ -31,6 +32,7 @@ from .serializers import (
 # COMPANIES
 # ============================================================
 
+@extend_schema(request=CompanySerializer, responses=CompanySerializer(many=True))
 @api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
 def company_list(request):
@@ -62,6 +64,7 @@ def company_list(request):
 
 
 
+@extend_schema(responses=CompanySerializer)
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def company_detail(request, company_id):
@@ -85,6 +88,7 @@ def company_detail(request, company_id):
 # BRANCHES
 # ============================================================
 
+@extend_schema(request=BranchSerializer, responses=BranchSerializer(many=True))
 @api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
 def branch_list(request):
@@ -125,6 +129,7 @@ def branch_list(request):
         'total': branches.count()
     }, status=200)
 
+@extend_schema(request=BranchSerializer, responses=BranchSerializer)
 @api_view(['GET', 'PUT', 'PATCH', 'DELETE'])
 @permission_classes([IsAuthenticated])
 def branch_detail(request, branch_id):
@@ -164,6 +169,7 @@ def branch_detail(request, branch_id):
 # EMPLOYERS (Clients)
 # ============================================================
 
+@extend_schema(request=EmployerSerializer, responses=EmployerSerializer(many=True))
 @api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
 def employer_list(request):
@@ -198,6 +204,7 @@ def employer_list(request):
         }, status=status.HTTP_400_BAD_REQUEST)
 
 
+@extend_schema(request=EmployerSerializer, responses=EmployerSerializer)
 @api_view(['GET', 'PUT', 'PATCH', 'DELETE'])
 @permission_classes([IsAuthenticated])
 def employer_detail(request, employer_id):
@@ -239,6 +246,7 @@ def employer_detail(request, employer_id):
 # VENDORS
 # ============================================================
 
+@extend_schema(request=VendorSerializer, responses=VendorSerializer(many=True))
 @api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
 def vendor_list(request):
@@ -272,6 +280,7 @@ def vendor_list(request):
             'details': serializer.errors
         }, status=status.HTTP_400_BAD_REQUEST)
 
+@extend_schema(request=VendorSerializer, responses=VendorSerializer)
 @api_view(['GET', 'PUT', 'PATCH', 'DELETE'])
 @permission_classes([IsAuthenticated])
 def vendor_detail(request, vendor_id):
@@ -311,6 +320,7 @@ def vendor_detail(request, vendor_id):
 # JOB ORDERS
 # ============================================================
 
+@extend_schema(request=JobOrderSerializer, responses=JobOrderSerializer(many=True))
 @api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
 def job_order_list(request):
@@ -350,6 +360,7 @@ def job_order_list(request):
         }, status=status.HTTP_400_BAD_REQUEST)
 
 
+@extend_schema(responses=JobOrderSerializer)
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def job_order_detail(request, job_order_id):
@@ -380,6 +391,7 @@ def job_order_detail(request, job_order_id):
 # CANDIDATES
 # ============================================================
 
+@extend_schema(request=CandidateSerializer, responses=CandidateSerializer(many=True))
 @api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
 def candidate_list(request):
@@ -423,6 +435,7 @@ def candidate_list(request):
         }, status=status.HTTP_400_BAD_REQUEST)
 
 
+@extend_schema(request=CandidateSerializer, responses=CandidateSerializer)
 @api_view(['GET', 'PUT'])
 @permission_classes([IsAuthenticated])
 def candidate_detail(request, candidate_id):
@@ -457,6 +470,7 @@ def candidate_detail(request, candidate_id):
         }, status=status.HTTP_400_BAD_REQUEST)
 
 
+@extend_schema(request=CandidateCostSerializer, responses=CandidateCostSerializer)
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def candidate_add_cost(request, candidate_id):
@@ -487,6 +501,7 @@ def candidate_add_cost(request, candidate_id):
 # INVOICES
 # ============================================================
 
+@extend_schema(responses=InvoiceSerializer(many=True))
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def invoice_list(request):
@@ -517,6 +532,7 @@ def invoice_list(request):
     }, status=status.HTTP_200_OK)
 
 
+@extend_schema(responses=InvoiceSerializer)
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def invoice_detail(request, invoice_id):
@@ -540,6 +556,7 @@ def invoice_detail(request, invoice_id):
 # DASHBOARD STATS
 # ============================================================
 
+@extend_schema(responses=None)
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def dashboard_stats(request):

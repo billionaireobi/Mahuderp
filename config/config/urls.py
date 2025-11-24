@@ -12,6 +12,9 @@ from django.conf.urls.static import static
 from rest_framework import permissions
 from django.http import JsonResponse
 
+# OpenAPI / Swagger views (drf-spectacular)
+from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
+
 def api_root(request):
     """API root endpoint"""
     return JsonResponse({
@@ -45,6 +48,19 @@ urlpatterns = [
     
     # Core API endpoints (will be added later)
     path('api/core/', include('core.urls')),
+
+    # OpenAPI Schema and documentation
+    # OpenAPI Schema and documentation
+    # - /api/schema/  -> raw OpenAPI JSON/YAML
+    # - /api/docs/    -> Swagger UI (interactive)
+    # - /api/redoc/   -> ReDoc UI
+    # Note: These are registered using drf-spectacular. In production you may want
+    # to restrict access to these endpoints or disable them when DEBUG=False.
+    path('api/schema/', SpectacularAPIView.as_view(), name='api-schema'),
+    # Swagger UI (interactive)
+    path('api/docs/', SpectacularSwaggerView.as_view(url_name='api-schema'), name='swagger-ui'),
+    # ReDoc UI
+    path('api/redoc/', SpectacularRedocView.as_view(url_name='api-schema'), name='redoc'),
 ]
 
 # Serve media files in development
