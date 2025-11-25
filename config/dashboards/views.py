@@ -30,6 +30,34 @@ from core.models import (
 # MAIN DASHBOARD ROUTER
 # ============================================================
 
+# @extend_schema(responses=OpenApiTypes.OBJECT)
+# @api_view(['GET'])
+# @permission_classes([IsAuthenticated])
+# def dashboard(request):
+#     """
+#     Main dashboard endpoint - routes to role-specific dashboard
+#     GET /api/dashboard/
+#     """
+#     user = request.user
+    
+#     # Route based on role
+#     if user.role == 'HQ_ADMIN':
+#         return hq_admin_dashboard(request)
+#     elif user.role == 'COUNTRY_MANAGER':
+#         return country_manager_dashboard(request)
+#     elif user.role == 'FINANCE_MANAGER':
+#         return finance_manager_dashboard(request)
+#     elif user.role == 'ACCOUNTANT':
+#         return accountant_dashboard(request)
+#     elif user.role == 'BRANCH_USER':
+#         return branch_user_dashboard(request)
+#     elif user.role == 'AUDITOR':
+#         return auditor_dashboard(request)
+#     else:
+#         return Response({
+#             'error': 'Invalid user role'
+#         }, status=status.HTTP_403_FORBIDDEN)
+
 @extend_schema(responses=OpenApiTypes.OBJECT)
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
@@ -39,25 +67,29 @@ def dashboard(request):
     GET /api/dashboard/
     """
     user = request.user
-    
-    # Route based on role
-    if user.role == 'HQ_ADMIN':
-        return hq_admin_dashboard(request)
-    elif user.role == 'COUNTRY_MANAGER':
-        return country_manager_dashboard(request)
-    elif user.role == 'FINANCE_MANAGER':
-        return finance_manager_dashboard(request)
-    elif user.role == 'ACCOUNTANT':
-        return accountant_dashboard(request)
-    elif user.role == 'BRANCH_USER':
-        return branch_user_dashboard(request)
-    elif user.role == 'AUDITOR':
-        return auditor_dashboard(request)
-    else:
-        return Response({
-            'error': 'Invalid user role'
-        }, status=status.HTTP_403_FORBIDDEN)
+    django_request = request._request   # ⬅️ FIX HERE
 
+    if user.role == 'HQ_ADMIN':
+        return hq_admin_dashboard(django_request)
+
+    elif user.role == 'COUNTRY_MANAGER':
+        return country_manager_dashboard(django_request)
+
+    elif user.role == 'FINANCE_MANAGER':
+        return finance_manager_dashboard(django_request)
+
+    elif user.role == 'ACCOUNTANT':
+        return accountant_dashboard(django_request)
+
+    elif user.role == 'BRANCH_USER':
+        return branch_user_dashboard(django_request)
+
+    elif user.role == 'AUDITOR':
+        return auditor_dashboard(django_request)
+
+    return Response({
+        'error': 'Invalid user role'
+    }, status=status.HTTP_403_FORBIDDEN)
 
 # ============================================================
 # HQ ADMIN DASHBOARD
