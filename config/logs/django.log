@@ -558,3 +558,23 @@ AssertionError: The `request` argument must be an instance of `django.http.HttpR
 [INFO] 2025-11-25 10:49:39 basehttp 8724 140418272458432 - "GET / HTTP/1.1" 200 405
 [INFO] 2025-11-25 10:50:06 basehttp 8724 140418272458432 - "GET /api/docs/ HTTP/1.1" 200 4659
 [INFO] 2025-11-25 10:50:08 basehttp 8724 140418272458432 - "GET /api/schema/ HTTP/1.1" 200 178415
+[INFO] 2025-11-25 10:55:05 autoreload 8724 140418374811904 - /home/nethunter/Desktop/mahudgrp/config/core/views.py changed, reloading.
+[INFO] 2025-11-25 10:55:06 autoreload 9441 140644231917824 - Watching for file changes with StatReloader
+[INFO] 2025-11-25 10:55:15 autoreload 9441 140644231917824 - /home/nethunter/Desktop/mahudgrp/config/core/views.py changed, reloading.
+[INFO] 2025-11-25 10:55:16 autoreload 9504 140394114990336 - Watching for file changes with StatReloader
+[INFO] 2025-11-25 10:55:27 autoreload 9504 140394114990336 - /home/nethunter/Desktop/mahudgrp/config/core/views.py changed, reloading.
+[INFO] 2025-11-25 10:55:29 autoreload 9572 139621184962816 - Watching for file changes with StatReloader
+[INFO] 2025-11-25 10:55:42 autoreload 9572 139621184962816 - /home/nethunter/Desktop/mahudgrp/config/core/views.py changed, reloading.
+[INFO] 2025-11-25 10:55:43 autoreload 9654 140681937334528 - Watching for file changes with StatReloader
+[INFO] 2025-11-25 10:55:56 autoreload 9654 140681937334528 - /home/nethunter/Desktop/mahudgrp/config/core/views.py changed, reloading.
+[INFO] 2025-11-25 10:55:58 autoreload 9748 139902587355392 - Watching for file changes with StatReloader
+[INFO] 2025-11-25 10:56:39 autoreload 9748 139902587355392 - /home/nethunter/Desktop/mahudgrp/config/core/views.py changed, reloading.
+[INFO] 2025-11-25 10:56:40 autoreload 9888 140577569763584 - Watching for file changes with StatReloader
+[INFO] 2025-11-25 10:59:44 autoreload 9888 140577569763584 - /home/nethunter/Desktop/mahudgrp/config/core/views.py changed, reloading.
+[INFO] 2025-11-25 10:59:45 autoreload 10084 140165446148352 - Watching for file changes with StatReloader
+[INFO] 2025-11-25 11:00:41 autoreload 10084 140165446148352 - /home/nethunter/Desktop/mahudgrp/config/core/urls.py changed, reloading.
+[INFO] 2025-11-25 11:00:41 autoreload 10273 139790119760128 - Watching for file changes with StatReloader
+[INFO] 2025-11-25 11:01:59 autoreload 10273 139790119760128 - /home/nethunter/Desktop/mahudgrp/config/core/views.py changed, reloading.
+[INFO] 2025-11-25 11:02:00 autoreload 10423 140551547150592 - Watching for file changes with StatReloader
+[INFO] 2025-11-25 11:02:23 basehttp 10423 140551444756160 - "GET /api/docs/ HTTP/1.1" 200 4659
+[INFO] 2025-11-25 11:02:23 basehttp 10423 140551444756160 - "GET /api/schema/ HTTP/1.1" 200 176964

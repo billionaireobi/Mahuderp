@@ -16,7 +16,7 @@ from datetime import timedelta
 from decimal import Decimal
 from .models import *
 from .serializers import *
-from drf_spectacular.utils import extend_schema
+from drf_spectacular.utils import extend_schema, OpenApiTypes
 from .utils import *
 # def handler404(request, exception):
 #     return render(request, '404.html', status=404)
@@ -382,7 +382,7 @@ def job_order_detail(request, job_order_id):
     }, status=status.HTTP_200_OK)
 
 
-@extend_schema(responses={"200": {"type": "object"}})
+@extend_schema(responses=OpenApiTypes.OBJECT)
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def job_order_summary(request, job_order_id):
@@ -497,7 +497,7 @@ def candidate_detail(request, candidate_id):
         }, status=status.HTTP_400_BAD_REQUEST)
 
 
-@extend_schema(request=CandidateCostSerializer, responses=CandidateCostSerializer)
+@extend_schema(request=CandidateCostSerializer, responses=CandidateCostSerializer, operation_id='core_candidate_add_cost_create')
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def candidate_add_cost(request, candidate_id):
@@ -561,7 +561,7 @@ def candidate_move_stage(request, candidate_id):
     }, status=200)
 
 
-@extend_schema(responses={"200": {"type": "object"}})
+@extend_schema(responses=OpenApiTypes.OBJECT)
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def candidate_profitability(request, candidate_id):
@@ -725,7 +725,7 @@ def invoice_generate(request):
     }, status=201)
 
 
-@extend_schema(responses={"200": {"type": "object"}})
+@extend_schema(request=None, responses=OpenApiTypes.OBJECT)
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def invoice_post(request, invoice_id):
@@ -748,7 +748,7 @@ def invoice_post(request, invoice_id):
     return Response({"message": "Invoice posted to GL", "invoice": InvoiceSerializer(invoice).data})
 
 
-@extend_schema(responses={"200": {"type": "object"}})
+@extend_schema(request=None, responses=OpenApiTypes.OBJECT)
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def invoice_send(request, invoice_id):
@@ -776,7 +776,7 @@ def invoice_send(request, invoice_id):
 # DASHBOARD STATS
 # ============================================================
 
-@extend_schema(responses=None)
+@extend_schema(responses=OpenApiTypes.OBJECT)
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def dashboard_stats(request):
@@ -859,7 +859,7 @@ def payment_create(request):
 
 # BULK CANDIDATE OPERATIONS
 
-@extend_schema(request=None, responses={"200": {"type": "object"}})
+@extend_schema(request=None, responses=OpenApiTypes.OBJECT)
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def candidate_bulk_move_stage(request):
@@ -874,7 +874,7 @@ def candidate_bulk_move_stage(request):
     })
 
 
-@extend_schema(request=CandidateCostSerializer, responses={"200": {"type": "object"}})
+@extend_schema(request=CandidateCostSerializer, responses=OpenApiTypes.OBJECT, operation_id='core_candidate_bulk_add_cost_create')
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def candidate_bulk_add_cost(request):

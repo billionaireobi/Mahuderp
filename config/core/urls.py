@@ -49,7 +49,8 @@ urlpatterns = [
     path('candidates/<uuid:candidate_id>/add-cost/', views.candidate_add_cost, name='candidate-add-cost'),
     path('candidates/<int:candidate_id>/move_stage/', views.candidate_move_stage, name='candidate-move-stage'),
     path('candidates/<int:candidate_id>/profitability/', views.candidate_profitability, name='candidate-profitability'),
-    path('candidates/<int:candidate_id>/add_cost/', views.candidate_add_cost, name='candidate-add-cost'),
+    # NOTE: removed duplicate route with underscore variant to avoid duplicate
+    # operationId generation in OpenAPI. Keep the hyphenated UUID route.
     path('candidates/bulk/move-stage/', views.candidate_bulk_move_stage),
 path('candidates/bulk/add-cost/', views.candidate_bulk_add_cost),
     

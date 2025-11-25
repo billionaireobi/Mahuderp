@@ -485,6 +485,40 @@ paths:
       responses:
         '200':
           description: No response body
+  /api/core/bills/{bill_id}/post/:
+    post:
+      operationId: core_bills_post_create
+      description: Post vendor bill to GL
+      parameters:
+      - in: path
+        name: bill_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - core
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Bill'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Bill'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Bill'
+        required: true
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Bill'
+          description: ''
   /api/core/branches/:
     get:
       operationId: core_branches_list
@@ -766,7 +800,7 @@ paths:
           description: ''
   /api/core/candidates/{candidate_id}/add-cost/:
     post:
-      operationId: core_candidates_add_cost_create
+      operationId: core_candidate_add_cost_create
       description: |-
         Add cost to candidate
         POST /api/candidates/{id}/add-cost/
@@ -800,6 +834,103 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CandidateCost'
+          description: ''
+  /api/core/candidates/{candidate_id}/move_stage/:
+    post:
+      operationId: core_candidates_move_stage_create
+      description: |-
+        Move candidate to next stage (especially DEPLOYED → triggers revenue)
+        POST /api/candidates/{id}/move_stage/
+        Body: { "stage": "DEPLOYED" }
+        → Auto-posts journal: DR COGS / CR WIP
+      parameters:
+      - in: path
+        name: candidate_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - core
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Candidate'
+          description: ''
+  /api/core/candidates/{candidate_id}/profitability/:
+    get:
+      operationId: core_candidates_profitability_retrieve
+      description: |-
+        Get per-candidate profitability
+        GET /api/candidates/{id}/profitability/
+      parameters:
+      - in: path
+        name: candidate_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - core
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /api/core/candidates/bulk/add-cost/:
+    post:
+      operationId: core_candidate_bulk_add_cost_create
+      description: Add same cost (e.g., visa fee) to multiple candidates
+      tags:
+      - core
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CandidateCost'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CandidateCost'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CandidateCost'
+        required: true
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /api/core/candidates/bulk/move-stage/:
+    post:
+      operationId: core_candidates_bulk_move_stage_create
+      description: Move multiple candidates to DEPLOYED (triggers revenue)
+      tags:
+      - core
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
           description: ''
   /api/core/companies/:
     get:
@@ -884,7 +1015,12 @@ paths:
       - BearerAuth: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
   /api/core/employers/:
     get:
       operationId: core_employers_list
@@ -1097,6 +1233,79 @@ paths:
               schema:
                 $ref: '#/components/schemas/Invoice'
           description: ''
+  /api/core/invoices/{invoice_id}/post/:
+    post:
+      operationId: core_invoices_post_create
+      description: |-
+        Post invoice to General Ledger
+        POST /api/invoices/{id}/post/
+      parameters:
+      - in: path
+        name: invoice_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - core
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /api/core/invoices/{invoice_id}/send/:
+    post:
+      operationId: core_invoices_send_create
+      description: |-
+        Send invoice via email (PDF + Stripe/PayPal links)
+        POST /api/invoices/{id}/send/
+      parameters:
+      - in: path
+        name: invoice_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - core
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /api/core/invoices/generate/:
+    post:
+      operationId: core_invoices_generate_create
+      description: |-
+        Generate invoice from deployed candidates
+        POST /api/invoices/generate/
+        Body: {
+            "job_order_id": 1,
+            "candidate_ids": [1, 2, 3],
+            "invoice_date": "2025-01-18"
+        }
+      tags:
+      - core
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Invoice'
+          description: ''
   /api/core/job-orders/:
     get:
       operationId: core_job_orders_list
@@ -1172,6 +1381,87 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/JobOrder'
+          description: ''
+  /api/core/job-orders/{job_order_id}/summary/:
+    get:
+      operationId: core_job_orders_summary_retrieve
+      description: |-
+        Financial summary for a job order
+        GET /api/job-orders/{id}/summary/
+      parameters:
+      - in: path
+        name: job_order_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - core
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /api/core/payments/:
+    post:
+      operationId: core_payments_create
+      description: Record vendor payment
+      tags:
+      - core
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Payment'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Payment'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Payment'
+        required: true
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Payment'
+          description: ''
+  /api/core/receipts/:
+    post:
+      operationId: core_receipts_create
+      description: Record customer payment
+      tags:
+      - core
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Receipt'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Receipt'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Receipt'
+        required: true
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Receipt'
           description: ''
   /api/core/vendors/:
     get:
@@ -1681,9 +1971,9 @@ components:
         * `PHP` - Philippine Peso
         * `USD` - US Dollar
         * `EUR` - Euro
-    Branch:
+    Bill:
       type: object
-      description: Serializer for Branch
+      description: Serializer for Bill
       properties:
         id:
           type: string
@@ -1692,13 +1982,146 @@ components:
         company_name:
           type: string
           readOnly: true
+        vendor_name:
+          type: string
+          readOnly: true
+        status_display:
+          type: string
+          readOnly: true
+        lines:
+          type: array
+          items:
+            $ref: '#/components/schemas/BillLine'
+          readOnly: true
+        bill_number:
+          type: string
+          readOnly: true
+        bill_date:
+          type: string
+          format: date
+        due_date:
+          type: string
+          format: date
+        currency:
+          $ref: '#/components/schemas/BaseCurrencyEnum'
+        total_amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,12}(?:\.\d{0,2})?$
+        tax_amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,12}(?:\.\d{0,2})?$
+        amount_paid:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,12}(?:\.\d{0,2})?$
+        status:
+          $ref: '#/components/schemas/BillStatusEnum'
+        posted_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        paid_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        notes:
+          type: string
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        company:
+          type: string
+          format: uuid
+        vendor:
+          type: string
+          format: uuid
+      required:
+      - bill_date
+      - bill_number
+      - company
+      - company_name
+      - created_at
+      - currency
+      - due_date
+      - id
+      - lines
+      - paid_at
+      - posted_at
+      - status_display
+      - updated_at
+      - vendor
+      - vendor_name
+    BillLine:
+      type: object
+      description: Serializer for Bill Line
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        description:
+          type: string
+          maxLength: 500
+        quantity:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: -9223372036854775808
+          format: int64
+        unit_price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,12}(?:\.\d{0,2})?$
+          readOnly: true
+        bill:
+          type: string
+          format: uuid
+      required:
+      - amount
+      - bill
+      - description
+      - id
+      - unit_price
+    BillStatusEnum:
+      enum:
+      - DRAFT
+      - POSTED
+      - PAID
+      - CANCELLED
+      type: string
+      description: |-
+        * `DRAFT` - Draft
+        * `POSTED` - Posted
+        * `PAID` - Paid
+        * `CANCELLED` - Cancelled
+    Branch:
+      type: object
+      description: Serializer for Branch
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        company_name:
+          type: string
+          readOnly: true
         name:
           type: string
-          description: Branch name
           maxLength: 200
         code:
           type: string
-          description: Branch code
           maxLength: 20
         address:
           type: string
@@ -1851,7 +2274,6 @@ components:
           $ref: '#/components/schemas/BaseCurrencyEnum'
         reimbursable:
           type: boolean
-          description: Can be billed to employer
         description:
           type: string
           nullable: true
@@ -1923,15 +2345,12 @@ components:
           readOnly: true
         name:
           type: string
-          description: Company name
           maxLength: 200
         short_name:
           type: string
-          description: Short display name
           maxLength: 50
         code:
           type: string
-          description: Company code (e.g., IN, KE)
           maxLength: 10
         country:
           $ref: '#/components/schemas/CountryEnum'
@@ -1939,13 +2358,11 @@ components:
           $ref: '#/components/schemas/BaseCurrencyEnum'
         tax_name:
           type: string
-          description: Tax name (VAT, GST, etc.)
           maxLength: 50
         tax_rate:
           type: string
           format: decimal
           pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
-          description: Tax rate (%)
         invoice_prefix:
           type: string
           maxLength: 10
@@ -1977,8 +2394,7 @@ components:
       description: Serializer for Company Profile
       properties:
         id:
-          type: string
-          format: uuid
+          type: integer
           readOnly: true
         legal_name:
           type: string
@@ -2349,12 +2765,10 @@ components:
           maximum: 9223372036854775807
           minimum: -9223372036854775808
           format: int64
-          description: Number of positions to fill
         agreed_fee:
           type: string
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-          description: Fee per candidate
         currency:
           $ref: '#/components/schemas/BaseCurrencyEnum'
         notes:
@@ -2521,19 +2935,16 @@ components:
       description: Serializer for Branch
       properties:
         id:
-          type: string
-          format: uuid
+          type: integer
           readOnly: true
         company_name:
           type: string
           readOnly: true
         name:
           type: string
-          description: Branch name
           maxLength: 200
         code:
           type: string
-          description: Branch code
           maxLength: 20
         address:
           type: string
@@ -2667,8 +3078,7 @@ components:
           description: Get company details if assigned
           readOnly: true
         branch:
-          type: string
-          format: uuid
+          type: integer
           readOnly: true
           nullable: true
           description: Assigned branch
@@ -2739,6 +3149,132 @@ components:
           type: string
           format: date-time
           readOnly: true
+    Payment:
+      type: object
+      description: Serializer for Payment
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        vendor_name:
+          type: string
+          readOnly: true
+        payment_number:
+          type: string
+          maxLength: 50
+        payment_date:
+          type: string
+          format: date
+        amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,12}(?:\.\d{0,2})?$
+        currency:
+          $ref: '#/components/schemas/BaseCurrencyEnum'
+        payment_method:
+          type: string
+          nullable: true
+          maxLength: 50
+        reference_number:
+          type: string
+          nullable: true
+          maxLength: 100
+        notes:
+          type: string
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        company:
+          type: string
+          format: uuid
+        vendor:
+          type: string
+          format: uuid
+        bill:
+          type: string
+          format: uuid
+          nullable: true
+      required:
+      - amount
+      - company
+      - created_at
+      - currency
+      - id
+      - payment_date
+      - payment_number
+      - updated_at
+      - vendor
+      - vendor_name
+    Receipt:
+      type: object
+      description: Serializer for Receipt
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        employer_name:
+          type: string
+          readOnly: true
+        receipt_number:
+          type: string
+          maxLength: 50
+        receipt_date:
+          type: string
+          format: date
+        amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,12}(?:\.\d{0,2})?$
+        currency:
+          $ref: '#/components/schemas/BaseCurrencyEnum'
+        payment_method:
+          type: string
+          nullable: true
+          maxLength: 50
+        reference_number:
+          type: string
+          nullable: true
+          maxLength: 100
+        notes:
+          type: string
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        company:
+          type: string
+          format: uuid
+        employer:
+          type: string
+          format: uuid
+        invoice:
+          type: string
+          format: uuid
+          nullable: true
+      required:
+      - amount
+      - company
+      - created_at
+      - currency
+      - employer
+      - employer_name
+      - id
+      - receipt_date
+      - receipt_number
+      - updated_at
     RefreshToken:
       type: object
       description: |-
@@ -2787,8 +3323,7 @@ components:
           nullable: true
           description: Assigned company (null for HQ_ADMIN)
         branch:
-          type: string
-          format: uuid
+          type: integer
           nullable: true
           description: Assigned branch
       required:
@@ -2866,8 +3401,7 @@ components:
           type: string
           readOnly: true
         branch:
-          type: string
-          format: uuid
+          type: integer
           nullable: true
           description: Assigned branch
         branch_name:
@@ -2941,8 +3475,7 @@ components:
           description: Get company details if assigned
           readOnly: true
         branch:
-          type: string
-          format: uuid
+          type: integer
           readOnly: true
           nullable: true
           description: Assigned branch
