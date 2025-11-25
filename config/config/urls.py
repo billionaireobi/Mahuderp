@@ -50,6 +50,8 @@ urlpatterns = [
     path('api/core/', include('core.urls')),
     # Dashboard endpoints
     path('api/dashboard/', include('dashboards.urls')),
+    # Reports endpoints
+    path('api/reports/', include('reports.urls')),
     # OpenAPI Schema and documentation
     # OpenAPI Schema and documentation
     # - /api/schema/  -> raw OpenAPI JSON/YAML

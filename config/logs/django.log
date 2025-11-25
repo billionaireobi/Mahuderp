@@ -578,3 +578,51 @@ AssertionError: The `request` argument must be an instance of `django.http.HttpR
 [INFO] 2025-11-25 11:02:00 autoreload 10423 140551547150592 - Watching for file changes with StatReloader
 [INFO] 2025-11-25 11:02:23 basehttp 10423 140551444756160 - "GET /api/docs/ HTTP/1.1" 200 4659
 [INFO] 2025-11-25 11:02:23 basehttp 10423 140551444756160 - "GET /api/schema/ HTTP/1.1" 200 176964
+[INFO] 2025-11-25 11:20:00 basehttp 10423 140551444756160 - "OPTIONS /api/auth/login/ HTTP/1.1" 200 0
+[INFO] 2025-11-25 11:31:21 basehttp 10423 140551444756160 - "POST /api/auth/login/ HTTP/1.1" 200 1009
+[INFO] 2025-11-25 11:33:37 basehttp 10423 140551444756160 - "OPTIONS /api/auth/login/ HTTP/1.1" 200 0
+[INFO] 2025-11-25 11:40:46 basehttp 10423 140551444756160 - "OPTIONS /api/auth/login/ HTTP/1.1" 200 0
+[INFO] 2025-11-25 11:42:27 basehttp 10423 140551436363456 - "GET /api/docs/ HTTP/1.1" 200 4659
+[INFO] 2025-11-25 11:42:28 basehttp 10423 140551436363456 - "GET /api/schema/ HTTP/1.1" 200 176964
+[INFO] 2025-11-25 11:43:06 basehttp 10423 140551444756160 - "OPTIONS /api/auth/login/ HTTP/1.1" 200 0
+[INFO] 2025-11-25 11:44:50 basehttp 10423 140551444756160 - "OPTIONS /api/auth/login/ HTTP/1.1" 200 0
+[INFO] 2025-11-25 11:44:54 basehttp 10423 140551444756160 - "OPTIONS /api/auth/login/ HTTP/1.1" 200 0
+[INFO] 2025-11-25 11:50:50 autoreload 10423 140551547150592 - /home/nethunter/Desktop/mahudgrp/config/config/settings.py changed, reloading.
+[INFO] 2025-11-25 11:50:51 autoreload 12362 140083769098496 - Watching for file changes with StatReloader
+[INFO] 2025-11-25 11:51:13 basehttp 12362 140083667662528 - "GET /api/docs/ HTTP/1.1" 200 4659
+[INFO] 2025-11-25 11:51:14 basehttp 12362 140083667662528 - "GET /api/schema/ HTTP/1.1" 200 176964
+[INFO] 2025-11-25 11:51:48 basehttp 12362 140083445364416 - "OPTIONS /api/auth/login/ HTTP/1.1" 200 0
+[INFO] 2025-11-25 11:51:49 basehttp 12362 140083445364416 - "POST /api/auth/login/ HTTP/1.1" 200 1009
+[INFO] 2025-11-25 11:53:32 basehttp 12362 140083445364416 - "OPTIONS /api/auth/check/ HTTP/1.1" 200 0
+[INFO] 2025-11-25 11:53:32 basehttp 12362 140083445364416 - "GET /api/auth/check/ HTTP/1.1" 200 335
+[INFO] 2025-11-25 11:56:25 basehttp 12362 140083445364416 - "OPTIONS /api/auth/change-password/ HTTP/1.1" 200 0
+[INFO] 2025-11-25 11:56:27 basehttp 12362 140083445364416 - "POST /api/auth/change-password/ HTTP/1.1" 200 87
+[INFO] 2025-11-25 12:00:10 basehttp 12362 140083445364416 - "POST /api/auth/change-password/ HTTP/1.1" 200 87
+[INFO] 2025-11-25 12:00:47 basehttp 12362 140083445364416 - "POST /api/auth/login/ HTTP/1.1" 200 1009
+[INFO] 2025-11-25 12:02:17 basehttp 12362 140083445364416 - "OPTIONS /api/auth/password-reset/ HTTP/1.1" 200 0
+[INFO] 2025-11-25 12:02:17 basehttp 12362 140083445364416 - "POST /api/auth/password-reset/ HTTP/1.1" 200 88
+[INFO] 2025-11-25 12:06:00 basehttp 12362 140083445364416 - "OPTIONS /api/auth/password-reset/confirm/ HTTP/1.1" 200 0
+[INFO] 2025-11-25 12:06:01 basehttp 12362 140083445364416 - "POST /api/auth/password-reset/confirm/ HTTP/1.1" 200 77
+[INFO] 2025-11-25 12:06:32 basehttp 12362 140083445364416 - "OPTIONS /api/auth/profile/ HTTP/1.1" 200 0
+[INFO] 2025-11-25 12:06:32 basehttp 12362 140083445364416 - "GET /api/auth/profile/ HTTP/1.1" 200 547
+[INFO] 2025-11-25 12:16:46 basehttp 12362 140083667662528 - "OPTIONS /api/core/companies/ HTTP/1.1" 200 0
+[INFO] 2025-11-25 12:16:46 basehttp 12362 140083667662528 - "POST /api/core/companies/ HTTP/1.1" 201 386
+[INFO] 2025-11-25 12:18:35 basehttp 12362 140083667662528 - "GET /api/core/companies/ HTTP/1.1" 200 359
+[INFO] 2025-11-25 12:19:45 basehttp 12362 140083667662528 - "OPTIONS /api/auth/register/ HTTP/1.1" 200 0
+[WARNING] 2025-11-25 12:19:45 basehttp 12362 140083667662528 - "POST /api/auth/register/ HTTP/1.1" 400 96
+[INFO] 2025-11-25 12:28:00 basehttp 12362 140083667662528 - "GET /api/core/companies/ HTTP/1.1" 200 359
+[INFO] 2025-11-25 12:33:40 basehttp 12362 140083445364416 - "OPTIONS /api/core/branches/ HTTP/1.1" 200 0
+[INFO] 2025-11-25 12:33:40 basehttp 12362 140083445364416 - "POST /api/core/branches/ HTTP/1.1" 201 513
+[WARNING] 2025-11-25 12:59:03 basehttp 12362 140083445364416 - "POST /api/core/companies/ HTTP/1.1" 400 51
+[WARNING] 2025-11-25 13:02:19 basehttp 12362 140083445364416 - "GET /api/core/companies/ HTTP/1.1" 401 183
+[INFO] 2025-11-25 13:08:36 basehttp 12362 140083445364416 - "GET /api/docs/ HTTP/1.1" 200 4659
+[INFO] 2025-11-25 13:08:37 basehttp 12362 140083445364416 - "GET /api/schema/ HTTP/1.1" 200 176964
+[INFO] 2025-11-25 13:21:20 basehttp 12362 140083445364416 - "GET /api/docs/ HTTP/1.1" 200 4659
+[INFO] 2025-11-25 13:21:21 basehttp 12362 140083445364416 - "GET /api/schema/ HTTP/1.1" 200 176964
+[WARNING] 2025-11-25 13:21:38 basehttp 12362 140083659269824 - "GET /api/auth/check/ HTTP/1.1" 401 58
+[INFO] 2025-11-25 13:53:20 basehttp 12362 140083445364416 - "GET /api/docs/ HTTP/1.1" 200 4659
+[INFO] 2025-11-25 13:53:21 basehttp 12362 140083445364416 - "GET /api/schema/ HTTP/1.1" 200 176964
+[INFO] 2025-11-25 15:20:02 autoreload 12362 140083769098496 - /home/nethunter/Desktop/mahudgrp/config/config/settings.py changed, reloading.
+[INFO] 2025-11-25 15:20:02 autoreload 21495 139779145912576 - Watching for file changes with StatReloader
+[INFO] 2025-11-25 15:20:19 autoreload 21495 139779145912576 - /home/nethunter/Desktop/mahudgrp/config/config/urls.py changed, reloading.
+[INFO] 2025-11-25 15:20:20 autoreload 21570 140294212567296 - Watching for file changes with StatReloader
