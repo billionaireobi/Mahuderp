@@ -9,20 +9,15 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from django.shortcuts import get_object_or_404
-
-from .models import (
-    Company, Branch, Employer, Vendor,
-    JobOrder, Candidate, CandidateCost,
-    Invoice, Bill
-)
-from .serializers import (
-    CompanySerializer, BranchSerializer,
-    EmployerSerializer, VendorSerializer,
-    JobOrderSerializer, CandidateSerializer, CandidateCostSerializer,
-    InvoiceSerializer, BillSerializer
-)
+from django.db import transaction
+from django.utils import timezone
+from django.db.models import Sum, Count
+from datetime import timedelta
+from decimal import Decimal
+from .models import *
+from .serializers import *
 from drf_spectacular.utils import extend_schema
-
+from .utils import *
 # def handler404(request, exception):
 #     return render(request, '404.html', status=404)
 
@@ -387,6 +382,38 @@ def job_order_detail(request, job_order_id):
     }, status=status.HTTP_200_OK)
 
 
+@extend_schema(responses={"200": {"type": "object"}})
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def job_order_summary(request, job_order_id):
+    """
+    Financial summary for a job order
+    GET /api/job-orders/{id}/summary/
+    """
+    job_order = get_object_or_404(JobOrder, id=job_order_id)
+    
+    if not request.user.has_company_access(job_order.company):
+        return Response({"error": "Access denied"}, status=403)
+
+    candidates = job_order.candidates.all()
+    deployed = candidates.filter(current_stage='DEPLOYED').count()
+    total_costs = CandidateCost.objects.filter(candidate__job_order=job_order).aggregate(t=Sum('amount'))['t'] or 0
+    revenue = deployed * job_order.agreed_fee
+    profit = revenue - total_costs
+
+    return Response({
+        "job_order": job_order.position_title,
+        "employer": job_order.employer.name,
+        "total_candidates": candidates.count(),
+        "deployed": deployed,
+        "in_progress": candidates.count() - deployed,
+        "agreed_fee_per_candidate": float(job_order.agreed_fee),
+        "potential_revenue": float(revenue),
+        "total_costs": float(total_costs),
+        "estimated_profit": float(profit),
+        "profit_margin_%": round((profit / revenue * 100), 2) if revenue > 0 else 0
+    })
+
 # ============================================================
 # CANDIDATES
 # ============================================================
@@ -497,6 +524,72 @@ def candidate_add_cost(request, candidate_id):
     }, status=status.HTTP_400_BAD_REQUEST)
 
 
+@extend_schema(request=None, responses=CandidateSerializer)
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def candidate_move_stage(request, candidate_id):
+    """
+    Move candidate to next stage (especially DEPLOYED → triggers revenue)
+    POST /api/candidates/{id}/move_stage/
+    Body: { "stage": "DEPLOYED" }
+    → Auto-posts journal: DR COGS / CR WIP
+    """
+    candidate = get_object_or_404(Candidate, id=candidate_id)
+    
+    if not request.user.has_company_access(candidate.job_order.company):
+        return Response({"error": "Access denied"}, status=403)
+
+    new_stage = request.data.get('stage')
+    if new_stage not in dict(Candidate.STAGE_CHOICES):
+        return Response({"error": "Invalid stage"}, status=400)
+
+    old_stage = candidate.current_stage
+    candidate.current_stage = new_stage
+    if new_stage == 'DEPLOYED' and not candidate.deployed_date:
+        candidate.deployed_date = timezone.now().date()
+    candidate.save()
+
+    # AUTO JOURNAL ON DEPLOYMENT
+    if new_stage == 'DEPLOYED' and old_stage != 'DEPLOYED':
+        from .utils import post_deployment_journal
+        post_deployment_journal(candidate)
+
+    return Response({
+        "message": "Stage updated successfully",
+        "candidate": CandidateSerializer(candidate).data,
+        "auto_journal_posted": new_stage == 'DEPLOYED'
+    }, status=200)
+
+
+@extend_schema(responses={"200": {"type": "object"}})
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def candidate_profitability(request, candidate_id):
+    """
+    Get per-candidate profitability
+    GET /api/candidates/{id}/profitability/
+    """
+    candidate = get_object_or_404(Candidate, id=candidate_id)
+    
+    if not request.user.has_company_access(candidate.job_order.company):
+        return Response({"error": "Access denied"}, status=403)
+
+    total_costs = candidate.costs.aggregate(total=Sum('amount'))['total'] or Decimal('0.00')
+    revenue = candidate.job_order.agreed_fee if candidate.current_stage == 'DEPLOYED' else Decimal('0.00')
+    profit = revenue - total_costs
+    margin = (profit / revenue * 100) if revenue > 0 else 0
+
+    return Response({
+        "candidate": candidate.full_name,
+        "passport": candidate.passport_number,
+        "job_order": candidate.job_order.position_title,
+        "revenue": float(revenue),
+        "total_costs": float(total_costs),
+        "gross_profit": float(profit),
+        "margin_percent": round(float(margin), 2),
+        "status": candidate.get_current_stage_display()
+    })
+
 # ============================================================
 # INVOICES
 # ============================================================
@@ -552,6 +645,133 @@ def invoice_detail(request, invoice_id):
     return Response(serializer.data, status=status.HTTP_200_OK)
 
 
+@extend_schema(request=None, responses=InvoiceSerializer)
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+@transaction.atomic
+def invoice_generate(request):
+    """
+    Generate invoice from deployed candidates
+    POST /api/invoices/generate/
+    Body: {
+        "job_order_id": 1,
+        "candidate_ids": [1, 2, 3],
+        "invoice_date": "2025-01-18"
+    }
+    """
+    job_order_id = request.data.get('job_order_id')
+    candidate_ids = request.data.get('candidate_ids', [])
+    invoice_date = request.data.get('invoice_date')
+
+    if not all([job_order_id, candidate_ids, invoice_date]):
+        return Response({"error": "job_order_id, candidate_ids, invoice_date required"}, status=400)
+
+    job_order = get_object_or_404(JobOrder, id=job_order_id)
+    candidates = Candidate.objects.filter(id__in=candidate_ids, job_order=job_order, current_stage='DEPLOYED')
+
+    if not candidates.exists():
+        return Response({"error": "No deployed candidates found"}, status=400)
+
+    if not request.user.has_company_access(job_order.company):
+        return Response({"error": "Access denied"}, status=403)
+
+    invoice = Invoice.objects.create(
+        company=job_order.company,
+        employer=job_order.employer,
+        job_order=job_order,
+        invoice_date=invoice_date,
+        due_date=invoice_date + timedelta(days=30),
+        currency=job_order.currency,
+        status='DRAFT'
+    )
+
+    # Service Fee
+    InvoiceLine.objects.create(
+        invoice=invoice,
+        description=f"Placement Fee - {candidates.count()} candidate(s)",
+        quantity=candidates.count(),
+        unit_price=job_order.agreed_fee,
+        amount=candidates.count() * job_order.agreed_fee
+    )
+
+    # Reimbursable Costs
+    total_reimb = 0
+    for candidate in candidates:
+        for cost in candidate.costs.filter(reimbursable=True):
+            InvoiceLine.objects.create(
+                invoice=invoice,
+                description=f"{cost.get_cost_type_display()} - {candidate.full_name}",
+                quantity=1,
+                unit_price=cost.amount,
+                amount=cost.amount,
+                candidate=candidate
+            )
+            total_reimb += cost.amount
+
+    invoice.total_amount = invoice.lines.aggregate(t=Sum('amount'))['t'] or 0
+    invoice.net_amount = invoice.total_amount
+    invoice.save()
+
+    # AUTO JOURNAL
+    from .utils import post_invoice_journal
+    post_invoice_journal(invoice)
+
+    return Response({
+        "message": "Invoice generated successfully",
+        "invoice": InvoiceSerializer(invoice).data,
+        "service_fee": float(candidates.count() * job_order.agreed_fee),
+        "reimbursable_costs": float(total_reimb),
+        "total": float(invoice.total_amount)
+    }, status=201)
+
+
+@extend_schema(responses={"200": {"type": "object"}})
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def invoice_post(request, invoice_id):
+    """
+    Post invoice to General Ledger
+    POST /api/invoices/{id}/post/
+    """
+    invoice = get_object_or_404(Invoice, id=invoice_id)
+    
+    if not request.user.has_company_access(invoice.company):
+        return Response({"error": "Access denied"}, status=403)
+
+    if invoice.status != 'DRAFT':
+        return Response({"error": "Only draft invoices can be posted"}, status=400)
+
+    invoice.status = 'POSTED'
+    invoice.posted_at = timezone.now()
+    invoice.save()
+
+    return Response({"message": "Invoice posted to GL", "invoice": InvoiceSerializer(invoice).data})
+
+
+@extend_schema(responses={"200": {"type": "object"}})
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def invoice_send(request, invoice_id):
+    """
+    Send invoice via email (PDF + Stripe/PayPal links)
+    POST /api/invoices/{id}/send/
+    """
+    invoice = get_object_or_404(Invoice, id=invoice_id)
+    
+    if not request.user.has_company_access(invoice.company):
+        return Response({"error": "Access denied"}, status=403)
+
+    invoice.status = 'SENT'
+    invoice.save()
+
+    from .tasks import generate_and_send_invoice_pdf
+    generate_and_send_invoice_pdf.delay(invoice.id)
+
+    return Response({
+        "message": "Invoice email queued",
+        "invoice_number": invoice.invoice_number,
+        "sent_to": invoice.employer.email
+    })
 # ============================================================
 # DASHBOARD STATS
 # ============================================================
@@ -585,3 +805,93 @@ def dashboard_stats(request):
         'candidates': candidates,
         'invoices': invoices
     }, status=status.HTTP_200_OK)
+
+
+# ============================================================
+# BILLS, RECEIPTS, PAYMENTS
+# ============================================================
+
+@extend_schema(request=BillSerializer, responses=BillSerializer)
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def bill_post(request, bill_id):
+    """Post vendor bill to GL"""
+    bill = get_object_or_404(Bill, id=bill_id)
+    if bill.status != 'DRAFT':
+        return Response({"error": "Only draft bills can be posted"}, status=400)
+
+    bill.status = 'POSTED'
+    bill.posted_at = timezone.now()
+    bill.save()
+
+    return Response({"message": "Bill posted to GL"})
+
+
+@extend_schema(request=ReceiptSerializer, responses=ReceiptSerializer)
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def receipt_create(request):
+    """Record customer payment"""
+    serializer = ReceiptSerializer(data=request.data)
+    if serializer.is_valid():
+        receipt = serializer.save()
+        # Auto-post journal
+        from .utils import post_receipt_journal
+        post_receipt_journal(receipt)
+        return Response(serializer.data, status=201)
+    return Response(serializer.errors, status=400)
+
+
+@extend_schema(request=PaymentSerializer, responses=PaymentSerializer)
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def payment_create(request):
+    """Record vendor payment"""
+    serializer = PaymentSerializer(data=request.data)
+    if serializer.is_valid():
+        payment = serializer.save()
+        # Auto-post journal
+        from .utils import post_payment_journal
+        post_payment_journal(payment)
+        return Response(serializer.data, status=201)
+    return Response(serializer.errors, status=400)
+
+
+# BULK CANDIDATE OPERATIONS
+
+@extend_schema(request=None, responses={"200": {"type": "object"}})
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def candidate_bulk_move_stage(request):
+    """Move multiple candidates to DEPLOYED (triggers revenue)"""
+    candidate_ids = request.data.get('candidate_ids', [])
+    stage = request.data.get('stage', 'DEPLOYED')
+    
+    result = bulk_move_stage(candidate_ids, stage, request.user)
+    return Response({
+        "message": f"{result['updated']} candidates moved to {stage}",
+        "details": result
+    })
+
+
+@extend_schema(request=CandidateCostSerializer, responses={"200": {"type": "object"}})
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def candidate_bulk_add_cost(request):
+    """Add same cost (e.g., visa fee) to multiple candidates"""
+    candidate_ids = request.data.get('candidate_ids', [])
+    cost_data = {
+        "cost_type": request.data.get('cost_type'),
+        "amount": request.data.get('amount'),
+        "currency": request.data.get('currency'),
+        "vendor_id": request.data.get('vendor'),
+        "description": request.data.get('description'),
+        "date_incurred": request.data.get('date_incurred'),
+        "reimbursable": request.data.get('reimbursable', False)
+    }
+    
+    result = bulk_add_cost(candidate_ids, cost_data, request.user)
+    return Response({
+        "message": f"Cost added to {result['created']} candidates",
+        "details": result
+    })
