@@ -626,3 +626,195 @@ AssertionError: The `request` argument must be an instance of `django.http.HttpR
 [INFO] 2025-11-25 15:20:02 autoreload 21495 139779145912576 - Watching for file changes with StatReloader
 [INFO] 2025-11-25 15:20:19 autoreload 21495 139779145912576 - /home/nethunter/Desktop/mahudgrp/config/config/urls.py changed, reloading.
 [INFO] 2025-11-25 15:20:20 autoreload 21570 140294212567296 - Watching for file changes with StatReloader
+[INFO] 2025-11-25 16:59:28 autoreload 24637 140179455738112 - Watching for file changes with StatReloader
+[INFO] 2025-11-25 16:59:38 basehttp 24637 140179353368256 - "GET /api/docs/ HTTP/1.1" 200 4659
+[INFO] 2025-11-25 16:59:38 basehttp 24637 140179353368256 - "GET /api/schema/ HTTP/1.1" 200 182436
+[INFO] 2025-11-25 17:01:19 basehttp 24637 140179276822208 - "OPTIONS /api/auth/login/ HTTP/1.1" 200 0
+[INFO] 2025-11-25 17:01:20 basehttp 24637 140179276822208 - "POST /api/auth/login/ HTTP/1.1" 200 1009
+[INFO] 2025-11-25 17:06:36 basehttp 24637 140179276822208 - "GET /api/docs/ HTTP/1.1" 200 4659
+[INFO] 2025-11-25 17:06:37 basehttp 24637 140179276822208 - "GET /api/schema/ HTTP/1.1" 200 182436
+[INFO] 2025-11-26 08:46:05 autoreload 4481 140685072851200 - Watching for file changes with StatReloader
+[INFO] 2025-11-26 08:46:09 basehttp 4481 140684970424000 - "GET / HTTP/1.1" 200 405
+[WARNING] 2025-11-26 08:46:10 basehttp 4481 140684970424000 - "GET /favicon.ico HTTP/1.1" 404 3834
+[INFO] 2025-11-26 08:47:22 basehttp 4481 140684962031296 - "GET /api/redoc/ HTTP/1.1" 200 742
+[WARNING] 2025-11-26 08:47:27 basehttp 4481 140684952590016 - "GET /favicon.ico HTTP/1.1" 404 3834
+[INFO] 2025-11-26 08:47:27 basehttp 4481 140684962031296 - "GET /api/schema/ HTTP/1.1" 200 88976
+[INFO] 2025-11-26 08:49:19 basehttp 4481 140684962031296 - "GET /api/docs/ HTTP/1.1" 200 4659
+[INFO] 2025-11-26 08:49:22 basehttp 4481 140684962031296 - "GET /api/schema/ HTTP/1.1" 200 182436
+[INFO] 2025-11-26 08:55:00 basehttp 4481 140684962031296 - "GET /api/docs/ HTTP/1.1" 200 4659
+[INFO] 2025-11-26 08:55:00 basehttp 4481 140684962031296 - "GET /api/schema/ HTTP/1.1" 200 182436
+[WARNING] 2025-11-26 08:55:26 basehttp 4481 140684962031296 - "POST /api/auth/login/ HTTP/1.1" 400 82
+[WARNING] 2025-11-26 08:56:08 basehttp 4481 140684962031296 - "POST /api/auth/login/ HTTP/1.1" 400 82
+[INFO] 2025-11-26 08:56:27 basehttp 4481 140684962031296 - "GET /api/docs/ HTTP/1.1" 200 4659
+[INFO] 2025-11-26 08:56:28 basehttp 4481 140684962031296 - "GET /api/schema/ HTTP/1.1" 200 182436
+[INFO] 2025-11-26 08:57:07 basehttp 4481 140684962031296 - "POST /api/auth/login/ HTTP/1.1" 200 1009
+[INFO] 2025-11-26 08:58:27 basehttp 4481 140684962031296 - "GET /api/core/companies/ HTTP/1.1" 200 4264
+[INFO] 2025-11-26 09:09:59 basehttp 4481 140684962031296 - "GET /api/reports/profit_loss/?company_id=0b96ab04-77a2-423b-befc-533d42baef07&from_date=2025-01-01 HTTP/1.1" 200 253
+[INFO] 2025-11-26 09:49:29 autoreload 4481 140685072851200 - /home/nethunter/Desktop/mahudgrp/config/reports/views.py changed, reloading.
+[INFO] 2025-11-26 09:49:29 autoreload 5943 140165164204288 - Watching for file changes with StatReloader
+[INFO] 2025-11-26 09:55:21 autoreload 5943 140165164204288 - /home/nethunter/Desktop/mahudgrp/config/reports/views.py changed, reloading.
+[INFO] 2025-11-26 09:55:22 autoreload 6161 139745617109248 - Watching for file changes with StatReloader
+[INFO] 2025-11-26 09:55:51 autoreload 6161 139745617109248 - /home/nethunter/Desktop/mahudgrp/config/reports/urls.py changed, reloading.
+[INFO] 2025-11-26 09:55:52 autoreload 6213 140280853336320 - Watching for file changes with StatReloader
+[INFO] 2025-11-26 09:56:00 autoreload 6213 140280853336320 - /home/nethunter/Desktop/mahudgrp/config/reports/views.py changed, reloading.
+[INFO] 2025-11-26 09:56:01 autoreload 6271 139737077141760 - Watching for file changes with StatReloader
+[INFO] 2025-11-26 09:57:22 autoreload 6271 139737077141760 - /home/nethunter/Desktop/mahudgrp/config/reports/urls.py changed, reloading.
+[INFO] 2025-11-26 09:57:23 autoreload 6366 139676770287872 - Watching for file changes with StatReloader
+[INFO] 2025-11-26 09:57:29 autoreload 6419 140003760349440 - Watching for file changes with StatReloader
+[WARNING] 2025-11-26 09:57:40 basehttp 6419 140003585816256 - "GET /api/core/companies/ HTTP/1.1" 401 183
+[WARNING] 2025-11-26 09:57:57 basehttp 6419 140003585816256 - "POST /api/auth/login/ HTTP/1.1" 401 183
+[WARNING] 2025-11-26 09:58:00 basehttp 6419 140003585816256 - "POST /api/auth/login/ HTTP/1.1" 401 183
+[INFO] 2025-11-26 09:58:18 basehttp 6419 140003585816256 - "GET /api/docs/ HTTP/1.1" 200 4659
+[INFO] 2025-11-26 09:58:18 basehttp 6419 140003585816256 - "GET /api/schema/ HTTP/1.1" 200 183064
+[INFO] 2025-11-26 10:01:21 basehttp 6419 140003585816256 - "POST /api/auth/login/ HTTP/1.1" 200 1009
+[INFO] 2025-11-26 10:09:02 autoreload 6419 140003760349440 - /home/nethunter/Desktop/mahudgrp/config/config/settings.py changed, reloading.
+[INFO] 2025-11-26 10:09:03 autoreload 6921 140381608841472 - Watching for file changes with StatReloader
+[INFO] 2025-11-26 10:09:30 basehttp 6921 140381507286720 - "GET /api/auth/check/ HTTP/1.1" 200 335
+[INFO] 2025-11-26 10:15:25 basehttp 6921 140381507286720 - "GET /api/auth/sessions/ HTTP/1.1" 200 978
+[INFO] 2025-11-26 10:16:28 basehttp 6921 140381507286720 - "GET /api/core/dashboard/stats/ HTTP/1.1" 200 58
+[INFO] 2025-11-26 10:27:40 autoreload 6921 140381608841472 - /home/nethunter/Desktop/mahudgrp/config/core/views.py changed, reloading.
+[INFO] 2025-11-26 10:27:41 autoreload 7639 139690015678720 - Watching for file changes with StatReloader
+[INFO] 2025-11-26 10:29:46 autoreload 7639 139690015678720 - /home/nethunter/Desktop/mahudgrp/config/core/views.py changed, reloading.
+[INFO] 2025-11-26 10:29:47 autoreload 7822 139825970696448 - Watching for file changes with StatReloader
+[INFO] 2025-11-26 10:29:52 basehttp 7822 139825868961472 - "GET /api/docs/ HTTP/1.1" 200 4659
+[INFO] 2025-11-26 10:29:52 basehttp 7822 139825868961472 - "GET /api/schema/ HTTP/1.1" 200 183135
+[WARNING] 2025-11-26 10:30:01 basehttp 7822 139825868961472 - "GET /api/core/dashboard/stats/ HTTP/1.1" 401 58
+[INFO] 2025-11-26 10:30:39 basehttp 7822 139825868961472 - "POST /api/auth/login/ HTTP/1.1" 200 1009
+[INFO] 2025-11-26 10:31:26 basehttp 7822 139825868961472 - "GET /api/dashboard/ HTTP/1.1" 200 1673
+[WARNING] 2025-11-26 10:32:39 basehttp 7822 139825868961472 - "GET /api/reports/recruitment_kpi/ HTTP/1.1" 400 31
+[WARNING] 2025-11-26 10:33:02 basehttp 7822 139825868961472 - "GET /api/dashboard/accountant/ HTTP/1.1" 400 39
+[ERROR] 2025-11-26 10:33:22 log 7822 139825868961472 - Internal Server Error: /api/core/dashboard/stats/
+Traceback (most recent call last):
+  File "/home/nethunter/Desktop/mahudgrp/venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/nethunter/Desktop/mahudgrp/venv/lib/python3.13/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/nethunter/Desktop/mahudgrp/venv/lib/python3.13/site-packages/django/views/decorators/csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "/home/nethunter/Desktop/mahudgrp/venv/lib/python3.13/site-packages/django/views/generic/base.py", line 105, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/nethunter/Desktop/mahudgrp/venv/lib/python3.13/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/nethunter/Desktop/mahudgrp/venv/lib/python3.13/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "/home/nethunter/Desktop/mahudgrp/venv/lib/python3.13/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/nethunter/Desktop/mahudgrp/venv/lib/python3.13/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/nethunter/Desktop/mahudgrp/venv/lib/python3.13/site-packages/rest_framework/decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "/home/nethunter/Desktop/mahudgrp/config/core/views.py", line 873, in dashboard_stats
+    ).aggregate(total=Coalesce(Sum('amount'), 0))['total'] or Decimal('0')
+      ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/nethunter/Desktop/mahudgrp/venv/lib/python3.13/site-packages/django/db/models/query.py", line 590, in aggregate
+    return self.query.chain().get_aggregation(self.db, kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/nethunter/Desktop/mahudgrp/venv/lib/python3.13/site-packages/django/db/models/sql/query.py", line 626, in get_aggregation
+    result = compiler.execute_sql(SINGLE)
+  File "/home/nethunter/Desktop/mahudgrp/venv/lib/python3.13/site-packages/django/db/models/sql/compiler.py", line 1610, in execute_sql
+    sql, params = self.as_sql()
+                  ~~~~~~~~~~~^^
+  File "/home/nethunter/Desktop/mahudgrp/venv/lib/python3.13/site-packages/django/db/models/sql/compiler.py", line 766, in as_sql
+    extra_select, order_by, group_by = self.pre_sql_setup(
+                                       ~~~~~~~~~~~~~~~~~~^
+        with_col_aliases=with_col_aliases or bool(combinator),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/nethunter/Desktop/mahudgrp/venv/lib/python3.13/site-packages/django/db/models/sql/compiler.py", line 85, in pre_sql_setup
+    self.setup_query(with_col_aliases=with_col_aliases)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/nethunter/Desktop/mahudgrp/venv/lib/python3.13/site-packages/django/db/models/sql/compiler.py", line 74, in setup_query
+    self.select, self.klass_info, self.annotation_col_map = self.get_select(
+                                                            ~~~~~~~~~~~~~~~^
+        with_col_aliases=with_col_aliases,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/nethunter/Desktop/mahudgrp/venv/lib/python3.13/site-packages/django/db/models/sql/compiler.py", line 329, in get_select
+    sql, params = col.select_format(self, sql, params)
+                  ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/home/nethunter/Desktop/mahudgrp/venv/lib/python3.13/site-packages/django/db/models/expressions.py", line 498, in select_format
+    if hasattr(self.output_field, "select_format"):
+               ^^^^^^^^^^^^^^^^^
+  File "/home/nethunter/Desktop/mahudgrp/venv/lib/python3.13/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ~~~~~~~~~^^^^^^^^^^
+  File "/home/nethunter/Desktop/mahudgrp/venv/lib/python3.13/site-packages/django/db/models/expressions.py", line 327, in output_field
+    output_field = self._resolve_output_field()
+  File "/home/nethunter/Desktop/mahudgrp/venv/lib/python3.13/site-packages/django/db/models/expressions.py", line 365, in _resolve_output_field
+    raise FieldError(
+    ...<6 lines>...
+    )
+django.core.exceptions.FieldError: Expression contains mixed types: DecimalField, IntegerField. You must set output_field.
+[ERROR] 2025-11-26 10:33:22 basehttp 7822 139825868961472 - "GET /api/core/dashboard/stats/ HTTP/1.1" 500 27819
+[INFO] 2025-11-26 10:45:31 basehttp 7822 139825860568768 - "POST /api/auth/login/ HTTP/1.1" 200 1009
+[INFO] 2025-11-26 10:49:46 autoreload 7822 139825970696448 - /home/nethunter/Desktop/mahudgrp/config/core/views.py changed, reloading.
+[INFO] 2025-11-26 10:49:47 autoreload 8571 140391975141632 - Watching for file changes with StatReloader
+[INFO] 2025-11-26 10:50:18 basehttp 8571 140391805351616 - "GET /api/docs/ HTTP/1.1" 200 4659
+[INFO] 2025-11-26 10:50:19 basehttp 8571 140391805351616 - "GET /api/schema/ HTTP/1.1" 200 183135
+[INFO] 2025-11-26 10:51:00 basehttp 8571 140391805351616 - "POST /api/auth/login/ HTTP/1.1" 200 1009
+[ERROR] 2025-11-26 10:51:54 log 8571 140391805351616 - Internal Server Error: /api/core/dashboard/stats/
+Traceback (most recent call last):
+  File "/home/nethunter/Desktop/mahudgrp/config/core/utils.py", line 23, in get_fx_rate
+    return FxRate.objects.get(
+           ~~~~~~~~~~~~~~~~~~^
+        from_currency=from_currency,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        to_currency=to_currency,
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+        rate_date=date
+        ^^^^^^^^^^^^^^
+    ).rate
+    ^
+  File "/home/nethunter/Desktop/mahudgrp/venv/lib/python3.13/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/nethunter/Desktop/mahudgrp/venv/lib/python3.13/site-packages/django/db/models/query.py", line 635, in get
+    raise self.model.DoesNotExist(
+        "%s matching query does not exist." % self.model._meta.object_name
+    )
+core.models.FxRate.DoesNotExist: FxRate matching query does not exist.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/nethunter/Desktop/mahudgrp/venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/nethunter/Desktop/mahudgrp/venv/lib/python3.13/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/nethunter/Desktop/mahudgrp/venv/lib/python3.13/site-packages/django/views/decorators/csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "/home/nethunter/Desktop/mahudgrp/venv/lib/python3.13/site-packages/django/views/generic/base.py", line 105, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/nethunter/Desktop/mahudgrp/venv/lib/python3.13/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/nethunter/Desktop/mahudgrp/venv/lib/python3.13/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "/home/nethunter/Desktop/mahudgrp/venv/lib/python3.13/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/nethunter/Desktop/mahudgrp/venv/lib/python3.13/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/nethunter/Desktop/mahudgrp/venv/lib/python3.13/site-packages/rest_framework/decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "/home/nethunter/Desktop/mahudgrp/config/core/views.py", line 881, in dashboard_stats
+    revenue_this_month += convert_currency(rev, company.base_currency, 'USD', today) or rev
+                          ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/nethunter/Desktop/mahudgrp/config/core/utils.py", line 41, in convert_currency
+    rate = get_fx_rate(from_curr, to_curr, date)
+  File "/home/nethunter/Desktop/mahudgrp/config/core/utils.py", line 36, in get_fx_rate
+    raise ValidationError(f"No FX rate found: {from_currency} → {to_currency}")
+django.core.exceptions.ValidationError: ['No FX rate found: INR → USD']
+[ERROR] 2025-11-26 10:51:54 basehttp 8571 140391805351616 - "GET /api/core/dashboard/stats/ HTTP/1.1" 500 26340
+[INFO] 2025-11-26 11:19:06 autoreload 8571 140391975141632 - /home/nethunter/Desktop/mahudgrp/config/core/utils.py changed, reloading.
+[INFO] 2025-11-26 11:19:07 autoreload 9701 139954890424576 - Watching for file changes with StatReloader
+[INFO] 2025-11-26 11:19:21 basehttp 9701 139954788234944 - "GET /api/docs/ HTTP/1.1" 200 4659
+[INFO] 2025-11-26 11:19:22 basehttp 9701 139954788234944 - "GET /api/schema/ HTTP/1.1" 200 183135
+[INFO] 2025-11-26 11:19:55 basehttp 9701 139954788234944 - "POST /api/auth/login/ HTTP/1.1" 200 1009
+[INFO] 2025-11-26 11:23:53 basehttp 9701 139954779842240 - "GET /api/core/dashboard/stats/ HTTP/1.1" 200 907
+[INFO] 2025-11-26 11:24:09 basehttp 9701 139954779842240 - "GET /api/core/dashboard/stats/ HTTP/1.1" 200 907
+[INFO] 2025-11-26 11:26:22 basehttp 9701 139954788234944 - "GET /api/core/dashboard/stats/ HTTP/1.1" 200 907

@@ -187,3 +187,5 @@ class Command(BaseCommand):
                     self.stdout.write(f'  - Branch already exists: {branch.name}')
             except Company.DoesNotExist:
                 self.stdout.write(self.style.ERROR(f'  ✗ Company not found: {company_code}'))
+
+

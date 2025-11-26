@@ -1,16 +1,6 @@
 # reports/urls.py
 from django.urls import path
-from .views import (
-    profit_loss_report,
-    balance_sheet_report,
-    ar_aging_report,
-    job_order_profitability_view,
-    employer_profitability_view,
-    recruitment_kpi_dashboard,
-    cost_center_report_view,
-    cashflow_forecast_view,
-    candidate_profitability_view,
-)
+from .views import *
 
 app_name = "reports"
 
@@ -24,4 +14,6 @@ urlpatterns = [
     path('cost_centers/', cost_center_report_view, name='cost-centers'),
     path('cashflow_forecast/', cashflow_forecast_view, name='cashflow-forecast'),
     path('candidate_profitability/', candidate_profitability_view, name='candidate-profitability'),
+
+    path('reports/margin-leaderboard/', margin_leaderboard_view),
 ]

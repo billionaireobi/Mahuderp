@@ -776,36 +776,278 @@ def invoice_send(request, invoice_id):
 # DASHBOARD STATS
 # ============================================================
 
-@extend_schema(responses=OpenApiTypes.OBJECT)
+# @extend_schema(responses=OpenApiTypes.OBJECT)
+# @api_view(['GET'])
+# @permission_classes([IsAuthenticated])
+# def dashboard_stats(request):
+#     """
+#     Get dashboard statistics
+#     GET /api/dashboard/stats/
+#     """
+#     user = request.user
+    
+#     if user.role == 'HQ_ADMIN':
+#         companies = Company.objects.filter(is_active=True).count()
+#         job_orders = JobOrder.objects.filter(is_active=True).count()
+#         candidates = Candidate.objects.all().count()
+#         invoices = Invoice.objects.all().count()
+#     elif user.company:
+#         companies = 1
+#         job_orders = JobOrder.objects.filter(company=user.company, is_active=True).count()
+#         candidates = Candidate.objects.filter(job_order__company=user.company).count()
+#         invoices = Invoice.objects.filter(company=user.company).count()
+#     else:
+#         companies = job_orders = candidates = invoices = 0
+    
+#     return Response({
+#         'companies': companies,
+#         'job_orders': job_orders,
+#         'candidates': candidates,
+#         'invoices': invoices
+#     }, status=status.HTTP_200_OK)
+# reports/views.py → REPLACE your old dashboard_stats with THIS NUCLEAR VERSION
+from drf_spectacular.utils import extend_schema, OpenApiResponse
+from django.db.models import Sum, Count, Avg, Q, F, FloatField, ExpressionWrapper
+from django.utils import timezone
+from decimal import Decimal
+from datetime import timedelta
+from django.db.models.functions import Coalesce
+from django.db.models import DecimalField, Value
+
+@extend_schema(
+    description="MAHAD GROUP GLOBAL DASHBOARD — Real-time financial & operational intelligence across 5 countries",
+    responses=OpenApiResponse(response=dict, description="Complete empire overview")
+)
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def dashboard_stats(request):
-    """
-    Get dashboard statistics
-    GET /api/dashboard/stats/
-    """
     user = request.user
-    
-    if user.role == 'HQ_ADMIN':
-        companies = Company.objects.filter(is_active=True).count()
-        job_orders = JobOrder.objects.filter(is_active=True).count()
-        candidates = Candidate.objects.all().count()
-        invoices = Invoice.objects.all().count()
-    elif user.company:
-        companies = 1
-        job_orders = JobOrder.objects.filter(company=user.company, is_active=True).count()
-        candidates = Candidate.objects.filter(job_order__company=user.company).count()
-        invoices = Invoice.objects.filter(company=user.company).count()
-    else:
-        companies = job_orders = candidates = invoices = 0
-    
-    return Response({
-        'companies': companies,
-        'job_orders': job_orders,
-        'candidates': candidates,
-        'invoices': invoices
-    }, status=status.HTTP_200_OK)
+    today = timezone.now().date()
+    this_month = today.replace(day=1)
+    last_month = (this_month - timedelta(days=1)).replace(day=1)
 
+    # Base filters
+    if user.role == 'HQ_ADMIN':
+        company_filter = Q()
+        job_filter = Q(is_active=True)
+        candidate_filter = Q()
+    elif user.company:
+        company_filter = Q(company=user.company)
+        job_filter = Q(company=user.company, is_active=True)
+        candidate_filter = Q(job_order__company=user.company)
+    else:
+        return Response({"error": "No company access"}, status=403)
+
+    # =============================================================================
+    # 1. CORE BUSINESS METRICS
+    # =============================================================================
+    total_candidates = Candidate.objects.filter(candidate_filter).count()
+    deployed_this_month = Candidate.objects.filter(
+        candidate_filter,
+        current_stage='DEPLOYED',
+        deployed_date__gte=this_month
+    ).count()
+
+    active_job_orders = JobOrder.objects.filter(job_filter).count()
+    total_employers = Employer.objects.filter(company_filter).count()
+
+    # =============================================================================
+    # 2. FINANCIAL POWER METRICS
+    # =============================================================================
+    revenue_this_month = Decimal('0')
+    costs_this_month = Decimal('0')
+    profit_this_month = Decimal('0')
+    ar_outstanding = Decimal('0')
+    wip_total = Decimal('0')
+
+    companies = Company.objects.filter(is_active=True) if user.role == 'HQ_ADMIN' else [user.company]
+
+    for company in companies:
+        base = company.base_currency
+
+        # ---------- Revenue ----------
+        rev = InvoiceLine.objects.filter(
+            invoice__company=company,
+            invoice__status__in=['POSTED', 'PAID'],
+            invoice__invoice_date__gte=this_month
+        ).aggregate(
+            total=Coalesce(
+                Sum('amount'),
+                Value(0),
+                output_field=DecimalField()
+            )
+        )['total'] or Decimal('0')
+
+        revenue_this_month += convert_currency(rev, company.base_currency, 'USD', today) or rev
+
+        # ---------- Costs ----------
+        cost = CandidateCost.objects.filter(
+            candidate__job_order__company=company,
+            candidate__current_stage='DEPLOYED',
+            date__gte=this_month
+        ).aggregate(
+            total=Coalesce(
+                Sum('amount'),
+                Value(0),
+                output_field=DecimalField()
+            )
+        )['total'] or Decimal('0')
+
+        costs_this_month += convert_currency(cost, company.base_currency, 'USD', today) or cost
+
+        # ---------- Accounts Receivable ----------
+        for inv in Invoice.objects.filter(company=company, status__in=['POSTED', 'SENT']):
+            due = inv.total_amount - inv.amount_paid
+            if due > 0:
+                ar_outstanding += convert_currency(
+                    due, inv.currency, base, inv.due_date or today
+                )
+
+        # ---------- WIP ----------
+        wip = CandidateCost.objects.filter(
+            candidate__job_order__company=company,
+            candidate__current_stage__in=[
+                'SOURCING', 'SCREENING', 'DOCUMENTATION',
+                'VISA', 'MEDICAL', 'TICKET'
+            ]
+        ).aggregate(
+            total=Coalesce(
+                Sum('amount'),
+                Value(0),
+                output_field=DecimalField()
+            )
+        )['total'] or Decimal('0')
+
+        wip_total += convert_currency(wip, company.base_currency, base, today)
+
+    profit_this_month = revenue_this_month - costs_this_month
+    gross_margin = (
+        profit_this_month / revenue_this_month * 100
+        if revenue_this_month else Decimal('0')
+    )
+
+    # =============================================================================
+    # 3. MARGIN LEADERS
+    # =============================================================================
+    top_margin_candidates = list(
+        Candidate.objects.filter(candidate_filter, current_stage='DEPLOYED')
+        .annotate(
+            revenue=Coalesce(
+                Sum(
+                    'invoiceline__amount',
+                    filter=Q(invoiceline__invoice__status__in=['POSTED', 'PAID'])
+                ),
+                Value(0),
+                output_field=DecimalField()
+            ),
+            cost=Coalesce(
+                Sum('costs__amount'),
+                Value(0),
+                output_field=DecimalField()
+            ),
+            margin=ExpressionWrapper(
+                (F('revenue') - F('cost')) * 100.0 / F('revenue'),
+                output_field=FloatField()
+            )
+        )
+        .filter(revenue__gt=0)
+        .order_by('-margin')[:5]
+        .values('full_name', 'passport_number', 'margin', 'revenue', 'cost')
+    )
+
+    # Stage distribution
+    stage_breakdown = dict(
+        Candidate.objects.filter(candidate_filter)
+        .values('current_stage')
+        .annotate(count=Count('id'))
+        .values_list('current_stage', 'count')
+    )
+
+    # =============================================================================
+    # 4. CASHFLOW & RISK
+    # =============================================================================
+    overdue_invoices = Invoice.objects.filter(
+        company_filter,
+        status__in=['POSTED', 'SENT'],
+        due_date__lt=today,
+        total_amount__gt=F('amount_paid')
+    ).count()
+
+    expected_inflow_30days = Decimal('0')
+
+    for inv in Invoice.objects.filter(
+        company_filter,
+        status__in=['POSTED', 'SENT'],
+        due_date__lte=today + timedelta(days=30)
+    ):
+        due = inv.total_amount - inv.amount_paid
+        if due > 0:
+            expected_inflow_30days += convert_currency(
+                due, inv.currency, inv.company.base_currency, inv.due_date
+            )
+
+    # =============================================================================
+    # FINAL RESPONSE
+    # =============================================================================
+    return Response({
+        "generated_at": timezone.now().isoformat(),
+        "user_role": user.role,
+        "dashboard": "Mahad Group Global Intelligence Center",
+
+        "core_metrics": {
+            "total_candidates_all_time": total_candidates,
+            "deployed_this_month": deployed_this_month,
+            "deployment_rate_this_month": round(deployed_this_month / max(total_candidates, 1) * 100, 1),
+            "active_job_orders": active_job_orders,
+            "total_clients": total_employers,
+        },
+
+        "financial_overview_usd": {
+            "revenue_this_month": round(float(revenue_this_month), 2),
+            "cogs_this_month": round(float(costs_this_month), 2),
+            "gross_profit_this_month": round(float(profit_this_month), 2),
+            "gross_margin_percent": round(float(gross_margin), 2),
+            "ar_outstanding": round(float(ar_outstanding), 2),
+            "wip_invested": round(float(wip_total), 2),
+            "net_cash_position": round(float(ar_outstanding - wip_total), 2),
+        },
+
+        "top_performers": [
+            {
+                "rank": i+1,
+                "candidate": c['full_name'],
+                "passport": c['passport_number'],
+                "margin_percent": round(c['margin'], 2),
+                "profit_usd": round(float(c['revenue'] - c['cost']), 2)
+            }
+            for i, c in enumerate(top_margin_candidates)
+        ],
+
+        "pipeline_stages": {
+            stage: stage_breakdown.get(stage, 0) for stage in [
+                "SOURCING", "SCREENING", "DOCUMENTATION",
+                "VISA", "MEDICAL", "TICKET", "DEPLOYED"
+            ]
+        },
+
+        "risk_alerts": {
+            "overdue_invoices": overdue_invoices,
+            "expected_inflow_next_30_days": round(float(expected_inflow_30days), 2),
+            "high_risk_over_90_days": Invoice.objects.filter(
+                company_filter,
+                status__in=['POSTED', 'SENT'],
+                due_date__lt=today - timedelta(days=90),
+                total_amount__gt=F('amount_paid')
+            ).count()
+        },
+
+        "quick_actions": {
+            "view_margin_leaderboard": "/api/reports/margin-leaderboard/",
+            "view_profit_loss": "/api/reports/profit-loss/",
+            "view_ar_aging": "/api/reports/ar-aging/",
+            "generate_invoice": "/api/invoices/generate/",
+        }
+    }, status=200)
 
 # ============================================================
 # BILLS, RECEIPTS, PAYMENTS

@@ -153,6 +153,7 @@ SPECTACULAR_SETTINGS = {
     'TITLE': 'Mahad Group Accounting API',
     'DESCRIPTION': 'OpenAPI schema for Mahad Group Accounting Suite',
     'VERSION': '1.0.0',
+    'COMPONENT_NO_SERIALIZER_WARNINGS': True,
     'SERVERS': [
         {'url': 'http://localhost:8000', 'description': 'Local development server'},
     ],
@@ -170,6 +171,7 @@ SPECTACULAR_SETTINGS.update({
             },
         },
     },
+
     # If multiple places use the same Django choices, spectacular may generate
     # multiple enum names for the same choice set. ENUM_NAME_OVERRIDES lets us
     # force a single stable name for the BaseCurrency choices used across the

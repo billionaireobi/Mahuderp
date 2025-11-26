@@ -12,13 +12,15 @@ from core.models import (
 )
 from django.core.exceptions import ValidationError
 
-
 def get_fx_rate(from_currency: str, to_currency: str, date=None) -> Decimal:
-    """Get FX rate with fallback to latest"""
+    """Get FX rate with fallback to latest and reverse lookup"""
+    
     if from_currency == to_currency:
-        return Decimal('1.0000')
+        return Decimal("1.0000")
     
     date = date or timezone.now().date()
+    
+    # Try exact match for this date
     try:
         return FxRate.objects.get(
             from_currency=from_currency,
@@ -26,21 +28,34 @@ def get_fx_rate(from_currency: str, to_currency: str, date=None) -> Decimal:
             rate_date=date
         ).rate
     except FxRate.DoesNotExist:
-        # Get latest available rate
-        latest = FxRate.objects.filter(
-            from_currency=from_currency,
-            to_currency=to_currency
-        ).order_by('-rate_date').first()
-        if latest:
-            return latest.rate
-        raise ValidationError(f"No FX rate found: {from_currency} → {to_currency}")
+        pass
+    
+    # Try latest available direct rate
+    latest_direct = FxRate.objects.filter(
+        from_currency=from_currency,
+        to_currency=to_currency
+    ).order_by("-rate_date").first()
+    
+    if latest_direct:
+        return latest_direct.rate
+    
+    # Try reverse rate (e.g., USD→INR if INR→USD missing)
+    reverse = FxRate.objects.filter(
+        from_currency=to_currency,
+        to_currency=from_currency
+    ).order_by("-rate_date").first()
+    
+    if reverse:
+        return Decimal("1") / reverse.rate
+    
+    # Last fallback — avoid crashing, use 1:1
+    return Decimal("1.0000")
 
 
 def convert_currency(amount: Decimal, from_curr: str, to_curr: str, date=None) -> Decimal:
-    """Convert amount using current or historical FX rate"""
+    """Convert amount with safe FX fallback & reverse lookup"""
     rate = get_fx_rate(from_curr, to_curr, date)
-    return (amount * rate).quantize(Decimal('0.0001'))
-
+    return (amount * rate).quantize(Decimal("0.0001"))
 
 def post_journal(company: Company, description: str, lines: list, posted_by=None):
     """Create journal with balanced lines"""

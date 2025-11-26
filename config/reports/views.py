@@ -22,10 +22,8 @@ from core.models import (
 # FX CONVERSION ENGINE — THE HEART OF MULTI-CURRENCY
 # =============================================
 def convert_currency(amount: Decimal, from_currency: str, to_currency: str, date=None) -> Decimal:
-    if not amount or amount == 0:
-        return Decimal('0.00')
-    if from_currency == to_currency:
-        return round(amount, 2)
+    if not amount or amount == 0 or from_currency == to_currency:
+        return round(amount or Decimal('0'), 2)
 
     if not date:
         date = timezone.now().date()
@@ -40,7 +38,6 @@ def convert_currency(amount: Decimal, from_currency: str, to_currency: str, date
         if rate:
             return round(amount * rate.rate, 2)
 
-        # Reverse rate fallback
         reverse = FxRate.objects.filter(
             from_currency=to_currency,
             to_currency=from_currency,
@@ -48,10 +45,10 @@ def convert_currency(amount: Decimal, from_currency: str, to_currency: str, date
         ).order_by('-rate_date').first()
         if reverse:
             return round(amount / reverse.rate, 2)
-    except Exception:
+    except:
         pass
+    return round(amount, 2)
 
-    return round(amount, 2)  # Fallback
 
 
 # =============================================
@@ -65,6 +62,7 @@ def profit_loss_report(request):
     to_date = request.query_params.get('to_date', timezone.now().date())
     job_order_id = request.query_params.get('job_order_id')
     candidate_id = request.query_params.get('candidate_id')
+    detail = request.query_params.get('detail', 'summary')  # summary, job, candidate
 
     if not company_id:
         return Response({"error": "company_id required"}, status=400)
@@ -73,7 +71,7 @@ def profit_loss_report(request):
     base = company.base_currency
 
     inv_filter = Q(invoice__company_id=company_id, invoice__status__in=['POSTED', 'PAID'])
-    cost_filter = Q(candidate__job_order__company_id=company_id, candidate__current_stage='DEPLOYED')
+    cost_filter = Q(candidate__job_order__company_id=company_id)
 
     if from_date:
         inv_filter &= Q(invoice__invoice_date__gte=from_date)
@@ -88,46 +86,81 @@ def profit_loss_report(request):
         inv_filter &= Q(candidate_id=candidate_id)
         cost_filter &= Q(candidate_id=candidate_id)
 
-    revenue_total = Decimal('0.00')
-    cogs_total = Decimal('0.00')
     revenue_lines = []
     cogs_lines = []
+    revenue_total = cost_total = Decimal('0')
 
-    for line in InvoiceLine.objects.filter(inv_filter):
+    # REVENUE
+    for line in InvoiceLine.objects.filter(inv_filter).select_related('candidate', 'invoice'):
         conv = convert_currency(line.amount, line.invoice.currency, base, line.invoice.invoice_date)
         revenue_total += conv
-        revenue_lines.append({
-            "candidate": line.candidate.full_name if line.candidate else "N/A",
-            "description": line.description,
-            "original": f"{line.amount} {line.invoice.currency}",
-            "converted": f"{conv:.2f} {base}",
-            "date": str(line.invoice.invoice_date)
-        })
+        if detail in ['job', 'candidate']:
+            revenue_lines.append({
+                "candidate": line.candidate.full_name if line.candidate else "Direct Fee",
+                "passport": line.candidate.passport_number if line.candidate else None,
+                "job_order": str(line.candidate.job_order) if line.candidate else "N/A",
+                "invoice": line.invoice.invoice_number,
+                "description": line.description,
+                "original": f"{line.amount:.2f} {line.invoice.currency}",
+                "converted": f"{conv:.2f} {base}",
+                "date": line.invoice.invoice_date.isoformat(),
+                "employer": line.invoice.employer.name
+            })
 
-    for cost in CandidateCost.objects.filter(cost_filter):
+    # COSTS
+    for cost in CandidateCost.objects.filter(cost_filter).select_related('candidate'):
         conv = convert_currency(cost.amount, cost.currency, base, cost.date)
-        cogs_total += conv
-        cogs_lines.append({
-            "candidate": cost.candidate.full_name,
-            "type": cost.get_cost_type_display(),
-            "original": f"{cost.amount} {cost.currency}",
-            "converted": f"{conv:.2f} {base}",
-            "date": str(cost.date)
-        })
+        cost_total += conv
+        if detail in ['job', 'candidate']:
+            cogs_lines.append({
+                "candidate": cost.candidate.full_name,
+                "passport": cost.candidate.passport_number,
+                "type": cost.get_cost_type_display(),
+                "reimbursable": cost.reimbursable,
+                "vendor": cost.vendor.name if cost.vendor else "Internal",
+                "original": f"{cost.amount:.2f} {cost.currency}",
+                "converted": f"{conv:.2f} {base}",
+                "date": cost.date.isoformat(),
+                "stage_when_incurred": cost.candidate.current_stage
+            })
 
-    gross_profit = revenue_total - cogs_total
-    gross_margin = (gross_profit / revenue_total * 100) if revenue_total > 0 else Decimal('0')
+    gross_profit = revenue_total - cost_total
+    gross_margin = (gross_profit / revenue_total * 100) if revenue_total else Decimal('0')
 
-    return Response({
+    response = {
+        "report": "Profit & Loss Statement",
         "company": company.name,
         "base_currency": base,
-        "period": f"{from_date or 'Beginning'} to {to_date}",
-        "revenue": {"total": float(revenue_total), "lines": revenue_lines[:100]},
-        "cogs": {"total": float(cogs_total), "lines": cogs_lines[:100]},
-        "gross_profit": float(gross_profit),
-        "gross_margin_percent": round(float(gross_margin), 2),
-        "generated_at": timezone.now().isoformat()
-    })
+        "period": f"{from_date or 'All Time'} → {to_date}",
+        "filters": {"job_order": job_order_id, "candidate": candidate_id, "detail_level": detail},
+        "summary": {
+            "total_revenue": float(revenue_total),
+            "total_cogs": float(cost_total),
+            "gross_profit": float(gross_profit),
+            "gross_margin_percent": round(float(gross_margin), 2),
+        },
+        "breakdown": {
+            "revenue_lines": revenue_lines[:500],
+            "cost_lines": cogs_lines[:500],
+        },
+        "generated_at": timezone.now().isoformat(),
+        "total_candidates": Candidate.objects.filter(cost_filter).distinct().count()
+    }
+
+    if detail == 'candidate':
+        response["top_performers"] = list(Candidate.objects.filter(cost_filter)
+            .annotate(
+                revenue=Coalesce(Sum('invoiceline__amount', filter=Q(invoiceline__invoice__status__in=['POSTED','PAID'])), 0),
+                cost=Coalesce(Sum('costs__amount'), 0),
+                profit=ExpressionWrapper(F('revenue') - F('cost'), output_field=DecimalField())
+            )
+            .filter(revenue__gt=0)
+            .order_by('-profit')[:10]
+            .values('full_name', 'passport_number', 'revenue', 'cost', 'profit')
+        )
+
+    return Response(response)
+
 
 
 # =============================================
@@ -389,22 +422,119 @@ def candidate_profitability_view(request):
     job = candidate.job_order
     base = job.company.base_currency
 
-    revenue = sum(convert_currency(l.amount, l.invoice.currency, base, l.invoice.invoice_date)
-                  for l in InvoiceLine.objects.filter(candidate=candidate, invoice__status__in=['POSTED','PAID']))
+    # Revenue
+    revenue_lines = InvoiceLine.objects.filter(
+        candidate=candidate, invoice__status__in=['POSTED', 'PAID']
+    ).select_related('invoice')
 
-    costs = sum(convert_currency(c.amount, c.currency, base, c.date) for c in candidate.costs.all())
+    revenue_total = Decimal('0')
+    revenue_detail = []
+    for line in revenue_lines:
+        conv = convert_currency(line.amount, line.invoice.currency, base, line.invoice.invoice_date)
+        revenue_total += conv
+        revenue_detail.append({
+            "invoice": line.invoice.invoice_number,
+            "description": line.description,
+            "amount_original": f"{line.amount:.2f} {line.invoice.currency}",
+            "amount_converted": f"{conv:.2f} {base}",
+            "date": line.invoice.invoice_date.isoformat()
+        })
 
-    profit = revenue - costs
-    margin = (profit / revenue * 100) if revenue > 0 else Decimal('0')
+    # Costs
+    costs = candidate.costs.all().select_related('vendor')
+    cost_total = Decimal('0')
+    cost_detail = []
+    reimbursable = non_reimbursable = Decimal('0')
+
+    for cost in costs:
+        conv = convert_currency(cost.amount, cost.currency, base, cost.date)
+        cost_total += conv
+        if cost.reimbursable:
+            reimbursable += conv
+        else:
+            non_reimbursable += conv
+
+        cost_detail.append({
+            "type": cost.get_cost_type_display(),
+            "reimbursable": cost.reimbursable,
+            "amount_original": f"{cost.amount:.2f} {cost.currency}",
+            "amount_converted": f"{conv:.2f} {base}",
+            "date": cost.date.isoformat(),
+            "vendor": cost.vendor.name if cost.vendor else "Internal",
+            "stage": cost.candidate.current_stage
+        })
+
+    profit = revenue_total - cost_total
+    margin = (profit / revenue_total * 100) if revenue_total else Decimal('0')
 
     return Response({
         "candidate": candidate.full_name,
         "passport": candidate.passport_number,
+        "nationality": candidate.nationality,
         "job_order": str(job),
-        "currency": base,
-        "revenue": float(revenue),
-        "total_costs": float(costs),
-        "profit": float(profit),
-        "margin_percent": round(float(margin), 2),
-        "current_stage": candidate.current_stage
+        "employer": job.employer.name,
+        "current_stage": candidate.current_stage,
+        "deployment_date": candidate.deployed_date.isoformat() if candidate.deployed_date else None,
+        "base_currency": base,
+
+        "revenue": {
+            "total": float(revenue_total),
+            "lines": revenue_detail
+        },
+        "costs": {
+            "total": float(cost_total),
+            "reimbursable": float(reimbursable),
+            "non_reimbursable": float(non_reimbursable),
+            "breakdown": cost_detail
+        },
+        "profitability": {
+            "gross_profit": float(profit),
+            "gross_margin_percent": round(float(margin), 2),
+            "profit_per_day": float(profit / max((timezone.now().date() - candidate.created_at.date()).days, 1))
+        },
+        "generated_at": timezone.now().isoformat()
     })
+
+# =============================================
+# 3. MARGIN LEADERBOARD — WHO ARE YOUR GODS?
+# =============================================
+from django.db.models import Sum, Q, F, Count, Avg, DecimalField, ExpressionWrapper, FloatField
+from django.db.models.functions import Coalesce
+from django.utils import timezone
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def margin_leaderboard_view(request):
+    company_id = request.query_params.get('company_id')
+    limit = int(request.query_params.get('limit', 20))
+
+    candidates = Candidate.objects.filter(
+        job_order__company_id=company_id,
+        current_stage='DEPLOYED'
+    ).annotate(
+        revenue=Coalesce(Sum('invoiceline__amount', filter=Q(invoiceline__invoice__status__in=['POSTED','PAID'])), 0),
+        cost=Coalesce(Sum('costs__amount'), 0),
+        profit=ExpressionWrapper(F('revenue') - F('cost'), output_field=DecimalField()),
+        margin=ExpressionWrapper(
+            F('profit') * 100 / F('revenue'),
+            output_field=FloatField()
+        )
+    ).filter(revenue__gt=0).order_by('-margin', '-profit')[:limit]
+
+    return Response({
+        "title": "Margin Kings Leaderboard",
+        "company_id": company_id,
+        "top_performers": [
+            {
+                "rank": i+1,
+                "candidate": c.full_name,
+                "passport": c.passport_number,
+                "revenue": float(c.revenue),
+                "cost": float(c.cost),
+                "profit": float(c.profit),
+                "margin_percent": round(c.margin, 2) if c.margin else 0,
+                "job_order": str(c.job_order)
+            } for i, c in enumerate(candidates)
+        ]
+    })
+
+
