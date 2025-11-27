@@ -17,7 +17,7 @@ from decimal import Decimal
 from .models import *
 from .serializers import *
 try:
-    from drf_spectacular.utils import extend_schema, OpenApiTypes, OpenApiResponse
+    from drf_spectacular.utils import extend_schema, OpenApiTypes, OpenApiResponse, OpenApiParameter
 except Exception:
     # Fallback no-op definitions if drf-spectacular is not installed (prevents import errors).
     def extend_schema(*args, **kwargs):
@@ -33,6 +33,12 @@ except Exception:
         STRING = str
 
     class OpenApiResponse:
+        def __init__(self, *args, **kwargs):
+            pass
+    # Minimal placeholder so code referencing OpenApiParameter doesn't crash when spectacular missing
+    class OpenApiParameter:
+        PATH = 'path'
+        QUERY = 'query'
         def __init__(self, *args, **kwargs):
             pass
 
@@ -401,7 +407,18 @@ def job_order_detail(request, job_order_id):
     }, status=status.HTTP_200_OK)
 
 
-@extend_schema(responses=OpenApiTypes.OBJECT)
+@extend_schema(
+    parameters=[
+        OpenApiParameter(
+            name='job_order_id',
+            type=OpenApiTypes.UUID,
+            location=OpenApiParameter.PATH,
+            description='Job order id (UUID)',
+            required=True
+        )
+    ],
+    responses=OpenApiTypes.OBJECT
+)
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def job_order_summary(request, job_order_id):
@@ -664,7 +681,7 @@ def invoice_detail(request, invoice_id):
     return Response(serializer.data, status=status.HTTP_200_OK)
 
 
-@extend_schema(request=None, responses=InvoiceSerializer)
+@extend_schema(request=InvoiceGenerateSerializer, responses=InvoiceSerializer)
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 @transaction.atomic
@@ -868,7 +885,13 @@ def dashboard_stats(request):
     ).count()
 
     active_job_orders = JobOrder.objects.filter(job_filter).count()
-    total_employers = Employer.objects.filter(company_filter).count()
+    # Employer model is not directly linked to Company via a `company` FK in this schema.
+    # Count differently depending on user role: HQ admins see all employers;
+    # company users see employers that have job orders for their company.
+    if user.role == 'HQ_ADMIN':
+        total_employers = Employer.objects.count()
+    else:
+        total_employers = Employer.objects.filter(job_orders__company=user.company).distinct().count()
 
     # =============================================================================
     # 2. FINANCIAL POWER METRICS

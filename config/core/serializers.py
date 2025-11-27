@@ -167,6 +167,16 @@ class InvoiceSerializer(serializers.ModelSerializer):
         read_only_fields = ['id', 'invoice_number', 'created_at', 'updated_at', 'posted_at', 'paid_at']
 
 
+# Serializer used for invoice generation request body (job_order, candidate ids, invoice date)
+class InvoiceGenerateSerializer(serializers.Serializer):
+    job_order_id = serializers.CharField(help_text='Job order id (UUID or int)')
+    candidate_ids = serializers.ListField(
+        child=serializers.CharField(),
+        help_text='List of candidate ids to include in the invoice'
+    )
+    invoice_date = serializers.DateField(help_text='Invoice date (YYYY-MM-DD)')
+
+
 class BillLineSerializer(serializers.ModelSerializer):
     """Serializer for Bill Line"""
     

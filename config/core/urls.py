@@ -40,7 +40,7 @@ urlpatterns = [
     # ============================================================
     path('job-orders/', views.job_order_list, name='job-order-list'),
     path('job-orders/<uuid:job_order_id>/', views.job_order_detail, name='job-order-detail'),
-    path('job-orders/<int:job_order_id>/summary/', views.job_order_summary, name='job-order-summary'),
+    path('job-orders/<uuid:job_order_id>/summary/', views.job_order_summary, name='job-order-summary'),
     # ============================================================
     # CANDIDATES
     # ============================================================

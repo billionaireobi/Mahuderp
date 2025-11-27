@@ -1295,6 +1295,18 @@ paths:
         }
       tags:
       - core
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InvoiceGenerate'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/InvoiceGenerate'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/InvoiceGenerate'
+        required: true
       security:
       - jwtAuth: []
       - BearerAuth: []
@@ -1391,7 +1403,9 @@ paths:
       - in: path
         name: job_order_id
         schema:
-          type: integer
+          type: string
+          format: uuid
+        description: Job order id (UUID)
         required: true
       tags:
       - core
@@ -2958,6 +2972,25 @@ components:
       - posted_at
       - status_display
       - updated_at
+    InvoiceGenerate:
+      type: object
+      properties:
+        job_order_id:
+          type: string
+          description: Job order id (UUID or int)
+        candidate_ids:
+          type: array
+          items:
+            type: string
+          description: List of candidate ids to include in the invoice
+        invoice_date:
+          type: string
+          format: date
+          description: Invoice date (YYYY-MM-DD)
+      required:
+      - candidate_ids
+      - invoice_date
+      - job_order_id
     InvoiceLine:
       type: object
       description: Serializer for Invoice Line
