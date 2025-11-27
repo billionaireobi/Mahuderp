@@ -1518,3 +1518,159 @@ django.core.exceptions.FieldError: Expression contains mixed types: DecimalField
 [INFO] 2025-11-26 14:26:15 basehttp 9500 7532 - "GET /api/docs/ HTTP/1.1" 200 4659
 [INFO] 2025-11-26 14:26:15 basehttp 9500 7532 - "GET /api/schema/ HTTP/1.1" 200 189546
 [INFO] 2025-11-26 14:42:25 autoreload 12612 13304 - Watching for file changes with StatReloader
+[INFO] 2025-11-27 09:15:52 autoreload 3268 1292 - Watching for file changes with StatReloader
+[INFO] 2025-11-27 09:16:18 basehttp 3268 5784 - "GET /api/docs/ HTTP/1.1" 200 4659
+[INFO] 2025-11-27 09:16:19 basehttp 3268 5784 - "GET /api/schema/ HTTP/1.1" 200 189546
+[INFO] 2025-11-27 09:17:01 basehttp 3268 3972 - "OPTIONS /api/auth/login/ HTTP/1.1" 200 0
+[INFO] 2025-11-27 09:17:02 basehttp 3268 3972 - "POST /api/auth/login/ HTTP/1.1" 200 686
+[WARNING] 2025-11-27 09:17:22 basehttp 3268 3972 - "GET /api/auth/profile/ HTTP/1.1" 401 58
+[INFO] 2025-11-27 09:18:03 basehttp 3268 3972 - "OPTIONS /api/auth/profile/ HTTP/1.1" 200 0
+[WARNING] 2025-11-27 09:18:03 basehttp 3268 3972 - "GET /api/auth/profile/ HTTP/1.1" 401 176
+[INFO] 2025-11-27 09:20:59 basehttp 3268 3972 - "OPTIONS /api/auth/refresh/ HTTP/1.1" 200 0
+[WARNING] 2025-11-27 09:20:59 basehttp 3268 3972 - "POST /api/auth/refresh/ HTTP/1.1" 401 176
+[INFO] 2025-11-27 09:21:09 basehttp 3268 5784 - "GET /api/docs/ HTTP/1.1" 200 4659
+[INFO] 2025-11-27 09:21:09 basehttp 3268 5784 - "GET /api/schema/ HTTP/1.1" 200 189546
+[INFO] 2025-11-27 09:21:46 basehttp 3268 3972 - "POST /api/auth/login/ HTTP/1.1" 200 686
+[INFO] 2025-11-27 09:22:29 basehttp 3268 3972 - "POST /api/auth/refresh/ HTTP/1.1" 200 342
+[INFO] 2025-11-27 09:23:08 basehttp 3268 3972 - "OPTIONS /api/auth/check/ HTTP/1.1" 200 0
+[INFO] 2025-11-27 09:23:08 basehttp 3268 3972 - "GET /api/auth/check/ HTTP/1.1" 200 335
+[INFO] 2025-11-27 09:23:30 basehttp 3268 3972 - "OPTIONS /api/auth/login-history/?limit=10 HTTP/1.1" 200 0
+[INFO] 2025-11-27 09:23:30 basehttp 3268 3972 - "GET /api/auth/login-history/?limit=10 HTTP/1.1" 200 3354
+[INFO] 2025-11-27 09:24:03 basehttp 3268 3972 - "GET /api/auth/profile/ HTTP/1.1" 200 547
+[WARNING] 2025-11-27 09:25:27 basehttp 3268 3972 - "PATCH /api/auth/profile/ HTTP/1.1" 400 103
+[INFO] 2025-11-27 09:25:42 basehttp 3268 3972 - "PATCH /api/auth/profile/ HTTP/1.1" 200 607
+[INFO] 2025-11-27 09:42:46 basehttp 3268 6716 - "GET /admin HTTP/1.1" 301 0
+[INFO] 2025-11-27 09:42:46 basehttp 3268 7176 - "GET /admin/ HTTP/1.1" 302 0
+[INFO] 2025-11-27 09:42:46 basehttp 3268 7176 - "GET /admin/login/?next=/admin/ HTTP/1.1" 200 4184
+[INFO] 2025-11-27 09:42:46 basehttp 3268 10776 - "GET /static/admin/css/login.css HTTP/1.1" 200 951
+[INFO] 2025-11-27 09:42:46 basehttp 3268 7176 - "GET /static/admin/css/base.css HTTP/1.1" 200 22120
+[INFO] 2025-11-27 09:42:46 basehttp 3268 1692 - "GET /static/admin/css/nav_sidebar.css HTTP/1.1" 200 2810
+[INFO] 2025-11-27 09:42:46 basehttp 3268 12780 - "GET /static/admin/css/dark_mode.css HTTP/1.1" 200 2808
+[INFO] 2025-11-27 09:42:46 basehttp 3268 300 - "GET /static/admin/css/responsive.css HTTP/1.1" 200 16565
+[INFO] 2025-11-27 09:42:46 basehttp 3268 304 - "GET /static/admin/js/theme.js HTTP/1.1" 200 1653
+[INFO] 2025-11-27 09:42:46 basehttp 3268 300 - "GET /static/admin/js/nav_sidebar.js HTTP/1.1" 200 3063
+[WARNING] 2025-11-27 09:42:46 basehttp 3268 300 - "GET /favicon.ico HTTP/1.1" 404 3834
+[INFO] 2025-11-27 09:43:05 basehttp 3268 300 - "POST /admin/login/?next=/admin/ HTTP/1.1" 302 0
+[INFO] 2025-11-27 09:43:05 basehttp 3268 300 - "GET /admin/ HTTP/1.1" 200 19007
+[INFO] 2025-11-27 09:43:05 basehttp 3268 300 - "GET /static/admin/css/dashboard.css HTTP/1.1" 200 441
+[INFO] 2025-11-27 09:43:05 basehttp 3268 300 - "GET /static/admin/img/icon-addlink.svg HTTP/1.1" 200 331
+[INFO] 2025-11-27 09:43:05 basehttp 3268 12780 - "GET /static/admin/img/icon-viewlink.svg HTTP/1.1" 200 581
+[INFO] 2025-11-27 09:43:05 basehttp 3268 304 - "GET /static/admin/img/icon-changelink.svg HTTP/1.1" 200 380
+[INFO] 2025-11-27 09:43:23 basehttp 3268 304 - "GET /admin/authentications/user/ HTTP/1.1" 200 40678
+[INFO] 2025-11-27 09:43:23 basehttp 3268 304 - "GET /static/admin/css/changelists.css HTTP/1.1" 200 6878
+[INFO] 2025-11-27 09:43:23 basehttp 3268 1692 - "GET /static/admin/js/jquery.init.js HTTP/1.1" 200 347
+[INFO] 2025-11-27 09:43:23 basehttp 3268 7176 - "GET /static/admin/js/core.js HTTP/1.1" 200 6208
+[INFO] 2025-11-27 09:43:23 basehttp 3268 10776 - "GET /static/admin/js/admin/RelatedObjectLookups.js HTTP/1.1" 200 9777
+[INFO] 2025-11-27 09:43:23 basehttp 3268 300 - "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[INFO] 2025-11-27 09:43:23 basehttp 3268 304 - "GET /static/admin/js/actions.js HTTP/1.1" 200 8076
+[INFO] 2025-11-27 09:43:23 basehttp 3268 1692 - "GET /static/admin/js/urlify.js HTTP/1.1" 200 7887
+[INFO] 2025-11-27 09:43:23 basehttp 3268 300 - "GET /static/admin/img/search.svg HTTP/1.1" 200 458
+[INFO] 2025-11-27 09:43:23 basehttp 3268 304 - "GET /static/admin/img/icon-yes.svg HTTP/1.1" 200 436
+[INFO] 2025-11-27 09:43:23 basehttp 3268 10776 - "GET /static/admin/js/prepopulate.js HTTP/1.1" 200 1531
+[INFO] 2025-11-27 09:43:23 basehttp 3268 300 - "GET /static/admin/img/icon-no.svg HTTP/1.1" 200 560
+[INFO] 2025-11-27 09:43:23 basehttp 3268 12780 - "GET /static/admin/js/vendor/jquery/jquery.js HTTP/1.1" 200 285314
+[INFO] 2025-11-27 09:43:23 basehttp 3268 12780 - "GET /static/admin/js/filters.js HTTP/1.1" 200 978
+[INFO] 2025-11-27 09:43:23 basehttp 3268 7176 - "GET /static/admin/js/vendor/xregexp/xregexp.js HTTP/1.1" 200 325171
+[INFO] 2025-11-27 09:43:23 basehttp 3268 12780 - "GET /static/admin/img/sorting-icons.svg HTTP/1.1" 200 1097
+[INFO] 2025-11-27 09:43:23 basehttp 3268 7176 - "GET /static/admin/img/tooltag-add.svg HTTP/1.1" 200 331
+[INFO] 2025-11-27 09:43:55 basehttp 3268 7176 - "GET /admin/core/bill/ HTTP/1.1" 200 23381
+[INFO] 2025-11-27 09:43:55 basehttp 3268 7176 - "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[INFO] 2025-11-27 09:43:59 basehttp 3268 7176 - "GET /admin/core/branch/ HTTP/1.1" 200 29773
+[INFO] 2025-11-27 09:43:59 basehttp 3268 7176 - "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[INFO] 2025-11-27 09:44:00 basehttp 3268 7176 - "GET /admin/core/candidatecost/ HTTP/1.1" 200 24192
+[INFO] 2025-11-27 09:44:00 basehttp 3268 7176 - "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[INFO] 2025-11-27 09:44:07 basehttp 3268 7176 - "GET /admin/core/candidate/ HTTP/1.1" 200 23538
+[INFO] 2025-11-27 09:44:07 basehttp 3268 7176 - "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[INFO] 2025-11-27 09:44:09 basehttp 3268 7176 - "GET /admin/core/company/ HTTP/1.1" 200 26874
+[INFO] 2025-11-27 09:44:09 basehttp 3268 7176 - "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[INFO] 2025-11-27 09:44:11 basehttp 3268 7176 - "GET /admin/core/currency/ HTTP/1.1" 200 23853
+[INFO] 2025-11-27 09:44:11 basehttp 3268 7176 - "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[INFO] 2025-11-27 09:44:13 basehttp 3268 7176 - "GET /admin/core/employer/ HTTP/1.1" 200 21018
+[INFO] 2025-11-27 09:44:13 basehttp 3268 7176 - "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[INFO] 2025-11-27 09:44:16 basehttp 3268 7176 - "GET /admin/core/invoice/ HTTP/1.1" 200 25152
+[INFO] 2025-11-27 09:44:16 basehttp 3268 7176 - "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[INFO] 2025-11-27 09:44:22 basehttp 3268 7176 - "GET /admin/core/joborder/ HTTP/1.1" 200 22587
+[INFO] 2025-11-27 09:44:22 basehttp 3268 7176 - "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[INFO] 2025-11-27 09:44:33 basehttp 3268 7176 - "GET /admin/core/vendor/ HTTP/1.1" 200 21695
+[INFO] 2025-11-27 09:44:33 basehttp 3268 7176 - "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[INFO] 2025-11-27 09:45:39 basehttp 3268 7176 - "GET /admin/authentications/refreshtoken/ HTTP/1.1" 200 33111
+[INFO] 2025-11-27 09:45:39 basehttp 3268 7176 - "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[INFO] 2025-11-27 09:46:00 basehttp 3268 7176 - "GET /admin/authentications/passwordresettoken/ HTTP/1.1" 200 21922
+[INFO] 2025-11-27 09:46:00 basehttp 3268 7176 - "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[INFO] 2025-11-27 09:46:03 basehttp 3268 7176 - "GET /admin/authentications/loginhistory/ HTTP/1.1" 200 32315
+[INFO] 2025-11-27 09:46:03 basehttp 3268 7176 - "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[INFO] 2025-11-27 09:46:08 basehttp 3268 7176 - "GET /admin/authentications/user/ HTTP/1.1" 200 40678
+[INFO] 2025-11-27 09:46:08 basehttp 3268 7176 - "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[INFO] 2025-11-27 09:46:30 basehttp 3268 7176 - "GET /admin/core/ HTTP/1.1" 200 12515
+[INFO] 2025-11-27 09:46:32 basehttp 3268 7176 - "GET /admin/core/ HTTP/1.1" 200 12515
+[INFO] 2025-11-27 09:46:34 basehttp 3268 7176 - "GET /admin/ HTTP/1.1" 200 19007
+[INFO] 2025-11-27 09:46:48 basehttp 3268 7176 - "GET /admin/token_blacklist/blacklistedtoken/ HTTP/1.1" 200 17218
+[INFO] 2025-11-27 09:46:48 basehttp 3268 7176 - "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[INFO] 2025-11-27 09:51:55 autoreload 12440 12444 - Watching for file changes with StatReloader
+[INFO] 2025-11-27 09:52:32 basehttp 12440 12848 - "GET /api/docs/ HTTP/1.1" 200 4659
+[INFO] 2025-11-27 09:52:33 basehttp 12440 12848 - "GET /api/schema/ HTTP/1.1" 200 190515
+[INFO] 2025-11-27 09:53:13 basehttp 12440 12848 - "GET /admin/token_blacklist/blacklistedtoken/ HTTP/1.1" 200 17218
+[INFO] 2025-11-27 09:53:13 basehttp 12440 12904 - "GET /static/admin/css/dark_mode.css HTTP/1.1" 200 2808
+[INFO] 2025-11-27 09:53:13 basehttp 12440 12848 - "GET /static/admin/css/base.css HTTP/1.1" 200 22120
+[INFO] 2025-11-27 09:53:13 basehttp 12440 12904 - "GET /static/admin/css/nav_sidebar.css HTTP/1.1" 200 2810
+[INFO] 2025-11-27 09:53:13 basehttp 12440 7316 - "GET /static/admin/js/theme.js HTTP/1.1" 200 1653
+[INFO] 2025-11-27 09:53:13 basehttp 12440 12848 - "GET /static/admin/css/changelists.css HTTP/1.1" 200 6878
+[INFO] 2025-11-27 09:53:13 basehttp 12440 7316 - "GET /static/admin/css/responsive.css HTTP/1.1" 200 16565
+[INFO] 2025-11-27 09:53:13 basehttp 12440 7316 - "GET /static/admin/js/jquery.init.js HTTP/1.1" 200 347
+[INFO] 2025-11-27 09:53:13 basehttp 12440 12904 - "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[INFO] 2025-11-27 09:53:13 basehttp 12440 7316 - "GET /static/admin/js/core.js HTTP/1.1" 200 6208
+[INFO] 2025-11-27 09:53:13 basehttp 12440 12904 - "GET /static/admin/js/admin/RelatedObjectLookups.js HTTP/1.1" 200 9777
+[INFO] 2025-11-27 09:53:13 basehttp 12440 12848 - "GET /static/admin/js/vendor/jquery/jquery.js HTTP/1.1" 200 285314
+[INFO] 2025-11-27 09:53:13 basehttp 12440 12904 - "GET /static/admin/js/urlify.js HTTP/1.1" 200 7887
+[INFO] 2025-11-27 09:53:13 basehttp 12440 7316 - "GET /static/admin/js/actions.js HTTP/1.1" 200 8076
+[INFO] 2025-11-27 09:53:13 basehttp 12440 12848 - "GET /static/admin/js/prepopulate.js HTTP/1.1" 200 1531
+[INFO] 2025-11-27 09:53:13 basehttp 12440 8344 - "GET /static/admin/img/search.svg HTTP/1.1" 200 458
+[INFO] 2025-11-27 09:53:13 basehttp 12440 8344 - "GET /static/admin/js/nav_sidebar.js HTTP/1.1" 200 3063
+[INFO] 2025-11-27 09:53:13 basehttp 12440 8344 - "GET /static/admin/js/filters.js HTTP/1.1" 200 978
+[INFO] 2025-11-27 09:53:13 basehttp 12440 12904 - "GET /static/admin/js/vendor/xregexp/xregexp.js HTTP/1.1" 200 325171
+[INFO] 2025-11-27 09:53:13 basehttp 12440 12904 - "GET /static/admin/img/icon-addlink.svg HTTP/1.1" 200 331
+[INFO] 2025-11-27 09:53:13 basehttp 12440 8344 - "GET /static/admin/img/tooltag-add.svg HTTP/1.1" 200 331
+[WARNING] 2025-11-27 09:53:13 basehttp 12440 8344 - "GET /favicon.ico HTTP/1.1" 404 3834
+[INFO] 2025-11-27 09:53:16 basehttp 12440 8344 - "GET /api/schema/ HTTP/1.1" 200 190515
+[INFO] 2025-11-27 09:53:17 basehttp 12440 8344 - "GET /admin/authentications/user/ HTTP/1.1" 200 40678
+[INFO] 2025-11-27 09:53:17 basehttp 12440 12848 - "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[INFO] 2025-11-27 09:53:17 basehttp 12440 12904 - "GET /static/admin/img/icon-no.svg HTTP/1.1" 200 560
+[INFO] 2025-11-27 09:53:17 basehttp 12440 8344 - "GET /static/admin/img/icon-yes.svg HTTP/1.1" 200 436
+[INFO] 2025-11-27 09:53:17 basehttp 12440 12904 - "GET /static/admin/img/icon-viewlink.svg HTTP/1.1" 200 581
+[INFO] 2025-11-27 09:53:17 basehttp 12440 8344 - "GET /static/admin/img/sorting-icons.svg HTTP/1.1" 200 1097
+[INFO] 2025-11-27 09:53:20 autoreload 12440 12444 - C:\Users\Administrator\Desktop\mahuderp\Mahuderp\config\reports\views.py changed, reloading.
+[INFO] 2025-11-27 09:53:21 autoreload 12340 12308 - Watching for file changes with StatReloader
+[INFO] 2025-11-27 09:53:56 basehttp 12340 10072 - "GET /api/docs/ HTTP/1.1" 200 4659
+[INFO] 2025-11-27 09:53:56 basehttp 12340 10072 - "GET /api/schema/ HTTP/1.1" 200 190838
+[INFO] 2025-11-27 09:54:42 autoreload 12340 12308 - C:\Users\Administrator\Desktop\mahuderp\Mahuderp\config\reports\views.py changed, reloading.
+[INFO] 2025-11-27 09:54:43 autoreload 5092 8832 - Watching for file changes with StatReloader
+[INFO] 2025-11-27 09:55:03 autoreload 5092 8832 - C:\Users\Administrator\Desktop\mahuderp\Mahuderp\config\reports\views.py changed, reloading.
+[INFO] 2025-11-27 09:55:04 autoreload 5912 6240 - Watching for file changes with StatReloader
+[INFO] 2025-11-27 09:58:28 autoreload 5912 6240 - C:\Users\Administrator\Desktop\mahuderp\Mahuderp\config\reports\views.py changed, reloading.
+[INFO] 2025-11-27 09:58:29 autoreload 4980 6424 - Watching for file changes with StatReloader
+[INFO] 2025-11-27 10:02:02 autoreload 4980 6424 - C:\Users\Administrator\Desktop\mahuderp\Mahuderp\config\reports\views.py changed, reloading.
+[INFO] 2025-11-27 10:02:03 autoreload 7100 10312 - Watching for file changes with StatReloader
+[INFO] 2025-11-27 10:02:50 autoreload 7100 10312 - C:\Users\Administrator\Desktop\mahuderp\Mahuderp\config\reports\views.py changed, reloading.
+[INFO] 2025-11-27 10:02:51 autoreload 8456 12944 - Watching for file changes with StatReloader
+[INFO] 2025-11-27 10:03:45 autoreload 8456 12944 - C:\Users\Administrator\Desktop\mahuderp\Mahuderp\config\reports\views.py changed, reloading.
+[INFO] 2025-11-27 10:03:46 autoreload 12308 3028 - Watching for file changes with StatReloader
+[INFO] 2025-11-27 10:05:03 basehttp 12308 4972 - "GET /api/docs/ HTTP/1.1" 200 4659
+[INFO] 2025-11-27 10:05:03 basehttp 12308 4972 - "GET /api/schema/ HTTP/1.1" 200 192776
+[INFO] 2025-11-27 10:05:50 autoreload 12308 3028 - C:\Users\Administrator\Desktop\mahuderp\Mahuderp\config\reports\views.py changed, reloading.
+[INFO] 2025-11-27 10:05:51 autoreload 6452 5632 - Watching for file changes with StatReloader
+[INFO] 2025-11-27 10:05:54 autoreload 6452 5632 - C:\Users\Administrator\Desktop\mahuderp\Mahuderp\config\authentications\views.py changed, reloading.
+[INFO] 2025-11-27 10:05:55 autoreload 11984 6928 - Watching for file changes with StatReloader
+[INFO] 2025-11-27 10:11:19 autoreload 12420 4968 - Watching for file changes with StatReloader
+[INFO] 2025-11-27 10:11:20 basehttp 12420 4452 - "GET /api/docs/ HTTP/1.1" 200 4659
+[INFO] 2025-11-27 10:11:21 basehttp 12420 4452 - "GET /api/schema/ HTTP/1.1" 200 192776
+[INFO] 2025-11-27 10:12:06 basehttp 12420 5996 - "OPTIONS /api/auth/login/ HTTP/1.1" 200 0
+[INFO] 2025-11-27 10:12:07 basehttp 12420 5996 - "POST /api/auth/login/ HTTP/1.1" 200 696
+[INFO] 2025-11-27 10:12:39 basehttp 12420 5996 - "OPTIONS /api/auth/refresh/ HTTP/1.1" 200 0
+[WARNING] 2025-11-27 10:12:39 basehttp 12420 5996 - "POST /api/auth/refresh/ HTTP/1.1" 401 33
+[INFO] 2025-11-27 10:13:22 basehttp 12420 5996 - "POST /api/auth/refresh/ HTTP/1.1" 200 342
+[INFO] 2025-11-27 10:14:24 basehttp 12420 5996 - "OPTIONS /api/core/companies/ HTTP/1.1" 200 0
+[INFO] 2025-11-27 10:14:24 basehttp 12420 5996 - "GET /api/core/companies/ HTTP/1.1" 200 4585
+[INFO] 2025-11-27 10:14:57 basehttp 12420 5996 - "OPTIONS /api/core/companies/a3bab2d8-a9f9-4665-b8c6-6f7a2b65322a/ HTTP/1.1" 200 0
+[INFO] 2025-11-27 10:14:57 basehttp 12420 5996 - "GET /api/core/companies/a3bab2d8-a9f9-4665-b8c6-6f7a2b65322a/ HTTP/1.1" 200 787
+[INFO] 2025-11-27 10:15:39 basehttp 12420 5996 - "OPTIONS /api/core/job-orders/ HTTP/1.1" 200 0
+[INFO] 2025-11-27 10:15:39 basehttp 12420 5996 - "GET /api/core/job-orders/ HTTP/1.1" 200 444

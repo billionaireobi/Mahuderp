@@ -1,0 +1,3854 @@
+openapi: 3.0.3
+info:
+  title: Mahad Group Accounting API
+  version: 1.0.0
+  description: OpenAPI schema for Mahad Group Accounting Suite
+paths:
+  /api/auth/change-password/:
+    post:
+      operationId: auth_change_password_create
+      description: |-
+        Change Password
+
+        POST /api/auth/change-password/
+
+        Request Body:
+        {
+            "old_password": "OldPass123!",
+            "new_password": "NewPass123!",
+            "new_password_confirm": "NewPass123!"
+        }
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChangePassword'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ChangePassword'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ChangePassword'
+        required: true
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          description: No response body
+  /api/auth/check/:
+    get:
+      operationId: auth_check_retrieve
+      description: |-
+        Check Authentication Status
+
+        GET /api/auth/check/
+
+        Returns current user information if authenticated
+      tags:
+      - auth
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+  /api/auth/login/:
+    post:
+      operationId: auth_login_create
+      description: |-
+        User Login
+
+        POST /api/auth/login/
+
+        Request Body:
+        {
+            "email": "user@example.com",
+            "password": "SecurePass123!",
+            "device_name": "Chrome on Windows"  // optional
+        }
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Login'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Login'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Login'
+        required: true
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+  /api/auth/login-history/:
+    get:
+      operationId: auth_login_history_list
+      description: |-
+        Get User Login History
+
+        GET /api/auth/login-history/
+
+        Query Parameters:
+        - limit: Number of records to return (default: 20, max: 100)
+      parameters:
+      - in: query
+        name: limit
+        schema:
+          type: integer
+        description: 'Number of records to return (default: 20, max: 100)'
+      tags:
+      - auth
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LoginHistory'
+          description: ''
+  /api/auth/logout/:
+    post:
+      operationId: auth_logout_create
+      description: |-
+        User Logout
+
+        POST /api/auth/logout/
+
+        Request Body:
+        {
+            "refresh_token": "your_refresh_token"
+        }
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Logout'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Logout'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Logout'
+        required: true
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          description: No response body
+  /api/auth/logout-all/:
+    post:
+      operationId: auth_logout_all_create
+      description: |-
+        Logout from all devices
+
+        POST /api/auth/logout-all/
+      tags:
+      - auth
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: null
+          description: ''
+  /api/auth/password-reset/:
+    post:
+      operationId: auth_password_reset_create
+      description: |-
+        Request Password Reset
+
+        POST /api/auth/password-reset/
+
+        Request Body:
+        {
+            "email": "user@example.com"
+        }
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PasswordResetRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PasswordResetRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PasswordResetRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      - {}
+      responses:
+        '200':
+          description: No response body
+  /api/auth/password-reset/confirm/:
+    post:
+      operationId: auth_password_reset_confirm_create
+      description: |-
+        Confirm Password Reset
+
+        POST /api/auth/password-reset/confirm/
+
+        Request Body:
+        {
+            "token": "reset_token_from_email",
+            "new_password": "NewPass123!",
+            "new_password_confirm": "NewPass123!"
+        }
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PasswordResetConfirm'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PasswordResetConfirm'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PasswordResetConfirm'
+        required: true
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      - {}
+      responses:
+        '200':
+          description: No response body
+  /api/auth/profile/:
+    get:
+      operationId: auth_profile_retrieve
+      description: |-
+        Get or Update User Profile
+
+        GET /api/auth/profile/
+        PATCH /api/auth/profile/
+
+        PATCH Request Body:
+        {
+            "first_name": "John",
+            "last_name": "Doe",
+            "phone": "+1234567890"
+        }
+      tags:
+      - auth
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserProfile'
+          description: ''
+    patch:
+      operationId: auth_profile_partial_update
+      description: |-
+        Get or Update User Profile
+
+        GET /api/auth/profile/
+        PATCH /api/auth/profile/
+
+        PATCH Request Body:
+        {
+            "first_name": "John",
+            "last_name": "Doe",
+            "phone": "+1234567890"
+        }
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedUserProfile'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedUserProfile'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedUserProfile'
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserProfile'
+          description: ''
+  /api/auth/refresh/:
+    post:
+      operationId: auth_refresh_create
+      description: |-
+        Refresh Access Token
+
+        POST /api/auth/refresh/
+
+        Request Body:
+        {
+            "refresh_token": "your_refresh_token"
+        }
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RefreshToken'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RefreshToken'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/RefreshToken'
+        required: true
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      - {}
+      responses:
+        '200':
+          description: No response body
+  /api/auth/register/:
+    post:
+      operationId: auth_register_create
+      description: |-
+        User Registration
+
+        POST /api/auth/register/
+
+        Request Body:
+        {
+            "email": "user@example.com",
+            "password": "SecurePass123!",
+            "password_confirm": "SecurePass123!",
+            "first_name": "John",
+            "last_name": "Doe",
+            "phone": "+1234567890",
+            "role": "ACCOUNTANT",
+            "company": "uuid-here",
+            "branch": "uuid-here"
+        }
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Register'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Register'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Register'
+        required: true
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+  /api/auth/resend-verification/:
+    post:
+      operationId: auth_resend_verification_create
+      description: |-
+        Resend Email Verification
+
+        POST /api/auth/resend-verification/
+
+        Request Body:
+        {
+            "email": "user@example.com"
+        }
+      tags:
+      - auth
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      - {}
+      responses:
+        '200':
+          description: No response body
+  /api/auth/sessions/:
+    get:
+      operationId: auth_sessions_list
+      description: |-
+        Get Active Sessions
+
+        GET /api/auth/sessions/
+      tags:
+      - auth
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ActiveSession'
+          description: ''
+  /api/auth/sessions/{session_id}/:
+    delete:
+      operationId: auth_sessions_destroy
+      description: |-
+        Revoke a Specific Session
+
+        DELETE /api/auth/sessions/{session_id}/
+      parameters:
+      - in: path
+        name: session_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - auth
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/auth/verify-email/:
+    post:
+      operationId: auth_verify_email_create
+      description: |-
+        Verify Email Address
+
+        POST /api/auth/verify-email/
+
+        Request Body:
+        {
+            "token": "verification_token_from_email"
+        }
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmailVerification'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/EmailVerification'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/EmailVerification'
+        required: true
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      - {}
+      responses:
+        '200':
+          description: No response body
+  /api/core/bills/{bill_id}/post/:
+    post:
+      operationId: core_bills_post_create
+      description: Post vendor bill to GL
+      parameters:
+      - in: path
+        name: bill_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - core
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Bill'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Bill'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Bill'
+        required: true
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Bill'
+          description: ''
+  /api/core/branches/:
+    get:
+      operationId: core_branches_list
+      description: |-
+        List branches or create a branch
+        GET/POST /api/core/branches/
+      tags:
+      - core
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Branch'
+          description: ''
+    post:
+      operationId: core_branches_create
+      description: |-
+        List branches or create a branch
+        GET/POST /api/core/branches/
+      tags:
+      - core
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Branch'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Branch'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Branch'
+        required: true
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Branch'
+          description: ''
+  /api/core/branches/{branch_id}/:
+    get:
+      operationId: core_branches_retrieve
+      description: |-
+        Get, update, or soft delete a branch
+        GET/PUT/PATCH/DELETE /api/core/branches/<branch_id>/
+      parameters:
+      - in: path
+        name: branch_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - core
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Branch'
+          description: ''
+    put:
+      operationId: core_branches_update
+      description: |-
+        Get, update, or soft delete a branch
+        GET/PUT/PATCH/DELETE /api/core/branches/<branch_id>/
+      parameters:
+      - in: path
+        name: branch_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - core
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Branch'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Branch'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Branch'
+        required: true
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Branch'
+          description: ''
+    patch:
+      operationId: core_branches_partial_update
+      description: |-
+        Get, update, or soft delete a branch
+        GET/PUT/PATCH/DELETE /api/core/branches/<branch_id>/
+      parameters:
+      - in: path
+        name: branch_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - core
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedBranch'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedBranch'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedBranch'
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Branch'
+          description: ''
+    delete:
+      operationId: core_branches_destroy
+      description: |-
+        Get, update, or soft delete a branch
+        GET/PUT/PATCH/DELETE /api/core/branches/<branch_id>/
+      parameters:
+      - in: path
+        name: branch_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - core
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/core/candidates/:
+    get:
+      operationId: core_candidates_list
+      description: |-
+        List or create candidates
+        GET/POST /api/candidates/
+      tags:
+      - core
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Candidate'
+          description: ''
+    post:
+      operationId: core_candidates_create
+      description: |-
+        List or create candidates
+        GET/POST /api/candidates/
+      tags:
+      - core
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Candidate'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Candidate'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Candidate'
+        required: true
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Candidate'
+          description: ''
+  /api/core/candidates/{candidate_id}/:
+    get:
+      operationId: core_candidates_retrieve
+      description: |-
+        Get or update candidate details
+        GET/PUT /api/candidates/{id}/
+      parameters:
+      - in: path
+        name: candidate_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - core
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Candidate'
+          description: ''
+    put:
+      operationId: core_candidates_update
+      description: |-
+        Get or update candidate details
+        GET/PUT /api/candidates/{id}/
+      parameters:
+      - in: path
+        name: candidate_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - core
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Candidate'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Candidate'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Candidate'
+        required: true
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Candidate'
+          description: ''
+  /api/core/candidates/{candidate_id}/add-cost/:
+    post:
+      operationId: core_candidate_add_cost_create
+      description: |-
+        Add cost to candidate
+        POST /api/candidates/{id}/add-cost/
+      parameters:
+      - in: path
+        name: candidate_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - core
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CandidateCost'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CandidateCost'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CandidateCost'
+        required: true
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CandidateCost'
+          description: ''
+  /api/core/candidates/{candidate_id}/move_stage/:
+    post:
+      operationId: core_candidates_move_stage_create
+      description: |-
+        Move candidate to next stage (especially DEPLOYED → triggers revenue)
+        POST /api/candidates/{id}/move_stage/
+        Body: { "stage": "DEPLOYED" }
+        → Auto-posts journal: DR COGS / CR WIP
+      parameters:
+      - in: path
+        name: candidate_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - core
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Candidate'
+          description: ''
+  /api/core/candidates/{candidate_id}/profitability/:
+    get:
+      operationId: core_candidates_profitability_retrieve
+      description: |-
+        Get per-candidate profitability
+        GET /api/candidates/{id}/profitability/
+      parameters:
+      - in: path
+        name: candidate_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - core
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /api/core/candidates/bulk/add-cost/:
+    post:
+      operationId: core_candidate_bulk_add_cost_create
+      description: Add same cost (e.g., visa fee) to multiple candidates
+      tags:
+      - core
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CandidateCost'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CandidateCost'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CandidateCost'
+        required: true
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /api/core/candidates/bulk/move-stage/:
+    post:
+      operationId: core_candidates_bulk_move_stage_create
+      description: Move multiple candidates to DEPLOYED (triggers revenue)
+      tags:
+      - core
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /api/core/companies/:
+    get:
+      operationId: core_companies_list
+      tags:
+      - core
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Company'
+          description: ''
+    post:
+      operationId: core_companies_create
+      tags:
+      - core
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Company'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Company'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Company'
+        required: true
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Company'
+          description: ''
+  /api/core/companies/{company_id}/:
+    get:
+      operationId: core_companies_retrieve
+      description: |-
+        Get company details
+        GET /api/companies/{id}/
+      parameters:
+      - in: path
+        name: company_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - core
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+          description: ''
+  /api/core/dashboard/stats/:
+    get:
+      operationId: core_dashboard_stats_retrieve
+      description: MAHAD GROUP GLOBAL DASHBOARD — Real-time financial & operational
+        intelligence across 5 countries
+      tags:
+      - core
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: Complete empire overview
+  /api/core/employers/:
+    get:
+      operationId: core_employers_list
+      description: |-
+        List or create employers
+        GET/POST /api/employers/
+      tags:
+      - core
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Employer'
+          description: ''
+    post:
+      operationId: core_employers_create
+      description: |-
+        List or create employers
+        GET/POST /api/employers/
+      tags:
+      - core
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Employer'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Employer'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Employer'
+        required: true
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Employer'
+          description: ''
+  /api/core/employers/{employer_id}/:
+    get:
+      operationId: core_employers_retrieve
+      description: |-
+        Get, update, or delete an employer
+        GET/PUT/PATCH/DELETE /api/employers/{id}/
+      parameters:
+      - in: path
+        name: employer_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - core
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Employer'
+          description: ''
+    put:
+      operationId: core_employers_update
+      description: |-
+        Get, update, or delete an employer
+        GET/PUT/PATCH/DELETE /api/employers/{id}/
+      parameters:
+      - in: path
+        name: employer_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - core
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Employer'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Employer'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Employer'
+        required: true
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Employer'
+          description: ''
+    patch:
+      operationId: core_employers_partial_update
+      description: |-
+        Get, update, or delete an employer
+        GET/PUT/PATCH/DELETE /api/employers/{id}/
+      parameters:
+      - in: path
+        name: employer_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - core
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedEmployer'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedEmployer'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedEmployer'
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Employer'
+          description: ''
+    delete:
+      operationId: core_employers_destroy
+      description: |-
+        Get, update, or delete an employer
+        GET/PUT/PATCH/DELETE /api/employers/{id}/
+      parameters:
+      - in: path
+        name: employer_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - core
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/core/invoices/:
+    get:
+      operationId: core_invoices_list
+      description: |-
+        List invoices
+        GET /api/invoices/
+      tags:
+      - core
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Invoice'
+          description: ''
+  /api/core/invoices/{invoice_id}/:
+    get:
+      operationId: core_invoices_retrieve
+      description: |-
+        Get invoice details
+        GET /api/invoices/{id}/
+      parameters:
+      - in: path
+        name: invoice_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - core
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Invoice'
+          description: ''
+  /api/core/invoices/{invoice_id}/post/:
+    post:
+      operationId: core_invoices_post_create
+      description: |-
+        Post invoice to General Ledger
+        POST /api/invoices/{id}/post/
+      parameters:
+      - in: path
+        name: invoice_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - core
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /api/core/invoices/{invoice_id}/send/:
+    post:
+      operationId: core_invoices_send_create
+      description: |-
+        Send invoice via email (PDF + Stripe/PayPal links)
+        POST /api/invoices/{id}/send/
+      parameters:
+      - in: path
+        name: invoice_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - core
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /api/core/invoices/generate/:
+    post:
+      operationId: core_invoices_generate_create
+      description: |-
+        Generate invoice from deployed candidates
+        POST /api/invoices/generate/
+        Body: {
+            "job_order_id": 1,
+            "candidate_ids": [1, 2, 3],
+            "invoice_date": "2025-01-18"
+        }
+      tags:
+      - core
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Invoice'
+          description: ''
+  /api/core/job-orders/:
+    get:
+      operationId: core_job_orders_list
+      description: |-
+        List or create job orders
+        GET/POST /api/job-orders/
+      tags:
+      - core
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/JobOrder'
+          description: ''
+    post:
+      operationId: core_job_orders_create
+      description: |-
+        List or create job orders
+        GET/POST /api/job-orders/
+      tags:
+      - core
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JobOrder'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/JobOrder'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/JobOrder'
+        required: true
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/JobOrder'
+          description: ''
+  /api/core/job-orders/{job_order_id}/:
+    get:
+      operationId: core_job_orders_retrieve
+      description: |-
+        Get job order details with candidates
+        GET /api/job-orders/{id}/
+      parameters:
+      - in: path
+        name: job_order_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - core
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobOrder'
+          description: ''
+  /api/core/job-orders/{job_order_id}/summary/:
+    get:
+      operationId: core_job_orders_summary_retrieve
+      description: |-
+        Financial summary for a job order
+        GET /api/job-orders/{id}/summary/
+      parameters:
+      - in: path
+        name: job_order_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - core
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /api/core/payments/:
+    post:
+      operationId: core_payments_create
+      description: Record vendor payment
+      tags:
+      - core
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Payment'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Payment'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Payment'
+        required: true
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Payment'
+          description: ''
+  /api/core/receipts/:
+    post:
+      operationId: core_receipts_create
+      description: Record customer payment
+      tags:
+      - core
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Receipt'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Receipt'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Receipt'
+        required: true
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Receipt'
+          description: ''
+  /api/core/vendors/:
+    get:
+      operationId: core_vendors_list
+      description: |-
+        List or create vendors
+        GET/POST /api/vendors/
+      tags:
+      - core
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Vendor'
+          description: ''
+    post:
+      operationId: core_vendors_create
+      description: |-
+        List or create vendors
+        GET/POST /api/vendors/
+      tags:
+      - core
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Vendor'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Vendor'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Vendor'
+        required: true
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Vendor'
+          description: ''
+  /api/core/vendors/{vendor_id}/:
+    get:
+      operationId: core_vendors_retrieve
+      description: |-
+        Get, update, or delete a vendor
+        GET/PUT/PATCH/DELETE /api/vendors/{id}/
+      parameters:
+      - in: path
+        name: vendor_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - core
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vendor'
+          description: ''
+    put:
+      operationId: core_vendors_update
+      description: |-
+        Get, update, or delete a vendor
+        GET/PUT/PATCH/DELETE /api/vendors/{id}/
+      parameters:
+      - in: path
+        name: vendor_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - core
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Vendor'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Vendor'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Vendor'
+        required: true
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vendor'
+          description: ''
+    patch:
+      operationId: core_vendors_partial_update
+      description: |-
+        Get, update, or delete a vendor
+        GET/PUT/PATCH/DELETE /api/vendors/{id}/
+      parameters:
+      - in: path
+        name: vendor_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - core
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedVendor'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedVendor'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedVendor'
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vendor'
+          description: ''
+    delete:
+      operationId: core_vendors_destroy
+      description: |-
+        Get, update, or delete a vendor
+        GET/PUT/PATCH/DELETE /api/vendors/{id}/
+      parameters:
+      - in: path
+        name: vendor_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - core
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/dashboard/:
+    get:
+      operationId: dashboard_retrieve
+      description: |-
+        Main dashboard endpoint - routes to role-specific dashboard
+        GET /api/dashboard/
+      tags:
+      - dashboard
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /api/dashboard/accountant/:
+    get:
+      operationId: dashboard_accountant_retrieve
+      description: |-
+        Accountant Dashboard - Day-to-day operations
+        GET /api/dashboard/accountant/
+      tags:
+      - dashboard
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /api/dashboard/auditor/:
+    get:
+      operationId: dashboard_auditor_retrieve
+      description: |-
+        Auditor Dashboard - Read-only audit and compliance view
+        GET /api/dashboard/auditor/
+      tags:
+      - dashboard
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /api/dashboard/branch-user/:
+    get:
+      operationId: dashboard_branch_user_retrieve
+      description: |-
+        Branch User Dashboard - Candidate operations focus
+        GET /api/dashboard/branch-user/
+      tags:
+      - dashboard
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /api/dashboard/country-manager/:
+    get:
+      operationId: dashboard_country_manager_retrieve
+      description: |-
+        Country Manager Dashboard - Company-specific operations
+        GET /api/dashboard/country-manager/
+      tags:
+      - dashboard
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /api/dashboard/finance-manager/:
+    get:
+      operationId: dashboard_finance_manager_retrieve
+      description: |-
+        Finance Manager Dashboard - Financial operations focus
+        GET /api/dashboard/finance-manager/
+      tags:
+      - dashboard
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /api/dashboard/hq-admin/:
+    get:
+      operationId: dashboard_hq_admin_retrieve
+      description: |-
+        HQ Admin Dashboard - Consolidated view across all companies
+        GET /api/dashboard/hq-admin/
+      tags:
+      - dashboard
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /api/reports/ar_aging/:
+    get:
+      operationId: reports_ar_aging_retrieve
+      parameters:
+      - in: query
+        name: company_id
+        schema:
+          type: string
+          format: uuid
+        description: Company ID
+        required: true
+      tags:
+      - reports
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /api/reports/balance_sheet/:
+    get:
+      operationId: reports_balance_sheet_retrieve
+      parameters:
+      - in: query
+        name: as_of_date
+        schema:
+          type: string
+          format: date
+        description: As of date (YYYY-MM-DD)
+      - in: query
+        name: company_id
+        schema:
+          type: string
+          format: uuid
+        description: Company ID
+        required: true
+      tags:
+      - reports
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /api/reports/candidate_profitability/:
+    get:
+      operationId: reports_candidate_profitability_retrieve
+      parameters:
+      - in: query
+        name: candidate_id
+        schema:
+          type: string
+        description: Candidate id
+        required: true
+      tags:
+      - reports
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /api/reports/cashflow_forecast/:
+    get:
+      operationId: reports_cashflow_forecast_retrieve
+      parameters:
+      - in: query
+        name: company_id
+        schema:
+          type: string
+          format: uuid
+        description: Company ID
+        required: true
+      tags:
+      - reports
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /api/reports/cost_centers/:
+    get:
+      operationId: reports_cost_centers_retrieve
+      parameters:
+      - in: query
+        name: company_id
+        schema:
+          type: string
+          format: uuid
+        description: Company ID
+        required: true
+      tags:
+      - reports
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /api/reports/employer_profitability/:
+    get:
+      operationId: reports_employer_profitability_retrieve
+      parameters:
+      - in: query
+        name: employer_id
+        schema:
+          type: string
+        description: Employer id
+        required: true
+      tags:
+      - reports
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /api/reports/job_order_profitability/:
+    get:
+      operationId: reports_job_order_profitability_retrieve
+      parameters:
+      - in: query
+        name: job_order_id
+        schema:
+          type: string
+        description: Job order id
+        required: true
+      tags:
+      - reports
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /api/reports/profit_loss/:
+    get:
+      operationId: reports_profit_loss_retrieve
+      parameters:
+      - in: query
+        name: candidate_id
+        schema:
+          type: string
+        description: Candidate id (optional)
+      - in: query
+        name: company_id
+        schema:
+          type: string
+          format: uuid
+        description: Company ID
+        required: true
+      - in: query
+        name: detail
+        schema:
+          type: string
+        description: 'Detail level: summary|job|candidate'
+      - in: query
+        name: from_date
+        schema:
+          type: string
+          format: date
+        description: Start date (YYYY-MM-DD)
+      - in: query
+        name: job_order_id
+        schema:
+          type: string
+        description: Job order id (optional)
+      - in: query
+        name: to_date
+        schema:
+          type: string
+          format: date
+        description: End date (YYYY-MM-DD)
+      tags:
+      - reports
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /api/reports/recruitment_kpi/:
+    get:
+      operationId: reports_recruitment_kpi_retrieve
+      parameters:
+      - in: query
+        name: company_id
+        schema:
+          type: string
+          format: uuid
+        description: Company ID
+        required: true
+      tags:
+      - reports
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /api/reports/reports/margin-leaderboard/:
+    get:
+      operationId: reports_reports_margin_leaderboard_retrieve
+      parameters:
+      - in: query
+        name: company_id
+        schema:
+          type: string
+          format: uuid
+        description: Company ID
+        required: true
+      - in: query
+        name: limit
+        schema:
+          type: integer
+        description: Max results to return
+      tags:
+      - reports
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /api/schema/:
+    get:
+      operationId: schema_retrieve
+      description: |-
+        OpenApi3 schema for this API. Format can be selected via content negotiation.
+
+        - YAML: application/vnd.oai.openapi
+        - JSON: application/vnd.oai.openapi+json
+      parameters:
+      - in: query
+        name: format
+        schema:
+          type: string
+          enum:
+          - json
+          - yaml
+      - in: query
+        name: lang
+        schema:
+          type: string
+          enum:
+          - af
+          - ar
+          - ar-dz
+          - ast
+          - az
+          - be
+          - bg
+          - bn
+          - br
+          - bs
+          - ca
+          - ckb
+          - cs
+          - cy
+          - da
+          - de
+          - dsb
+          - el
+          - en
+          - en-au
+          - en-gb
+          - eo
+          - es
+          - es-ar
+          - es-co
+          - es-mx
+          - es-ni
+          - es-ve
+          - et
+          - eu
+          - fa
+          - fi
+          - fr
+          - fy
+          - ga
+          - gd
+          - gl
+          - he
+          - hi
+          - hr
+          - hsb
+          - hu
+          - hy
+          - ia
+          - id
+          - ig
+          - io
+          - is
+          - it
+          - ja
+          - ka
+          - kab
+          - kk
+          - km
+          - kn
+          - ko
+          - ky
+          - lb
+          - lt
+          - lv
+          - mk
+          - ml
+          - mn
+          - mr
+          - ms
+          - my
+          - nb
+          - ne
+          - nl
+          - nn
+          - os
+          - pa
+          - pl
+          - pt
+          - pt-br
+          - ro
+          - ru
+          - sk
+          - sl
+          - sq
+          - sr
+          - sr-latn
+          - sv
+          - sw
+          - ta
+          - te
+          - tg
+          - th
+          - tk
+          - tr
+          - tt
+          - udm
+          - ug
+          - uk
+          - ur
+          - uz
+          - vi
+          - zh-hans
+          - zh-hant
+      tags:
+      - schema
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/vnd.oai.openapi:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/yaml:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/vnd.oai.openapi+json:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+components:
+  schemas:
+    ActiveSession:
+      type: object
+      description: |-
+        Active Session Serializer
+        Displays user's active sessions
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        device_name:
+          type: string
+          readOnly: true
+          nullable: true
+        ip_address:
+          type: string
+          readOnly: true
+          nullable: true
+        user_agent:
+          type: string
+          readOnly: true
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        last_used_at:
+          type: string
+          format: date-time
+          readOnly: true
+        expires_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - created_at
+      - device_name
+      - expires_at
+      - id
+      - ip_address
+      - last_used_at
+      - user_agent
+    BaseCurrencyEnum:
+      enum:
+      - INR
+      - KES
+      - AED
+      - QAR
+      - PHP
+      - USD
+      - EUR
+      type: string
+      description: |-
+        * `INR` - Indian Rupee
+        * `KES` - Kenyan Shilling
+        * `AED` - UAE Dirham
+        * `QAR` - Qatari Riyal
+        * `PHP` - Philippine Peso
+        * `USD` - US Dollar
+        * `EUR` - Euro
+    Bill:
+      type: object
+      description: Serializer for Bill
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        company_name:
+          type: string
+          readOnly: true
+        vendor_name:
+          type: string
+          readOnly: true
+        status_display:
+          type: string
+          readOnly: true
+        lines:
+          type: array
+          items:
+            $ref: '#/components/schemas/BillLine'
+          readOnly: true
+        bill_number:
+          type: string
+          readOnly: true
+        bill_date:
+          type: string
+          format: date
+        due_date:
+          type: string
+          format: date
+        currency:
+          $ref: '#/components/schemas/BaseCurrencyEnum'
+        total_amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,12}(?:\.\d{0,2})?$
+        tax_amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,12}(?:\.\d{0,2})?$
+        amount_paid:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,12}(?:\.\d{0,2})?$
+        status:
+          $ref: '#/components/schemas/BillStatusEnum'
+        posted_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        paid_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        notes:
+          type: string
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        company:
+          type: string
+          format: uuid
+        vendor:
+          type: string
+          format: uuid
+      required:
+      - bill_date
+      - bill_number
+      - company
+      - company_name
+      - created_at
+      - currency
+      - due_date
+      - id
+      - lines
+      - paid_at
+      - posted_at
+      - status_display
+      - updated_at
+      - vendor
+      - vendor_name
+    BillLine:
+      type: object
+      description: Serializer for Bill Line
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        description:
+          type: string
+          maxLength: 500
+        quantity:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: -9223372036854775808
+          format: int64
+        unit_price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,12}(?:\.\d{0,2})?$
+          readOnly: true
+        bill:
+          type: string
+          format: uuid
+      required:
+      - amount
+      - bill
+      - description
+      - id
+      - unit_price
+    BillStatusEnum:
+      enum:
+      - DRAFT
+      - POSTED
+      - PAID
+      - CANCELLED
+      type: string
+      description: |-
+        * `DRAFT` - Draft
+        * `POSTED` - Posted
+        * `PAID` - Paid
+        * `CANCELLED` - Cancelled
+    Branch:
+      type: object
+      description: Serializer for Branch
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        company_name:
+          type: string
+          readOnly: true
+        name:
+          type: string
+          maxLength: 200
+        code:
+          type: string
+          maxLength: 20
+        address:
+          type: string
+        city:
+          type: string
+          nullable: true
+          maxLength: 100
+        state:
+          type: string
+          nullable: true
+          maxLength: 100
+        postal_code:
+          type: string
+          nullable: true
+          maxLength: 20
+        phone:
+          type: string
+          maxLength: 50
+        email:
+          type: string
+          format: email
+          nullable: true
+          maxLength: 254
+        manager_name:
+          type: string
+          nullable: true
+          maxLength: 100
+        manager_email:
+          type: string
+          format: email
+          nullable: true
+          maxLength: 254
+        manager_phone:
+          type: string
+          nullable: true
+          maxLength: 20
+        is_active:
+          type: boolean
+        is_headquarters:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        company:
+          type: string
+          format: uuid
+      required:
+      - address
+      - code
+      - company
+      - company_name
+      - created_at
+      - id
+      - name
+      - phone
+      - updated_at
+    Candidate:
+      type: object
+      description: Serializer for Candidate
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        job_order_title:
+          type: string
+          readOnly: true
+        employer_name:
+          type: string
+          readOnly: true
+        stage_display:
+          type: string
+          readOnly: true
+        costs:
+          type: array
+          items:
+            $ref: '#/components/schemas/CandidateCost'
+          readOnly: true
+        total_costs:
+          type: number
+          readOnly: true
+        full_name:
+          type: string
+          maxLength: 200
+        passport_number:
+          type: string
+          maxLength: 50
+        nationality:
+          type: string
+          maxLength: 100
+        current_stage:
+          $ref: '#/components/schemas/CurrentStageEnum'
+        deployed_date:
+          type: string
+          format: date
+          nullable: true
+        remarks:
+          type: string
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        job_order:
+          type: string
+          format: uuid
+      required:
+      - costs
+      - created_at
+      - employer_name
+      - full_name
+      - id
+      - job_order
+      - job_order_title
+      - nationality
+      - passport_number
+      - stage_display
+      - total_costs
+      - updated_at
+    CandidateCost:
+      type: object
+      description: Serializer for Candidate Cost
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        cost_type_display:
+          type: string
+          readOnly: true
+        vendor_name:
+          type: string
+          readOnly: true
+        cost_type:
+          $ref: '#/components/schemas/CostTypeEnum'
+        amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        currency:
+          $ref: '#/components/schemas/BaseCurrencyEnum'
+        reimbursable:
+          type: boolean
+        description:
+          type: string
+          nullable: true
+        date:
+          type: string
+          format: date
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        candidate:
+          type: string
+          format: uuid
+        vendor:
+          type: string
+          format: uuid
+          nullable: true
+        bill:
+          type: string
+          format: uuid
+          nullable: true
+      required:
+      - amount
+      - candidate
+      - cost_type
+      - cost_type_display
+      - created_at
+      - currency
+      - id
+      - updated_at
+      - vendor_name
+    ChangePassword:
+      type: object
+      description: |-
+        Change Password Serializer
+        Handles password change for authenticated users
+      properties:
+        old_password:
+          type: string
+          writeOnly: true
+          description: Current password
+        new_password:
+          type: string
+          writeOnly: true
+          description: New password
+        new_password_confirm:
+          type: string
+          writeOnly: true
+          description: Confirm new password
+      required:
+      - new_password
+      - new_password_confirm
+      - old_password
+    Company:
+      type: object
+      description: Serializer for Company
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        profile:
+          allOf:
+          - $ref: '#/components/schemas/CompanyProfile'
+          readOnly: true
+        name:
+          type: string
+          maxLength: 200
+        short_name:
+          type: string
+          maxLength: 50
+        code:
+          type: string
+          maxLength: 10
+        country:
+          $ref: '#/components/schemas/CountryEnum'
+        base_currency:
+          $ref: '#/components/schemas/BaseCurrencyEnum'
+        tax_name:
+          type: string
+          maxLength: 50
+        tax_rate:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
+        invoice_prefix:
+          type: string
+          maxLength: 10
+        invoice_counter:
+          type: integer
+          readOnly: true
+        is_active:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - code
+      - country
+      - created_at
+      - id
+      - invoice_counter
+      - name
+      - profile
+      - short_name
+      - updated_at
+    CompanyProfile:
+      type: object
+      description: Serializer for Company Profile
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        legal_name:
+          type: string
+          maxLength: 200
+        tax_registration_number:
+          type: string
+          nullable: true
+          maxLength: 100
+        trade_license:
+          type: string
+          nullable: true
+          maxLength: 100
+        logo:
+          type: string
+          format: uri
+          nullable: true
+        stamp:
+          type: string
+          format: uri
+          nullable: true
+        signature:
+          type: string
+          format: uri
+          nullable: true
+        address:
+          type: string
+        phone:
+          type: string
+          maxLength: 50
+        email:
+          type: string
+          format: email
+          maxLength: 254
+        website:
+          type: string
+          format: uri
+          nullable: true
+          maxLength: 200
+        bank_name:
+          type: string
+          maxLength: 200
+        bank_account_name:
+          type: string
+          maxLength: 200
+        bank_account_number:
+          type: string
+          maxLength: 50
+        iban:
+          type: string
+          nullable: true
+          maxLength: 50
+        swift:
+          type: string
+          nullable: true
+          maxLength: 20
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        company:
+          type: string
+          format: uuid
+      required:
+      - address
+      - bank_account_name
+      - bank_account_number
+      - bank_name
+      - company
+      - created_at
+      - email
+      - id
+      - legal_name
+      - phone
+      - updated_at
+    CostTypeEnum:
+      enum:
+      - VISA
+      - MEDICAL
+      - TICKET
+      - TRAINING
+      - DOCUMENTATION
+      - OTHER
+      type: string
+      description: |-
+        * `VISA` - Visa Fee
+        * `MEDICAL` - Medical Test
+        * `TICKET` - Air Ticket
+        * `TRAINING` - Training
+        * `DOCUMENTATION` - Documentation
+        * `OTHER` - Other
+    CountryEnum:
+      enum:
+      - IN
+      - KE
+      - AE
+      - QA
+      - PH
+      type: string
+      description: |-
+        * `IN` - India
+        * `KE` - Kenya
+        * `AE` - UAE
+        * `QA` - Qatar
+        * `PH` - Philippines
+    CurrentStageEnum:
+      enum:
+      - SOURCING
+      - SCREENING
+      - DOCUMENTATION
+      - VISA
+      - MEDICAL
+      - TICKET
+      - DEPLOYED
+      - INVOICED
+      type: string
+      description: |-
+        * `SOURCING` - Sourcing
+        * `SCREENING` - Screening
+        * `DOCUMENTATION` - Documentation
+        * `VISA` - Visa Processing
+        * `MEDICAL` - Medical
+        * `TICKET` - Ticket Issued
+        * `DEPLOYED` - Deployed
+        * `INVOICED` - Invoiced
+    EmailVerification:
+      type: object
+      description: |-
+        Email Verification Serializer
+        Handles email verification with token
+      properties:
+        token:
+          type: string
+          description: Email verification token
+      required:
+      - token
+    Employer:
+      type: object
+      description: Serializer for Employer
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        code:
+          type: string
+          maxLength: 50
+        name:
+          type: string
+          maxLength: 200
+        country:
+          type: string
+          maxLength: 100
+        contact_person:
+          type: string
+          nullable: true
+          maxLength: 200
+        email:
+          type: string
+          format: email
+          maxLength: 254
+        phone:
+          type: string
+          maxLength: 50
+        address:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - address
+      - code
+      - country
+      - created_at
+      - email
+      - id
+      - name
+      - phone
+      - updated_at
+    Invoice:
+      type: object
+      description: Serializer for Invoice
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        company_name:
+          type: string
+          readOnly: true
+        employer_name:
+          type: string
+          readOnly: true
+        status_display:
+          type: string
+          readOnly: true
+        lines:
+          type: array
+          items:
+            $ref: '#/components/schemas/InvoiceLine'
+          readOnly: true
+        invoice_number:
+          type: string
+          readOnly: true
+        invoice_date:
+          type: string
+          format: date
+        due_date:
+          type: string
+          format: date
+        currency:
+          $ref: '#/components/schemas/BaseCurrencyEnum'
+        total_amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,12}(?:\.\d{0,2})?$
+        tax_amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,12}(?:\.\d{0,2})?$
+        net_amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,12}(?:\.\d{0,2})?$
+        amount_paid:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,12}(?:\.\d{0,2})?$
+        status:
+          $ref: '#/components/schemas/InvoiceStatusEnum'
+        posted_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        paid_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        notes:
+          type: string
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        company:
+          type: string
+          format: uuid
+        employer:
+          type: string
+          format: uuid
+        job_order:
+          type: string
+          format: uuid
+          nullable: true
+        candidate:
+          type: string
+          format: uuid
+          nullable: true
+      required:
+      - company
+      - company_name
+      - created_at
+      - currency
+      - due_date
+      - employer
+      - employer_name
+      - id
+      - invoice_date
+      - invoice_number
+      - lines
+      - paid_at
+      - posted_at
+      - status_display
+      - updated_at
+    InvoiceLine:
+      type: object
+      description: Serializer for Invoice Line
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        candidate_name:
+          type: string
+          readOnly: true
+        description:
+          type: string
+          maxLength: 500
+        quantity:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: -9223372036854775808
+          format: int64
+        unit_price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,12}(?:\.\d{0,2})?$
+          readOnly: true
+        invoice:
+          type: string
+          format: uuid
+        candidate:
+          type: string
+          format: uuid
+          nullable: true
+      required:
+      - amount
+      - candidate_name
+      - description
+      - id
+      - invoice
+      - unit_price
+    InvoiceStatusEnum:
+      enum:
+      - DRAFT
+      - POSTED
+      - SENT
+      - PAID
+      - CANCELLED
+      type: string
+      description: |-
+        * `DRAFT` - Draft
+        * `POSTED` - Posted
+        * `SENT` - Sent
+        * `PAID` - Paid
+        * `CANCELLED` - Cancelled
+    JobOrder:
+      type: object
+      description: Serializer for Job Order
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        company_name:
+          type: string
+          readOnly: true
+        employer_name:
+          type: string
+          readOnly: true
+        candidate_count:
+          type: integer
+          readOnly: true
+        position_title:
+          type: string
+          maxLength: 200
+        num_positions:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: -9223372036854775808
+          format: int64
+        agreed_fee:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        currency:
+          $ref: '#/components/schemas/BaseCurrencyEnum'
+        notes:
+          type: string
+          nullable: true
+        is_active:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        company:
+          type: string
+          format: uuid
+        employer:
+          type: string
+          format: uuid
+      required:
+      - agreed_fee
+      - candidate_count
+      - company
+      - company_name
+      - created_at
+      - employer
+      - employer_name
+      - id
+      - num_positions
+      - position_title
+      - updated_at
+    Login:
+      type: object
+      description: |-
+        User Login Serializer
+        Handles user authentication with email and password
+      properties:
+        email:
+          type: string
+          format: email
+          description: User's email address
+        password:
+          type: string
+          writeOnly: true
+          description: User's password
+        device_name:
+          type: string
+          description: Optional device name for tracking sessions
+      required:
+      - email
+      - password
+    LoginHistory:
+      type: object
+      description: |-
+        Login History Serializer
+        Displays user login history
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        email_attempted:
+          type: string
+          format: email
+          readOnly: true
+        status:
+          allOf:
+          - $ref: '#/components/schemas/LoginHistoryStatusEnum'
+          readOnly: true
+        failure_reason:
+          type: string
+          readOnly: true
+          nullable: true
+        ip_address:
+          type: string
+          readOnly: true
+          nullable: true
+        user_agent:
+          type: string
+          readOnly: true
+          nullable: true
+        country:
+          type: string
+          readOnly: true
+          nullable: true
+        city:
+          type: string
+          readOnly: true
+          nullable: true
+        timestamp:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - city
+      - country
+      - email_attempted
+      - failure_reason
+      - id
+      - ip_address
+      - status
+      - timestamp
+      - user_agent
+    LoginHistoryStatusEnum:
+      enum:
+      - SUCCESS
+      - FAILED
+      - LOCKED
+      - INACTIVE
+      type: string
+      description: |-
+        * `SUCCESS` - Success
+        * `FAILED` - Failed
+        * `LOCKED` - Account Locked
+        * `INACTIVE` - Account Inactive
+    Logout:
+      type: object
+      description: |-
+        Logout Serializer
+        Handles user logout
+      properties:
+        refresh_token:
+          type: string
+          description: Refresh token to revoke
+      required:
+      - refresh_token
+    PasswordResetConfirm:
+      type: object
+      description: |-
+        Password Reset Confirm Serializer
+        Handles password reset with token
+      properties:
+        token:
+          type: string
+          description: Password reset token from email
+        new_password:
+          type: string
+          writeOnly: true
+          description: New password
+        new_password_confirm:
+          type: string
+          writeOnly: true
+          description: Confirm new password
+      required:
+      - new_password
+      - new_password_confirm
+      - token
+    PasswordResetRequest:
+      type: object
+      description: |-
+        Password Reset Request Serializer
+        Handles password reset email requests
+      properties:
+        email:
+          type: string
+          format: email
+          description: Email address associated with the account
+      required:
+      - email
+    PatchedBranch:
+      type: object
+      description: Serializer for Branch
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        company_name:
+          type: string
+          readOnly: true
+        name:
+          type: string
+          maxLength: 200
+        code:
+          type: string
+          maxLength: 20
+        address:
+          type: string
+        city:
+          type: string
+          nullable: true
+          maxLength: 100
+        state:
+          type: string
+          nullable: true
+          maxLength: 100
+        postal_code:
+          type: string
+          nullable: true
+          maxLength: 20
+        phone:
+          type: string
+          maxLength: 50
+        email:
+          type: string
+          format: email
+          nullable: true
+          maxLength: 254
+        manager_name:
+          type: string
+          nullable: true
+          maxLength: 100
+        manager_email:
+          type: string
+          format: email
+          nullable: true
+          maxLength: 254
+        manager_phone:
+          type: string
+          nullable: true
+          maxLength: 20
+        is_active:
+          type: boolean
+        is_headquarters:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        company:
+          type: string
+          format: uuid
+    PatchedEmployer:
+      type: object
+      description: Serializer for Employer
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        code:
+          type: string
+          maxLength: 50
+        name:
+          type: string
+          maxLength: 200
+        country:
+          type: string
+          maxLength: 100
+        contact_person:
+          type: string
+          nullable: true
+          maxLength: 200
+        email:
+          type: string
+          format: email
+          maxLength: 254
+        phone:
+          type: string
+          maxLength: 50
+        address:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+    PatchedUserProfile:
+      type: object
+      description: |-
+        User Profile Serializer
+        Detailed user profile with permissions and company details
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        email:
+          type: string
+          format: email
+          readOnly: true
+        first_name:
+          type: string
+          maxLength: 100
+        last_name:
+          type: string
+          maxLength: 100
+        full_name:
+          type: string
+          description: Get user's full name
+          readOnly: true
+        phone:
+          type: string
+          nullable: true
+          maxLength: 20
+        role:
+          allOf:
+          - $ref: '#/components/schemas/RoleEnum'
+          readOnly: true
+        company:
+          type: string
+          format: uuid
+          readOnly: true
+          nullable: true
+          description: Assigned company (null for HQ_ADMIN)
+        company_details:
+          type: object
+          additionalProperties: {}
+          description: Get company details if assigned
+          readOnly: true
+        branch:
+          type: integer
+          readOnly: true
+          nullable: true
+          description: Assigned branch
+        branch_details:
+          type: object
+          additionalProperties: {}
+          description: Get branch details if assigned
+          readOnly: true
+        is_active:
+          type: boolean
+        is_verified:
+          type: boolean
+        date_joined:
+          type: string
+          format: date-time
+          readOnly: true
+        last_login:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        last_activity:
+          type: string
+          format: date-time
+          nullable: true
+        permissions:
+          type: object
+          additionalProperties: {}
+          description: Return role-based permissions
+          readOnly: true
+    PatchedVendor:
+      type: object
+      description: Serializer for Vendor
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        type_display:
+          type: string
+          readOnly: true
+        name:
+          type: string
+          maxLength: 200
+        type:
+          $ref: '#/components/schemas/TypeEnum'
+        country:
+          type: string
+          maxLength: 100
+        contact:
+          type: string
+          maxLength: 200
+        email:
+          type: string
+          format: email
+          maxLength: 254
+        phone:
+          type: string
+          maxLength: 50
+        address:
+          type: string
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+    Payment:
+      type: object
+      description: Serializer for Payment
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        vendor_name:
+          type: string
+          readOnly: true
+        payment_number:
+          type: string
+          maxLength: 50
+        payment_date:
+          type: string
+          format: date
+        amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,12}(?:\.\d{0,2})?$
+        currency:
+          $ref: '#/components/schemas/BaseCurrencyEnum'
+        payment_method:
+          type: string
+          nullable: true
+          maxLength: 50
+        reference_number:
+          type: string
+          nullable: true
+          maxLength: 100
+        notes:
+          type: string
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        company:
+          type: string
+          format: uuid
+        vendor:
+          type: string
+          format: uuid
+        bill:
+          type: string
+          format: uuid
+          nullable: true
+      required:
+      - amount
+      - company
+      - created_at
+      - currency
+      - id
+      - payment_date
+      - payment_number
+      - updated_at
+      - vendor
+      - vendor_name
+    Receipt:
+      type: object
+      description: Serializer for Receipt
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        employer_name:
+          type: string
+          readOnly: true
+        receipt_number:
+          type: string
+          maxLength: 50
+        receipt_date:
+          type: string
+          format: date
+        amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,12}(?:\.\d{0,2})?$
+        currency:
+          $ref: '#/components/schemas/BaseCurrencyEnum'
+        payment_method:
+          type: string
+          nullable: true
+          maxLength: 50
+        reference_number:
+          type: string
+          nullable: true
+          maxLength: 100
+        notes:
+          type: string
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        company:
+          type: string
+          format: uuid
+        employer:
+          type: string
+          format: uuid
+        invoice:
+          type: string
+          format: uuid
+          nullable: true
+      required:
+      - amount
+      - company
+      - created_at
+      - currency
+      - employer
+      - employer_name
+      - id
+      - receipt_date
+      - receipt_number
+      - updated_at
+    RefreshToken:
+      type: object
+      description: |-
+        Refresh Token Serializer
+        Handles access token refresh
+      properties:
+        refresh_token:
+          type: string
+          description: Refresh token received during login
+      required:
+      - refresh_token
+    Register:
+      type: object
+      description: |-
+        User Registration Serializer
+        Handles new user registration with validation
+      properties:
+        email:
+          type: string
+          format: email
+          maxLength: 255
+        password:
+          type: string
+          writeOnly: true
+          description: Password must be at least 8 characters with letters, numbers,
+            and special characters
+        password_confirm:
+          type: string
+          writeOnly: true
+          description: Re-enter your password for confirmation
+        first_name:
+          type: string
+          maxLength: 100
+        last_name:
+          type: string
+          maxLength: 100
+        phone:
+          type: string
+          nullable: true
+          maxLength: 20
+        role:
+          $ref: '#/components/schemas/RoleEnum'
+        company:
+          type: string
+          format: uuid
+          nullable: true
+          description: Assigned company (null for HQ_ADMIN)
+        branch:
+          type: integer
+          nullable: true
+          description: Assigned branch
+      required:
+      - email
+      - first_name
+      - last_name
+      - password
+      - password_confirm
+      - role
+    RoleEnum:
+      enum:
+      - HQ_ADMIN
+      - COUNTRY_MANAGER
+      - FINANCE_MANAGER
+      - ACCOUNTANT
+      - BRANCH_USER
+      - AUDITOR
+      type: string
+      description: |-
+        * `HQ_ADMIN` - HQ Admin
+        * `COUNTRY_MANAGER` - Country Manager
+        * `FINANCE_MANAGER` - Finance Manager
+        * `ACCOUNTANT` - Accountant
+        * `BRANCH_USER` - Branch User
+        * `AUDITOR` - Auditor
+    TypeEnum:
+      enum:
+      - VISA_AGENT
+      - MEDICAL
+      - AIRLINE
+      - TRAINING
+      - OTHER
+      type: string
+      description: |-
+        * `VISA_AGENT` - Visa Agent
+        * `MEDICAL` - Medical Center
+        * `AIRLINE` - Airline
+        * `TRAINING` - Training Center
+        * `OTHER` - Other
+    User:
+      type: object
+      description: |-
+        Basic User Serializer
+        Used for displaying user information in responses
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        email:
+          type: string
+          format: email
+          maxLength: 255
+        first_name:
+          type: string
+          maxLength: 100
+        last_name:
+          type: string
+          maxLength: 100
+        full_name:
+          type: string
+          readOnly: true
+        phone:
+          type: string
+          nullable: true
+          maxLength: 20
+        role:
+          $ref: '#/components/schemas/RoleEnum'
+        company:
+          type: string
+          format: uuid
+          nullable: true
+          description: Assigned company (null for HQ_ADMIN)
+        company_name:
+          type: string
+          readOnly: true
+        branch:
+          type: integer
+          nullable: true
+          description: Assigned branch
+        branch_name:
+          type: string
+          readOnly: true
+        is_active:
+          type: boolean
+        is_verified:
+          type: boolean
+        date_joined:
+          type: string
+          format: date-time
+          readOnly: true
+        last_login:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+      required:
+      - branch_name
+      - company_name
+      - date_joined
+      - email
+      - first_name
+      - full_name
+      - id
+      - last_login
+      - last_name
+      - role
+    UserProfile:
+      type: object
+      description: |-
+        User Profile Serializer
+        Detailed user profile with permissions and company details
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        email:
+          type: string
+          format: email
+          readOnly: true
+        first_name:
+          type: string
+          maxLength: 100
+        last_name:
+          type: string
+          maxLength: 100
+        full_name:
+          type: string
+          description: Get user's full name
+          readOnly: true
+        phone:
+          type: string
+          nullable: true
+          maxLength: 20
+        role:
+          allOf:
+          - $ref: '#/components/schemas/RoleEnum'
+          readOnly: true
+        company:
+          type: string
+          format: uuid
+          readOnly: true
+          nullable: true
+          description: Assigned company (null for HQ_ADMIN)
+        company_details:
+          type: object
+          additionalProperties: {}
+          description: Get company details if assigned
+          readOnly: true
+        branch:
+          type: integer
+          readOnly: true
+          nullable: true
+          description: Assigned branch
+        branch_details:
+          type: object
+          additionalProperties: {}
+          description: Get branch details if assigned
+          readOnly: true
+        is_active:
+          type: boolean
+        is_verified:
+          type: boolean
+        date_joined:
+          type: string
+          format: date-time
+          readOnly: true
+        last_login:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        last_activity:
+          type: string
+          format: date-time
+          nullable: true
+        permissions:
+          type: object
+          additionalProperties: {}
+          description: Return role-based permissions
+          readOnly: true
+      required:
+      - branch
+      - branch_details
+      - company
+      - company_details
+      - date_joined
+      - email
+      - first_name
+      - full_name
+      - id
+      - last_login
+      - last_name
+      - permissions
+      - role
+    Vendor:
+      type: object
+      description: Serializer for Vendor
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        type_display:
+          type: string
+          readOnly: true
+        name:
+          type: string
+          maxLength: 200
+        type:
+          $ref: '#/components/schemas/TypeEnum'
+        country:
+          type: string
+          maxLength: 100
+        contact:
+          type: string
+          maxLength: 200
+        email:
+          type: string
+          format: email
+          maxLength: 254
+        phone:
+          type: string
+          maxLength: 50
+        address:
+          type: string
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - contact
+      - country
+      - created_at
+      - email
+      - id
+      - name
+      - phone
+      - type_display
+      - updated_at
+  securitySchemes:
+    jwtAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+servers:
+- url: http://localhost:8000
+  description: Local development server

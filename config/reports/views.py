@@ -65,7 +65,8 @@ def convert_currency(amount: Decimal, from_currency: str, to_currency: str, date
         OpenApiParameter('job_order_id', OpenApiTypes.STR, description='Job order id (optional)', required=False),
         OpenApiParameter('candidate_id', OpenApiTypes.STR, description='Candidate id (optional)', required=False),
         OpenApiParameter('detail', OpenApiTypes.STR, description='Detail level: summary|job|candidate', required=False),
-    ]
+    ],
+    responses=OpenApiTypes.OBJECT
 )
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
@@ -183,7 +184,8 @@ def profit_loss_report(request):
     parameters=[
         OpenApiParameter('company_id', OpenApiTypes.UUID, description='Company ID', required=True),
         OpenApiParameter('as_of_date', OpenApiTypes.DATE, description='As of date (YYYY-MM-DD)', required=False),
-    ]
+    ],
+    responses=OpenApiTypes.OBJECT
 )
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
@@ -241,6 +243,8 @@ def balance_sheet_report(request):
     parameters=[
         OpenApiParameter('company_id', OpenApiTypes.UUID, description='Company ID', required=True),
     ]
+    ,
+    responses=OpenApiTypes.OBJECT
 )
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
@@ -295,7 +299,8 @@ def ar_aging_report(request):
 @extend_schema(
     parameters=[
         OpenApiParameter('job_order_id', OpenApiTypes.STR, description='Job order id', required=True),
-    ]
+    ],
+    responses=OpenApiTypes.OBJECT
 )
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
@@ -333,7 +338,8 @@ def job_order_profitability_view(request):
 @extend_schema(
     parameters=[
         OpenApiParameter('employer_id', OpenApiTypes.STR, description='Employer id', required=True),
-    ]
+    ],
+    responses=OpenApiTypes.OBJECT
 )
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
@@ -370,7 +376,8 @@ def employer_profitability_view(request):
 @extend_schema(
     parameters=[
         OpenApiParameter('company_id', OpenApiTypes.UUID, description='Company ID', required=True),
-    ]
+    ],
+    responses=OpenApiTypes.OBJECT
 )
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
@@ -397,7 +404,8 @@ def recruitment_kpi_dashboard(request):
 @extend_schema(
     parameters=[
         OpenApiParameter('company_id', OpenApiTypes.UUID, description='Company ID', required=True),
-    ]
+    ],
+    responses=OpenApiTypes.OBJECT
 )
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
@@ -424,7 +432,8 @@ def cost_center_report_view(request):
 @extend_schema(
     parameters=[
         OpenApiParameter('company_id', OpenApiTypes.UUID, description='Company ID', required=True),
-    ]
+    ],
+    responses=OpenApiTypes.OBJECT
 )
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
@@ -463,7 +472,8 @@ def cashflow_forecast_view(request):
 @extend_schema(
     parameters=[
         OpenApiParameter('candidate_id', OpenApiTypes.STR, description='Candidate id', required=True),
-    ]
+    ],
+    responses=OpenApiTypes.OBJECT
 )
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
@@ -585,6 +595,8 @@ from django.utils import timezone
         OpenApiParameter('company_id', OpenApiTypes.UUID, description='Company ID', required=True),
         OpenApiParameter('limit', OpenApiTypes.INT, description='Max results to return', required=False),
     ]
+    ,
+    responses=OpenApiTypes.OBJECT
 )
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])

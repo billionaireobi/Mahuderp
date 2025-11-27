@@ -158,7 +158,6 @@ def login(request):
     
     return Response({
         'message': 'Login successful',
-        'access': access_token,
         'refresh': refresh_token_str,
         'user': UserSerializer(user).data,
         'expires_in': int(settings.SIMPLE_JWT['ACCESS_TOKEN_LIFETIME'].total_seconds())
