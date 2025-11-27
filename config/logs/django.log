@@ -818,3 +818,703 @@ django.core.exceptions.ValidationError: ['No FX rate found: INR → USD']
 [INFO] 2025-11-26 11:23:53 basehttp 9701 139954779842240 - "GET /api/core/dashboard/stats/ HTTP/1.1" 200 907
 [INFO] 2025-11-26 11:24:09 basehttp 9701 139954779842240 - "GET /api/core/dashboard/stats/ HTTP/1.1" 200 907
 [INFO] 2025-11-26 11:26:22 basehttp 9701 139954788234944 - "GET /api/core/dashboard/stats/ HTTP/1.1" 200 907
+[INFO] 2025-11-26 13:15:05 autoreload 7040 7152 - Watching for file changes with StatReloader
+[INFO] 2025-11-26 13:15:10 basehttp 7040 5968 - "GET / HTTP/1.1" 200 405
+[WARNING] 2025-11-26 13:15:11 basehttp 7040 5968 - "GET /favicon.ico HTTP/1.1" 404 3834
+[INFO] 2025-11-26 13:15:36 basehttp 7040 12148 - "GET /api/docs/ HTTP/1.1" 200 4659
+[ERROR] 2025-11-26 13:15:37 log 7040 12148 - Internal Server Error: /api/schema/
+Traceback (most recent call last):
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\django\views\generic\base.py", line 105, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\views.py", line 84, in get
+    return self._get_schema_response(request)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\views.py", line 92, in _get_schema_response
+    data=generator.get_schema(request=request, public=self.serve_public),
+         ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\generators.py", line 287, in get_schema
+    paths=self.parse(request, public),
+          ~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\generators.py", line 258, in parse
+    operation = view.schema.get_operation(
+        path, path_regex, path_prefix, method, self.registry
+    )
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\utils.py", line 451, in get_operation
+    return super().get_operation(path, path_regex, path_prefix, method, registry)
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\openapi.py", line 113, in get_operation
+    operation['responses'] = self._get_response_bodies()
+                             ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\openapi.py", line 1407, in _get_response_bodies
+    return {'200': self._get_response_for_code(response_serializers, '200', direction=direction)}
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\openapi.py", line 1459, in _get_response_for_code
+    schema = self._unwrap_list_serializer(serializer.child, direction)
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\openapi.py", line 1436, in _unwrap_list_serializer
+    component = self.resolve_serializer(serializer, direction)
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\openapi.py", line 1658, in resolve_serializer
+    component.schema = self._map_serializer(serializer, direction, bypass_extensions)
+                       ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\openapi.py", line 959, in _map_serializer
+    schema = self._map_basic_serializer(serializer, direction)
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\openapi.py", line 1052, in _map_basic_serializer
+    for field in serializer.fields.values():
+                 ^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\django\utils\functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\rest_framework\serializers.py", line 356, in fields
+    for key, value in self.get_fields().items():
+                      ~~~~~~~~~~~~~~~^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\rest_framework\serializers.py", line 1086, in get_fields
+    fields[field_name] = field_class(**field_kwargs)
+                         ~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\rest_framework\fields.py", line 862, in __init__
+    validators, error_message = ip_address_validators(protocol, self.unpack_ipv4)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: not enough values to unpack (expected 2, got 1)
+[ERROR] 2025-11-26 13:15:37 basehttp 7040 12148 - "GET /api/schema/ HTTP/1.1" 500 202331
+[ERROR] 2025-11-26 13:15:37 log 7040 12148 - Internal Server Error: /api/schema/
+Traceback (most recent call last):
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\django\views\generic\base.py", line 105, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\views.py", line 84, in get
+    return self._get_schema_response(request)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\views.py", line 92, in _get_schema_response
+    data=generator.get_schema(request=request, public=self.serve_public),
+         ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\generators.py", line 287, in get_schema
+    paths=self.parse(request, public),
+          ~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\generators.py", line 258, in parse
+    operation = view.schema.get_operation(
+        path, path_regex, path_prefix, method, self.registry
+    )
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\utils.py", line 451, in get_operation
+    return super().get_operation(path, path_regex, path_prefix, method, registry)
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\openapi.py", line 113, in get_operation
+    operation['responses'] = self._get_response_bodies()
+                             ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\openapi.py", line 1407, in _get_response_bodies
+    return {'200': self._get_response_for_code(response_serializers, '200', direction=direction)}
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\openapi.py", line 1459, in _get_response_for_code
+    schema = self._unwrap_list_serializer(serializer.child, direction)
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\openapi.py", line 1436, in _unwrap_list_serializer
+    component = self.resolve_serializer(serializer, direction)
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\openapi.py", line 1658, in resolve_serializer
+    component.schema = self._map_serializer(serializer, direction, bypass_extensions)
+                       ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\openapi.py", line 959, in _map_serializer
+    schema = self._map_basic_serializer(serializer, direction)
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\openapi.py", line 1052, in _map_basic_serializer
+    for field in serializer.fields.values():
+                 ^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\django\utils\functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\rest_framework\serializers.py", line 356, in fields
+    for key, value in self.get_fields().items():
+                      ~~~~~~~~~~~~~~~^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\rest_framework\serializers.py", line 1086, in get_fields
+    fields[field_name] = field_class(**field_kwargs)
+                         ~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\rest_framework\fields.py", line 862, in __init__
+    validators, error_message = ip_address_validators(protocol, self.unpack_ipv4)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: not enough values to unpack (expected 2, got 1)
+[ERROR] 2025-11-26 13:15:37 basehttp 7040 12148 - "GET /api/schema/ HTTP/1.1" 500 202331
+[INFO] 2025-11-26 13:16:01 basehttp 7040 12148 - "GET /api/docs/ HTTP/1.1" 200 4659
+[ERROR] 2025-11-26 13:16:01 log 7040 12148 - Internal Server Error: /api/schema/
+Traceback (most recent call last):
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\django\views\generic\base.py", line 105, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\views.py", line 84, in get
+    return self._get_schema_response(request)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\views.py", line 92, in _get_schema_response
+    data=generator.get_schema(request=request, public=self.serve_public),
+         ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\generators.py", line 287, in get_schema
+    paths=self.parse(request, public),
+          ~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\generators.py", line 258, in parse
+    operation = view.schema.get_operation(
+        path, path_regex, path_prefix, method, self.registry
+    )
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\utils.py", line 451, in get_operation
+    return super().get_operation(path, path_regex, path_prefix, method, registry)
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\openapi.py", line 113, in get_operation
+    operation['responses'] = self._get_response_bodies()
+                             ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\openapi.py", line 1407, in _get_response_bodies
+    return {'200': self._get_response_for_code(response_serializers, '200', direction=direction)}
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\openapi.py", line 1459, in _get_response_for_code
+    schema = self._unwrap_list_serializer(serializer.child, direction)
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\openapi.py", line 1436, in _unwrap_list_serializer
+    component = self.resolve_serializer(serializer, direction)
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\openapi.py", line 1658, in resolve_serializer
+    component.schema = self._map_serializer(serializer, direction, bypass_extensions)
+                       ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\openapi.py", line 959, in _map_serializer
+    schema = self._map_basic_serializer(serializer, direction)
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\openapi.py", line 1052, in _map_basic_serializer
+    for field in serializer.fields.values():
+                 ^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\django\utils\functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\rest_framework\serializers.py", line 356, in fields
+    for key, value in self.get_fields().items():
+                      ~~~~~~~~~~~~~~~^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\rest_framework\serializers.py", line 1086, in get_fields
+    fields[field_name] = field_class(**field_kwargs)
+                         ~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\rest_framework\fields.py", line 862, in __init__
+    validators, error_message = ip_address_validators(protocol, self.unpack_ipv4)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: not enough values to unpack (expected 2, got 1)
+[ERROR] 2025-11-26 13:16:01 basehttp 7040 12148 - "GET /api/schema/ HTTP/1.1" 500 202331
+[ERROR] 2025-11-26 13:16:01 log 7040 12148 - Internal Server Error: /api/schema/
+Traceback (most recent call last):
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\django\views\generic\base.py", line 105, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\views.py", line 84, in get
+    return self._get_schema_response(request)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\views.py", line 92, in _get_schema_response
+    data=generator.get_schema(request=request, public=self.serve_public),
+         ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\generators.py", line 287, in get_schema
+    paths=self.parse(request, public),
+          ~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\generators.py", line 258, in parse
+    operation = view.schema.get_operation(
+        path, path_regex, path_prefix, method, self.registry
+    )
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\utils.py", line 451, in get_operation
+    return super().get_operation(path, path_regex, path_prefix, method, registry)
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\openapi.py", line 113, in get_operation
+    operation['responses'] = self._get_response_bodies()
+                             ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\openapi.py", line 1407, in _get_response_bodies
+    return {'200': self._get_response_for_code(response_serializers, '200', direction=direction)}
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\openapi.py", line 1459, in _get_response_for_code
+    schema = self._unwrap_list_serializer(serializer.child, direction)
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\openapi.py", line 1436, in _unwrap_list_serializer
+    component = self.resolve_serializer(serializer, direction)
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\openapi.py", line 1658, in resolve_serializer
+    component.schema = self._map_serializer(serializer, direction, bypass_extensions)
+                       ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\openapi.py", line 959, in _map_serializer
+    schema = self._map_basic_serializer(serializer, direction)
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\openapi.py", line 1052, in _map_basic_serializer
+    for field in serializer.fields.values():
+                 ^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\django\utils\functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\rest_framework\serializers.py", line 356, in fields
+    for key, value in self.get_fields().items():
+                      ~~~~~~~~~~~~~~~^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\rest_framework\serializers.py", line 1086, in get_fields
+    fields[field_name] = field_class(**field_kwargs)
+                         ~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\rest_framework\fields.py", line 862, in __init__
+    validators, error_message = ip_address_validators(protocol, self.unpack_ipv4)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: not enough values to unpack (expected 2, got 1)
+[ERROR] 2025-11-26 13:16:01 basehttp 7040 12148 - "GET /api/schema/ HTTP/1.1" 500 202331
+[INFO] 2025-11-26 13:16:02 basehttp 7040 12148 - "GET /api/docs/ HTTP/1.1" 200 4659
+[ERROR] 2025-11-26 13:16:02 log 7040 12148 - Internal Server Error: /api/schema/
+Traceback (most recent call last):
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\django\views\generic\base.py", line 105, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\views.py", line 84, in get
+    return self._get_schema_response(request)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\views.py", line 92, in _get_schema_response
+    data=generator.get_schema(request=request, public=self.serve_public),
+         ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\generators.py", line 287, in get_schema
+    paths=self.parse(request, public),
+          ~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\generators.py", line 258, in parse
+    operation = view.schema.get_operation(
+        path, path_regex, path_prefix, method, self.registry
+    )
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\utils.py", line 451, in get_operation
+    return super().get_operation(path, path_regex, path_prefix, method, registry)
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\openapi.py", line 113, in get_operation
+    operation['responses'] = self._get_response_bodies()
+                             ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\openapi.py", line 1407, in _get_response_bodies
+    return {'200': self._get_response_for_code(response_serializers, '200', direction=direction)}
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\openapi.py", line 1459, in _get_response_for_code
+    schema = self._unwrap_list_serializer(serializer.child, direction)
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\openapi.py", line 1436, in _unwrap_list_serializer
+    component = self.resolve_serializer(serializer, direction)
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\openapi.py", line 1658, in resolve_serializer
+    component.schema = self._map_serializer(serializer, direction, bypass_extensions)
+                       ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\openapi.py", line 959, in _map_serializer
+    schema = self._map_basic_serializer(serializer, direction)
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\openapi.py", line 1052, in _map_basic_serializer
+    for field in serializer.fields.values():
+                 ^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\django\utils\functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\rest_framework\serializers.py", line 356, in fields
+    for key, value in self.get_fields().items():
+                      ~~~~~~~~~~~~~~~^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\rest_framework\serializers.py", line 1086, in get_fields
+    fields[field_name] = field_class(**field_kwargs)
+                         ~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\rest_framework\fields.py", line 862, in __init__
+    validators, error_message = ip_address_validators(protocol, self.unpack_ipv4)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: not enough values to unpack (expected 2, got 1)
+[ERROR] 2025-11-26 13:16:02 basehttp 7040 12148 - "GET /api/schema/ HTTP/1.1" 500 202331
+[ERROR] 2025-11-26 13:16:03 log 7040 12148 - Internal Server Error: /api/schema/
+Traceback (most recent call last):
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\django\views\generic\base.py", line 105, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\views.py", line 84, in get
+    return self._get_schema_response(request)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\views.py", line 92, in _get_schema_response
+    data=generator.get_schema(request=request, public=self.serve_public),
+         ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\generators.py", line 287, in get_schema
+    paths=self.parse(request, public),
+          ~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\generators.py", line 258, in parse
+    operation = view.schema.get_operation(
+        path, path_regex, path_prefix, method, self.registry
+    )
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\utils.py", line 451, in get_operation
+    return super().get_operation(path, path_regex, path_prefix, method, registry)
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\openapi.py", line 113, in get_operation
+    operation['responses'] = self._get_response_bodies()
+                             ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\openapi.py", line 1407, in _get_response_bodies
+    return {'200': self._get_response_for_code(response_serializers, '200', direction=direction)}
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\openapi.py", line 1459, in _get_response_for_code
+    schema = self._unwrap_list_serializer(serializer.child, direction)
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\openapi.py", line 1436, in _unwrap_list_serializer
+    component = self.resolve_serializer(serializer, direction)
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\openapi.py", line 1658, in resolve_serializer
+    component.schema = self._map_serializer(serializer, direction, bypass_extensions)
+                       ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\openapi.py", line 959, in _map_serializer
+    schema = self._map_basic_serializer(serializer, direction)
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\openapi.py", line 1052, in _map_basic_serializer
+    for field in serializer.fields.values():
+                 ^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\django\utils\functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\rest_framework\serializers.py", line 356, in fields
+    for key, value in self.get_fields().items():
+                      ~~~~~~~~~~~~~~~^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\rest_framework\serializers.py", line 1086, in get_fields
+    fields[field_name] = field_class(**field_kwargs)
+                         ~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\rest_framework\fields.py", line 862, in __init__
+    validators, error_message = ip_address_validators(protocol, self.unpack_ipv4)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: not enough values to unpack (expected 2, got 1)
+[ERROR] 2025-11-26 13:16:03 basehttp 7040 12148 - "GET /api/schema/ HTTP/1.1" 500 202331
+[INFO] 2025-11-26 13:16:27 basehttp 7040 12148 - "GET /api/docs/ HTTP/1.1" 200 4659
+[ERROR] 2025-11-26 13:16:27 log 7040 12148 - Internal Server Error: /api/schema/
+Traceback (most recent call last):
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\django\views\generic\base.py", line 105, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\views.py", line 84, in get
+    return self._get_schema_response(request)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\views.py", line 92, in _get_schema_response
+    data=generator.get_schema(request=request, public=self.serve_public),
+         ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\generators.py", line 287, in get_schema
+    paths=self.parse(request, public),
+          ~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\generators.py", line 258, in parse
+    operation = view.schema.get_operation(
+        path, path_regex, path_prefix, method, self.registry
+    )
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\utils.py", line 451, in get_operation
+    return super().get_operation(path, path_regex, path_prefix, method, registry)
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\openapi.py", line 113, in get_operation
+    operation['responses'] = self._get_response_bodies()
+                             ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\openapi.py", line 1407, in _get_response_bodies
+    return {'200': self._get_response_for_code(response_serializers, '200', direction=direction)}
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\openapi.py", line 1459, in _get_response_for_code
+    schema = self._unwrap_list_serializer(serializer.child, direction)
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\openapi.py", line 1436, in _unwrap_list_serializer
+    component = self.resolve_serializer(serializer, direction)
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\openapi.py", line 1658, in resolve_serializer
+    component.schema = self._map_serializer(serializer, direction, bypass_extensions)
+                       ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\openapi.py", line 959, in _map_serializer
+    schema = self._map_basic_serializer(serializer, direction)
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\openapi.py", line 1052, in _map_basic_serializer
+    for field in serializer.fields.values():
+                 ^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\django\utils\functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\rest_framework\serializers.py", line 356, in fields
+    for key, value in self.get_fields().items():
+                      ~~~~~~~~~~~~~~~^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\rest_framework\serializers.py", line 1086, in get_fields
+    fields[field_name] = field_class(**field_kwargs)
+                         ~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\rest_framework\fields.py", line 862, in __init__
+    validators, error_message = ip_address_validators(protocol, self.unpack_ipv4)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: not enough values to unpack (expected 2, got 1)
+[ERROR] 2025-11-26 13:16:27 basehttp 7040 12148 - "GET /api/schema/ HTTP/1.1" 500 202331
+[ERROR] 2025-11-26 13:16:27 log 7040 12148 - Internal Server Error: /api/schema/
+Traceback (most recent call last):
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\django\views\generic\base.py", line 105, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\views.py", line 84, in get
+    return self._get_schema_response(request)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\views.py", line 92, in _get_schema_response
+    data=generator.get_schema(request=request, public=self.serve_public),
+         ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\generators.py", line 287, in get_schema
+    paths=self.parse(request, public),
+          ~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\generators.py", line 258, in parse
+    operation = view.schema.get_operation(
+        path, path_regex, path_prefix, method, self.registry
+    )
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\utils.py", line 451, in get_operation
+    return super().get_operation(path, path_regex, path_prefix, method, registry)
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\openapi.py", line 113, in get_operation
+    operation['responses'] = self._get_response_bodies()
+                             ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\openapi.py", line 1407, in _get_response_bodies
+    return {'200': self._get_response_for_code(response_serializers, '200', direction=direction)}
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\openapi.py", line 1459, in _get_response_for_code
+    schema = self._unwrap_list_serializer(serializer.child, direction)
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\openapi.py", line 1436, in _unwrap_list_serializer
+    component = self.resolve_serializer(serializer, direction)
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\openapi.py", line 1658, in resolve_serializer
+    component.schema = self._map_serializer(serializer, direction, bypass_extensions)
+                       ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\openapi.py", line 959, in _map_serializer
+    schema = self._map_basic_serializer(serializer, direction)
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\drf_spectacular\openapi.py", line 1052, in _map_basic_serializer
+    for field in serializer.fields.values():
+                 ^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\django\utils\functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\rest_framework\serializers.py", line 356, in fields
+    for key, value in self.get_fields().items():
+                      ~~~~~~~~~~~~~~~^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\rest_framework\serializers.py", line 1086, in get_fields
+    fields[field_name] = field_class(**field_kwargs)
+                         ~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\rest_framework\fields.py", line 862, in __init__
+    validators, error_message = ip_address_validators(protocol, self.unpack_ipv4)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: not enough values to unpack (expected 2, got 1)
+[ERROR] 2025-11-26 13:16:27 basehttp 7040 12148 - "GET /api/schema/ HTTP/1.1" 500 202331
+[INFO] 2025-11-26 13:20:03 autoreload 7040 7152 - C:\Users\Administrator\Desktop\mahuderp\Mahuderp\venv\Lib\site-packages\rest_framework\fields.py changed, reloading.
+[INFO] 2025-11-26 13:20:05 autoreload 2816 2104 - Watching for file changes with StatReloader
+[INFO] 2025-11-26 13:21:52 basehttp 2816 9440 - "GET /api/docs/ HTTP/1.1" 200 4659
+[INFO] 2025-11-26 13:21:52 basehttp 2816 9440 - "GET /api/schema/ HTTP/1.1" 200 183135
+[INFO] 2025-11-26 13:23:11 basehttp 2816 6052 - "OPTIONS /api/auth/login/ HTTP/1.1" 200 0
+[INFO] 2025-11-26 13:23:11 basehttp 2816 6052 - "POST /api/auth/login/ HTTP/1.1" 200 1009
+[INFO] 2025-11-26 13:24:07 basehttp 2816 6052 - "OPTIONS /api/core/branches/ HTTP/1.1" 200 0
+[INFO] 2025-11-26 13:24:07 basehttp 2816 6052 - "GET /api/core/branches/ HTTP/1.1" 200 3945
+[INFO] 2025-11-26 13:24:28 basehttp 2816 6052 - "OPTIONS /api/core/candidates/ HTTP/1.1" 200 0
+[INFO] 2025-11-26 13:24:28 basehttp 2816 6052 - "GET /api/core/candidates/ HTTP/1.1" 200 27
+[INFO] 2025-11-26 13:26:55 basehttp 2816 6052 - "OPTIONS /api/reports/reports/margin-leaderboard/ HTTP/1.1" 200 0
+[ERROR] 2025-11-26 13:26:55 log 2816 6052 - Internal Server Error: /api/reports/reports/margin-leaderboard/
+Traceback (most recent call last):
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\django\views\generic\base.py", line 105, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\rest_framework\decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\config\reports\views.py", line 521, in margin_leaderboard_view
+    ).filter(revenue__gt=0).order_by('-margin', '-profit')[:limit]
+      ~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\django\db\models\query.py", line 1495, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\django\db\models\query.py", line 1513, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\django\db\models\query.py", line 1523, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\django\db\models\sql\query.py", line 1646, in add_q
+    clause, _ = self._add_q(q_object, can_reuse)
+                ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\django\db\models\sql\query.py", line 1678, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ~~~~~~~~~~~~~~~~~^
+        child,
+        ^^^^^^
+    ...<7 lines>...
+        update_join_types=update_join_types,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\django\db\models\sql\query.py", line 1544, in build_filter
+    condition = self.build_lookup(lookups, reffed_expression, value)
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\django\db\models\sql\query.py", line 1405, in build_lookup
+    lookup_class = lhs.get_lookup(lookup_name)
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\django\db\models\expressions.py", line 403, in get_lookup
+    return self.output_field.get_lookup(lookup)
+           ^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\django\utils\functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\django\db\models\expressions.py", line 327, in output_field
+    output_field = self._resolve_output_field()
+  File "C:\Users\Administrator\Desktop\mahuderp\mahuderp\venv\Lib\site-packages\django\db\models\expressions.py", line 365, in _resolve_output_field
+    raise FieldError(
+    ...<6 lines>...
+    )
+django.core.exceptions.FieldError: Expression contains mixed types: DecimalField, IntegerField. You must set output_field.
+[ERROR] 2025-11-26 13:26:55 basehttp 2816 6052 - "GET /api/reports/reports/margin-leaderboard/ HTTP/1.1" 500 167904
+[INFO] 2025-11-26 13:28:42 autoreload 2816 2104 - C:\Users\Administrator\Desktop\mahuderp\Mahuderp\config\reports\views.py changed, reloading.
+[INFO] 2025-11-26 13:28:43 autoreload 4176 2032 - Watching for file changes with StatReloader
+[INFO] 2025-11-26 13:29:55 autoreload 4176 2032 - C:\Users\Administrator\Desktop\mahuderp\Mahuderp\config\core\views.py changed, reloading.
+[INFO] 2025-11-26 13:29:56 autoreload 4972 1860 - Watching for file changes with StatReloader
+[WARNING] 2025-11-26 13:30:16 basehttp 4972 5700 - "GET /api/reports/reports/margin-leaderboard/ HTTP/1.1" 401 5301
+[INFO] 2025-11-26 13:30:16 basehttp 4972 5700 - "GET /static/rest_framework/css/bootstrap.min.css HTTP/1.1" 200 121457
+[INFO] 2025-11-26 13:30:16 basehttp 4972 7376 - "GET /static/rest_framework/css/prettify.css HTTP/1.1" 200 817
+[INFO] 2025-11-26 13:30:16 basehttp 4972 1028 - "GET /static/rest_framework/js/ajax-form.js HTTP/1.1" 200 3597
+[INFO] 2025-11-26 13:30:16 basehttp 4972 7376 - "GET /static/rest_framework/js/csrf.js HTTP/1.1" 200 1719
+[INFO] 2025-11-26 13:30:16 basehttp 4972 11764 - "GET /static/rest_framework/css/bootstrap-tweaks.css HTTP/1.1" 200 3385
+[INFO] 2025-11-26 13:30:16 basehttp 4972 7888 - "GET /static/rest_framework/css/default.css HTTP/1.1" 200 1152
+[INFO] 2025-11-26 13:30:16 basehttp 4972 1892 - "GET /static/rest_framework/js/jquery-3.5.1.min.js HTTP/1.1" 200 89476
+[INFO] 2025-11-26 13:30:16 basehttp 4972 11764 - "GET /static/rest_framework/js/default.js HTTP/1.1" 200 1268
+[INFO] 2025-11-26 13:30:16 basehttp 4972 7376 - "GET /static/rest_framework/js/prettify-min.js HTTP/1.1" 200 13632
+[INFO] 2025-11-26 13:30:16 basehttp 4972 1028 - "GET /static/rest_framework/js/bootstrap.min.js HTTP/1.1" 200 39680
+[INFO] 2025-11-26 13:30:16 basehttp 4972 5700 - "GET /static/rest_framework/img/grid.png HTTP/1.1" 200 1458
+[INFO] 2025-11-26 13:30:30 basehttp 4972 2564 - "GET /api/reports/reports/margin-leaderboard/ HTTP/1.1" 200 74
+[INFO] 2025-11-26 13:30:32 basehttp 4972 2564 - "GET /api/reports/reports/margin-leaderboard/ HTTP/1.1" 200 74
+[INFO] 2025-11-26 13:30:51 basehttp 4972 2564 - "OPTIONS /api/reports/recruitment_kpi/ HTTP/1.1" 200 0
+[WARNING] 2025-11-26 13:30:51 basehttp 4972 2564 - "GET /api/reports/recruitment_kpi/ HTTP/1.1" 400 31
+[WARNING] 2025-11-26 13:30:59 basehttp 4972 2564 - "GET /api/reports/recruitment_kpi/ HTTP/1.1" 400 31
+[INFO] 2025-11-26 13:31:27 basehttp 4972 2564 - "OPTIONS /api/reports/profit_loss/ HTTP/1.1" 200 0
+[WARNING] 2025-11-26 13:31:27 basehttp 4972 2564 - "GET /api/reports/profit_loss/ HTTP/1.1" 400 31
+[INFO] 2025-11-26 13:36:52 autoreload 6052 12200 - Watching for file changes with StatReloader
+[INFO] 2025-11-26 13:39:58 basehttp 6052 6812 - "OPTIONS /api/core/companies/ HTTP/1.1" 200 0
+[INFO] 2025-11-26 13:39:58 basehttp 6052 6812 - "GET /api/core/companies/ HTTP/1.1" 200 4264
+[WARNING] 2025-11-26 13:41:12 basehttp 6052 9208 - "GET /api/reports/recruitment_kpi/?company_id=a3bab2d8-a9f9-4665-b8c6-6f7a2b65322a HTTP/1.1" 401 5458
+[INFO] 2025-11-26 13:41:12 basehttp 6052 9208 - "GET /static/rest_framework/css/bootstrap.min.css HTTP/1.1" 304 0
+[INFO] 2025-11-26 13:41:12 basehttp 6052 11088 - "GET /static/rest_framework/css/bootstrap-tweaks.css HTTP/1.1" 304 0
+[INFO] 2025-11-26 13:41:12 basehttp 6052 4720 - "GET /static/rest_framework/css/prettify.css HTTP/1.1" 304 0
+[INFO] 2025-11-26 13:41:12 basehttp 6052 9208 - "GET /static/rest_framework/js/ajax-form.js HTTP/1.1" 304 0
+[INFO] 2025-11-26 13:41:12 basehttp 6052 2216 - "GET /static/rest_framework/css/default.css HTTP/1.1" 304 0
+[INFO] 2025-11-26 13:41:12 basehttp 6052 11088 - "GET /static/rest_framework/js/bootstrap.min.js HTTP/1.1" 304 0
+[INFO] 2025-11-26 13:41:12 basehttp 6052 11076 - "GET /static/rest_framework/js/jquery-3.5.1.min.js HTTP/1.1" 304 0
+[INFO] 2025-11-26 13:41:12 basehttp 6052 4720 - "GET /static/rest_framework/js/prettify-min.js HTTP/1.1" 304 0
+[INFO] 2025-11-26 13:41:12 basehttp 6052 11056 - "GET /static/rest_framework/js/csrf.js HTTP/1.1" 304 0
+[INFO] 2025-11-26 13:41:12 basehttp 6052 9208 - "GET /static/rest_framework/js/default.js HTTP/1.1" 304 0
+[INFO] 2025-11-26 13:41:12 basehttp 6052 9208 - "GET /static/rest_framework/img/grid.png HTTP/1.1" 304 0
+[INFO] 2025-11-26 13:42:38 autoreload 6052 12200 - C:\Users\Administrator\Desktop\mahuderp\Mahuderp\config\reports\views.py changed, reloading.
+[INFO] 2025-11-26 13:42:39 autoreload 1528 3612 - Watching for file changes with StatReloader
+[INFO] 2025-11-26 13:43:01 autoreload 1528 3612 - C:\Users\Administrator\Desktop\mahuderp\Mahuderp\config\reports\views.py changed, reloading.
+[INFO] 2025-11-26 13:43:02 autoreload 7072 4840 - Watching for file changes with StatReloader
+[INFO] 2025-11-26 13:43:08 autoreload 7072 4840 - C:\Users\Administrator\Desktop\mahuderp\Mahuderp\config\reports\views.py changed, reloading.
+[INFO] 2025-11-26 13:43:09 autoreload 1012 9972 - Watching for file changes with StatReloader
+[INFO] 2025-11-26 13:43:53 autoreload 1012 9972 - C:\Users\Administrator\Desktop\mahuderp\Mahuderp\config\core\views.py changed, reloading.
+[INFO] 2025-11-26 13:43:54 autoreload 11232 2100 - Watching for file changes with StatReloader
+[INFO] 2025-11-26 13:44:11 basehttp 11232 12192 - "GET /api/docs/ HTTP/1.1" 200 4659
+[INFO] 2025-11-26 13:44:12 basehttp 11232 12192 - "GET /api/schema/ HTTP/1.1" 200 189546
+[WARNING] 2025-11-26 13:44:20 basehttp 11232 2104 - "GET /api/core/companies/ HTTP/1.1" 401 58
+[INFO] 2025-11-26 13:45:02 basehttp 11232 2104 - "POST /api/auth/login/ HTTP/1.1" 200 1009
+[INFO] 2025-11-26 13:45:32 basehttp 11232 2104 - "GET /api/core/companies/ HTTP/1.1" 200 4264
+[INFO] 2025-11-26 13:46:04 basehttp 11232 2104 - "OPTIONS /api/reports/recruitment_kpi/?company_id=a3bab2d8-a9f9-4665-b8c6-6f7a2b65322a HTTP/1.1" 200 0
+[INFO] 2025-11-26 13:46:04 basehttp 11232 2104 - "GET /api/reports/recruitment_kpi/?company_id=a3bab2d8-a9f9-4665-b8c6-6f7a2b65322a HTTP/1.1" 200 75
+[INFO] 2025-11-26 13:48:36 autoreload 11232 2100 - C:\Users\Administrator\Desktop\mahuderp\Mahuderp\config\reports\models.py changed, reloading.
+[INFO] 2025-11-26 13:48:37 autoreload 6344 1836 - Watching for file changes with StatReloader
+[INFO] 2025-11-26 13:49:58 autoreload 6344 1836 - C:\Users\Administrator\Desktop\mahuderp\Mahuderp\config\reports\views.py changed, reloading.
+[INFO] 2025-11-26 13:49:59 autoreload 9416 296 - Watching for file changes with StatReloader
+[INFO] 2025-11-26 13:50:23 autoreload 9416 296 - C:\Users\Administrator\Desktop\mahuderp\Mahuderp\config\reports\views.py changed, reloading.
+[INFO] 2025-11-26 13:50:24 autoreload 7700 5652 - Watching for file changes with StatReloader
+[INFO] 2025-11-26 13:51:39 autoreload 7700 5652 - C:\Users\Administrator\Desktop\mahuderp\Mahuderp\config\reports\views.py changed, reloading.
+[INFO] 2025-11-26 13:51:40 autoreload 1492 9316 - Watching for file changes with StatReloader
+[INFO] 2025-11-26 13:51:49 basehttp 1492 6868 - "GET /api/reports/recruitment_kpi/?company_id=a3bab2d8-a9f9-4665-b8c6-6f7a2b65322a HTTP/1.1" 200 75
+[INFO] 2025-11-26 13:55:58 autoreload 1492 9316 - C:\Users\Administrator\Desktop\mahuderp\Mahuderp\config\reports\views.py changed, reloading.
+[INFO] 2025-11-26 13:55:58 autoreload 2584 7360 - Watching for file changes with StatReloader
+[INFO] 2025-11-26 13:56:00 autoreload 2584 7360 - C:\Users\Administrator\Desktop\mahuderp\Mahuderp\config\reports\models.py changed, reloading.
+[INFO] 2025-11-26 13:56:01 autoreload 9500 7960 - Watching for file changes with StatReloader
+[INFO] 2025-11-26 14:02:42 basehttp 9500 3060 - "GET /api/reports/recruitment_kpi/?company_id=a3bab2d8-a9f9-4665-b8c6-6f7a2b65322a HTTP/1.1" 200 75
+[INFO] 2025-11-26 14:03:15 basehttp 9500 3060 - "OPTIONS /api/reports/ar_aging/?company_id=a3bab2d8-a9f9-4665-b8c6-6f7a2b65322a HTTP/1.1" 200 0
+[INFO] 2025-11-26 14:03:15 basehttp 9500 3060 - "GET /api/reports/ar_aging/?company_id=a3bab2d8-a9f9-4665-b8c6-6f7a2b65322a HTTP/1.1" 200 169
+[INFO] 2025-11-26 14:04:23 basehttp 9500 3060 - "GET /api/reports/recruitment_kpi/?company_id=a3bab2d8-a9f9-4665-b8c6-6f7a2b65322a HTTP/1.1" 200 75
+[INFO] 2025-11-26 14:26:15 basehttp 9500 7532 - "GET /api/docs/ HTTP/1.1" 200 4659
+[INFO] 2025-11-26 14:26:15 basehttp 9500 7532 - "GET /api/schema/ HTTP/1.1" 200 189546
+[INFO] 2025-11-26 14:42:25 autoreload 12612 13304 - Watching for file changes with StatReloader

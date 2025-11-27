@@ -6,7 +6,9 @@
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiTypes
 from django.db.models import Sum, Q, F, DecimalField
+from django.db.models import Value
 from django.db.models.functions import Coalesce
 from django.utils import timezone
 from decimal import Decimal
@@ -16,6 +18,7 @@ from core.models import (
     Company, JobOrder, Candidate, CandidateCost,
     Invoice, InvoiceLine, Bill, Employer, FxRate
 )
+from .models import CandidateReport, JobOrderReport
 
 
 # =============================================
@@ -54,6 +57,16 @@ def convert_currency(amount: Decimal, from_currency: str, to_currency: str, date
 # =============================================
 # 1. PROFIT & LOSS STATEMENT (FULLY MULTI-CURRENCY)
 # =============================================
+@extend_schema(
+    parameters=[
+        OpenApiParameter('company_id', OpenApiTypes.UUID, description='Company ID', required=True),
+        OpenApiParameter('from_date', OpenApiTypes.DATE, description='Start date (YYYY-MM-DD)', required=False),
+        OpenApiParameter('to_date', OpenApiTypes.DATE, description='End date (YYYY-MM-DD)', required=False),
+        OpenApiParameter('job_order_id', OpenApiTypes.STR, description='Job order id (optional)', required=False),
+        OpenApiParameter('candidate_id', OpenApiTypes.STR, description='Candidate id (optional)', required=False),
+        OpenApiParameter('detail', OpenApiTypes.STR, description='Detail level: summary|job|candidate', required=False),
+    ]
+)
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def profit_loss_report(request):
@@ -150,8 +163,8 @@ def profit_loss_report(request):
     if detail == 'candidate':
         response["top_performers"] = list(Candidate.objects.filter(cost_filter)
             .annotate(
-                revenue=Coalesce(Sum('invoiceline__amount', filter=Q(invoiceline__invoice__status__in=['POSTED','PAID'])), 0),
-                cost=Coalesce(Sum('costs__amount'), 0),
+                    revenue=Coalesce(Sum('invoiceline__amount', filter=Q(invoiceline__invoice__status__in=['POSTED','PAID'])), Value(Decimal('0')), output_field=DecimalField()),
+                    cost=Coalesce(Sum('costs__amount'), Value(Decimal('0')), output_field=DecimalField()),
                 profit=ExpressionWrapper(F('revenue') - F('cost'), output_field=DecimalField())
             )
             .filter(revenue__gt=0)
@@ -166,6 +179,12 @@ def profit_loss_report(request):
 # =============================================
 # 2. BALANCE SHEET (MULTI-CURRENCY)
 # =============================================
+@extend_schema(
+    parameters=[
+        OpenApiParameter('company_id', OpenApiTypes.UUID, description='Company ID', required=True),
+        OpenApiParameter('as_of_date', OpenApiTypes.DATE, description='As of date (YYYY-MM-DD)', required=False),
+    ]
+)
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def balance_sheet_report(request):
@@ -218,6 +237,11 @@ def balance_sheet_report(request):
 # =============================================
 # 3. AR AGING REPORT (MULTI-CURRENCY)
 # =============================================
+@extend_schema(
+    parameters=[
+        OpenApiParameter('company_id', OpenApiTypes.UUID, description='Company ID', required=True),
+    ]
+)
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def ar_aging_report(request):
@@ -268,6 +292,11 @@ def ar_aging_report(request):
 # =============================================
 # 4. JOB ORDER PROFITABILITY
 # =============================================
+@extend_schema(
+    parameters=[
+        OpenApiParameter('job_order_id', OpenApiTypes.STR, description='Job order id', required=True),
+    ]
+)
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def job_order_profitability_view(request):
@@ -301,6 +330,11 @@ def job_order_profitability_view(request):
 # =============================================
 # 5. EMPLOYER PROFITABILITY
 # =============================================
+@extend_schema(
+    parameters=[
+        OpenApiParameter('employer_id', OpenApiTypes.STR, description='Employer id', required=True),
+    ]
+)
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def employer_profitability_view(request):
@@ -333,6 +367,11 @@ def employer_profitability_view(request):
 # =============================================
 # 6. RECRUITMENT KPI DASHBOARD
 # =============================================
+@extend_schema(
+    parameters=[
+        OpenApiParameter('company_id', OpenApiTypes.UUID, description='Company ID', required=True),
+    ]
+)
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def recruitment_kpi_dashboard(request):
@@ -355,6 +394,11 @@ def recruitment_kpi_dashboard(request):
 # =============================================
 # 7. COST CENTER REPORT
 # =============================================
+@extend_schema(
+    parameters=[
+        OpenApiParameter('company_id', OpenApiTypes.UUID, description='Company ID', required=True),
+    ]
+)
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def cost_center_report_view(request):
@@ -377,6 +421,11 @@ def cost_center_report_view(request):
 # =============================================
 # 8. CASHFLOW FORECAST (90 DAYS)
 # =============================================
+@extend_schema(
+    parameters=[
+        OpenApiParameter('company_id', OpenApiTypes.UUID, description='Company ID', required=True),
+    ]
+)
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def cashflow_forecast_view(request):
@@ -411,12 +460,42 @@ def cashflow_forecast_view(request):
 # =============================================
 # 9. CANDIDATE PROFITABILITY
 # =============================================
+@extend_schema(
+    parameters=[
+        OpenApiParameter('candidate_id', OpenApiTypes.STR, description='Candidate id', required=True),
+    ]
+)
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def candidate_profitability_view(request):
     candidate_id = request.query_params.get('candidate_id')
     if not candidate_id:
         return Response({"error": "candidate_id required"}, status=400)
+    # Try to serve from snapshot table if available (faster for frontend)
+    snapshot = CandidateReport.objects.filter(candidate_id=candidate_id).order_by('-generated_at').first()
+    if snapshot:
+        # build a minimal response from snapshot
+        try:
+            candidate = Candidate.objects.get(id=candidate_id)
+            job = candidate.job_order
+            employer = job.employer
+        except Candidate.DoesNotExist:
+            return Response({"error": "candidate not found"}, status=404)
+
+        return Response({
+            "candidate": candidate.full_name,
+            "passport": candidate.passport_number,
+            "nationality": candidate.nationality,
+            "job_order": str(job),
+            "employer": employer.name,
+            "current_stage": candidate.current_stage,
+            "deployment_date": candidate.deployed_date.isoformat() if candidate.deployed_date else None,
+            "base_currency": snapshot.currency,
+            "revenue": {"total": float(snapshot.revenue), "lines": []},
+            "costs": {"total": float(snapshot.cost), "reimbursable": None, "non_reimbursable": None, "breakdown": []},
+            "profitability": {"gross_profit": float(snapshot.profit), "gross_margin_percent": float(snapshot.margin_percent), "profit_per_day": None},
+            "generated_at": snapshot.generated_at.isoformat()
+        })
 
     candidate = Candidate.objects.get(id=candidate_id)
     job = candidate.job_order
@@ -501,18 +580,50 @@ def candidate_profitability_view(request):
 from django.db.models import Sum, Q, F, Count, Avg, DecimalField, ExpressionWrapper, FloatField
 from django.db.models.functions import Coalesce
 from django.utils import timezone
+@extend_schema(
+    parameters=[
+        OpenApiParameter('company_id', OpenApiTypes.UUID, description='Company ID', required=True),
+        OpenApiParameter('limit', OpenApiTypes.INT, description='Max results to return', required=False),
+    ]
+)
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def margin_leaderboard_view(request):
     company_id = request.query_params.get('company_id')
     limit = int(request.query_params.get('limit', 20))
+    # If snapshots exist, use them for faster response
+    if CandidateReport.objects.filter(company_id=company_id).exists():
+        snaps = CandidateReport.objects.filter(company_id=company_id).order_by('-margin_percent', '-profit')[:limit]
+        top = []
+        for i, s in enumerate(snaps):
+            # try to fetch candidate record for names
+            try:
+                cand = Candidate.objects.get(id=s.candidate_id)
+                job_order_str = str(cand.job_order)
+                passport = cand.passport_number
+                full_name = cand.full_name
+            except Candidate.DoesNotExist:
+                full_name = str(s.candidate_id)
+                passport = None
+                job_order_str = None
+            top.append({
+                "rank": i+1,
+                "candidate": full_name,
+                "passport": passport,
+                "revenue": float(s.revenue),
+                "cost": float(s.cost),
+                "profit": float(s.profit),
+                "margin_percent": float(s.margin_percent),
+                "job_order": job_order_str
+            })
+        return Response({"title": "Margin Kings Leaderboard", "company_id": company_id, "top_performers": top})
 
     candidates = Candidate.objects.filter(
         job_order__company_id=company_id,
         current_stage='DEPLOYED'
     ).annotate(
-        revenue=Coalesce(Sum('invoiceline__amount', filter=Q(invoiceline__invoice__status__in=['POSTED','PAID'])), 0),
-        cost=Coalesce(Sum('costs__amount'), 0),
+            revenue=Coalesce(Sum('invoiceline__amount', filter=Q(invoiceline__invoice__status__in=['POSTED','PAID'])), Value(Decimal('0')), output_field=DecimalField()),
+            cost=Coalesce(Sum('costs__amount'), Value(Decimal('0')), output_field=DecimalField()),
         profit=ExpressionWrapper(F('revenue') - F('cost'), output_field=DecimalField()),
         margin=ExpressionWrapper(
             F('profit') * 100 / F('revenue'),

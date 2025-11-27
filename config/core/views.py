@@ -16,7 +16,26 @@ from datetime import timedelta
 from decimal import Decimal
 from .models import *
 from .serializers import *
-from drf_spectacular.utils import extend_schema, OpenApiTypes
+try:
+    from drf_spectacular.utils import extend_schema, OpenApiTypes, OpenApiResponse
+except Exception:
+    # Fallback no-op definitions if drf-spectacular is not installed (prevents import errors).
+    def extend_schema(*args, **kwargs):
+        def decorator(func):
+            return func
+        return decorator
+
+    class OpenApiTypes:
+        OBJECT = dict
+        # common simple fallbacks - adjust if additional types are referenced
+        INT = int
+        NUMBER = float
+        STRING = str
+
+    class OpenApiResponse:
+        def __init__(self, *args, **kwargs):
+            pass
+
 from .utils import *
 # def handler404(request, exception):
 #     return render(request, '404.html', status=404)
